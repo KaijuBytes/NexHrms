@@ -65,26 +65,26 @@ def get_active_employees() -> int:
 
 @frappe.whitelist(allow_guest=True)
 def subscription_updated(app: str, plan: str):
-	if app in ["hrms", "erpnext"] and plan:
-		update_erpnext_access()
+	if app in ["hrms", "nex"] and plan:
+		update_nex_access()
 
 
-def update_erpnext_access(user_input: dict | None):
+def update_nex_access(user_input: dict | None):
 	"""
 	Called from hooks after setup wizard completion, ignored if user has no hrms subscription
-	enables erpnext workspaces and roles if user has subscribed to both hrms and erpnext
-	disables erpnext workspaces and roles if user has subscribed to hrms but not erpnext
+	enables nex workspaces and roles if user has subscribed to both hrms and nex
+	disables nex workspaces and roles if user has subscribed to hrms but not nex
 	"""
 	if not frappe.utils.get_url().endswith(".frappehr.com"):
 		return
 
-	update_erpnext_workspaces(True)
-	update_erpnext_roles(True)
+	update_nex_workspaces(True)
+	update_nex_roles(True)
 	set_app_logo()
 
 
-def update_erpnext_workspaces(disable: bool = True):
-	erpnext_workspaces = [
+def update_nex_workspaces(disable: bool = True):
+	nex_workspaces = [
 		"Home",
 		"Assets",
 		"Accounting",
@@ -97,7 +97,7 @@ def update_erpnext_workspaces(disable: bool = True):
 		"Support",
 	]
 
-	for workspace in erpnext_workspaces:
+	for workspace in nex_workspaces:
 		try:
 			workspace_doc = frappe.get_doc("Workspace", workspace)
 			workspace_doc.flags.ignore_links = True
@@ -108,8 +108,8 @@ def update_erpnext_workspaces(disable: bool = True):
 			frappe.clear_messages()
 
 
-def update_erpnext_roles(disable: bool = True):
-	roles = get_erpnext_roles()
+def update_nex_roles(disable: bool = True):
+	roles = get_nex_roles()
 	for role in roles:
 		try:
 			role_doc = frappe.get_doc("Role", role)
@@ -124,15 +124,15 @@ def set_app_logo():
 	frappe.db.set_single_value("Navbar Settings", "app_logo", "/assets/hrms/images/frappe-hr-logo.svg")
 
 
-def get_erpnext_roles() -> set:
-	erpnext_roles = get_roles_for_app("erpnext")
+def get_nex_roles() -> set:
+	nex_roles = get_roles_for_app("nex")
 	hrms_roles = get_roles_for_app("hrms")
-	return erpnext_roles - hrms_roles - set(STANDARD_ROLES)
+	return nex_roles - hrms_roles - set(STANDARD_ROLES)
 
 
 def get_roles_for_app(app_name: str) -> set:
-	erpnext_modules = get_modules_by_app(app_name)
-	doctypes = get_doctypes_by_modules(erpnext_modules)
+	nex_modules = get_modules_by_app(app_name)
+	doctypes = get_doctypes_by_modules(nex_modules)
 	roles = roles_by_doctype(doctypes)
 
 	return roles
@@ -157,14 +157,14 @@ def roles_by_doctype(doctypes: list) -> set:
 	return set(roles)
 
 
-def hide_erpnext() -> bool:
+def hide_nex() -> bool:
 	hr_subscription = has_subscription(frappe.conf.sk_hrms)
-	erpnext_subscription = has_subscription(frappe.conf.sk_erpnext_smb or frappe.conf.sk_erpnext)
+	nex_subscription = has_subscription(frappe.conf.sk_nex_smb or frappe.conf.sk_nex)
 
 	if not hr_subscription:
 		return False
 
-	if hr_subscription and erpnext_subscription:
+	if hr_subscription and nex_subscription:
 		# subscribed for ERPNext
 		return False
 

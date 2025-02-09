@@ -3354,7 +3354,7 @@ msgstr "Lettera di presentazione"
 #: hr/doctype/job_applicant/job_applicant.js:46
 #: hr/doctype/vehicle_log/vehicle_log.js:9
 #: hr/doctype/vehicle_log/vehicle_log.js:10
-#: public/js/erpnext/delivery_trip.js:12
+#: public/js/nex/delivery_trip.js:12
 msgid "Create"
 msgstr ""
 
@@ -3446,7 +3446,7 @@ msgstr ""
 
 #. Title of an Onboarding Step
 #: payroll/onboarding_step/create_salary_slip/create_salary_slip.json
-#: public/js/erpnext/timesheet.js:8
+#: public/js/nex/timesheet.js:8
 msgid "Create Salary Slip"
 msgstr "Creare busta paga"
 
@@ -7010,7 +7010,7 @@ msgstr "Approvazione dell&#39;approvazione obbligatoria nel rimborso spese"
 #: hr/doctype/expense_claim/expense_claim.json
 #: hr/doctype/vehicle_log/vehicle_log.js:7
 #: hr/report/unpaid_expense_claim/unpaid_expense_claim.py:20
-#: hr/workspace/hr/hr.json public/js/erpnext/delivery_trip.js:7
+#: hr/workspace/hr/hr.json public/js/nex/delivery_trip.js:7
 msgid "Expense Claim"
 msgstr ""
 

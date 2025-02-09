@@ -5,8 +5,8 @@ import frappe
 from frappe.tests import IntegrationTestCase
 from frappe.utils import today
 
-from erpnext.setup.doctype.designation.test_designation import create_designation
-from erpnext.setup.doctype.employee.test_employee import make_employee
+from nex.setup.doctype.designation.test_designation import create_designation
+from nex.setup.doctype.employee.test_employee import make_employee
 
 from hrms.hr.doctype.employee_referral.employee_referral import (
 	create_additional_salary,

@@ -5,7 +5,7 @@ import frappe
 from frappe.tests import IntegrationTestCase
 from frappe.utils import today
 
-from erpnext.setup.doctype.employee.test_employee import make_employee
+from nex.setup.doctype.employee.test_employee import make_employee
 
 
 class TestEmployeeGrievance(IntegrationTestCase):

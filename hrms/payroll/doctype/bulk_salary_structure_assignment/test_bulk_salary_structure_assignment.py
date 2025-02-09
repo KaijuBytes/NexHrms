@@ -5,7 +5,7 @@ import frappe
 from frappe.tests import IntegrationTestCase
 from frappe.utils import getdate
 
-from erpnext.setup.doctype.employee.test_employee import make_employee
+from nex.setup.doctype.employee.test_employee import make_employee
 
 from hrms.payroll.doctype.bulk_salary_structure_assignment.bulk_salary_structure_assignment import (
 	BulkSalaryStructureAssignment,

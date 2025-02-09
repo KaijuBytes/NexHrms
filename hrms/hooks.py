@@ -4,7 +4,7 @@ app_publisher = "Frappe Technologies Pvt. Ltd."
 app_description = "Modern HR and Payroll Software"
 app_email = "contact@frappe.io"
 app_license = "GNU General Public License (v3)"
-required_apps = ["frappe/erpnext"]
+required_apps = ["frappe/nex"]
 source_link = "http://github.com/frappe/hrms"
 app_logo_url = "/assets/hrms/images/frappe-hr-logo.svg"
 app_home = "/app/overview"
@@ -47,14 +47,14 @@ app_include_css = "hrms.bundle.css"
 
 # include js in doctype views
 doctype_js = {
-	"Employee": "public/js/erpnext/employee.js",
-	"Company": "public/js/erpnext/company.js",
-	"Department": "public/js/erpnext/department.js",
-	"Timesheet": "public/js/erpnext/timesheet.js",
-	"Payment Entry": "public/js/erpnext/payment_entry.js",
-	"Journal Entry": "public/js/erpnext/journal_entry.js",
-	"Delivery Trip": "public/js/erpnext/delivery_trip.js",
-	"Bank Transaction": "public/js/erpnext/bank_transaction.js",
+	"Employee": "public/js/nex/employee.js",
+	"Company": "public/js/nex/company.js",
+	"Department": "public/js/nex/department.js",
+	"Timesheet": "public/js/nex/timesheet.js",
+	"Payment Entry": "public/js/nex/payment_entry.js",
+	"Journal Entry": "public/js/nex/journal_entry.js",
+	"Delivery Trip": "public/js/nex/delivery_trip.js",
+	"Bank Transaction": "public/js/nex/bank_transaction.js",
 }
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
@@ -100,7 +100,7 @@ jinja = {
 after_install = "hrms.install.after_install"
 after_migrate = "hrms.setup.update_select_perm_after_install"
 
-setup_wizard_complete = "hrms.subscription_utils.update_erpnext_access"
+setup_wizard_complete = "hrms.subscription_utils.update_nex_access"
 
 # Uninstallation
 # ------------
@@ -142,7 +142,7 @@ before_app_uninstall = "hrms.setup.before_app_uninstall"
 # 	"Event": "frappe.desk.doctype.event.event.has_permission",
 # }
 
-has_upload_permission = {"Employee": "erpnext.setup.doctype.employee.employee.has_upload_permission"}
+has_upload_permission = {"Employee": "nex.setup.doctype.employee.employee.has_upload_permission"}
 
 # DocType Class
 # ---------------
@@ -161,8 +161,8 @@ override_doctype_class = {
 
 doc_events = {
 	"User": {
-		"validate": "erpnext.setup.doctype.employee.employee.validate_employee_role",
-		"on_update": "erpnext.setup.doctype.employee.employee.update_user_permissions",
+		"validate": "nex.setup.doctype.employee.employee.validate_employee_role",
+		"on_update": "nex.setup.doctype.employee.employee.update_user_permissions",
 	},
 	"Company": {
 		"validate": "hrms.overrides.company.validate_default_accounts",

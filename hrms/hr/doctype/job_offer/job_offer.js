@@ -1,7 +1,7 @@
 // Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
 // License: GNU General Public License v3. See license.txt
 
-frappe.provide("erpnext.job_offer");
+frappe.provide("nex.job_offer");
 
 frappe.ui.form.on("Job Offer", {
 	onload: function (frm) {
@@ -15,7 +15,7 @@ frappe.ui.form.on("Job Offer", {
 	},
 
 	select_terms: function (frm) {
-		erpnext.utils.get_terms(frm.doc.select_terms, frm.doc, function (r) {
+		nex.utils.get_terms(frm.doc.select_terms, frm.doc, function (r) {
 			if (!r.exc) {
 				frm.set_value("terms", r.message);
 			}
@@ -43,7 +43,7 @@ frappe.ui.form.on("Job Offer", {
 			(!frm.doc.__onload || !frm.doc.__onload.employee)
 		) {
 			frm.add_custom_button(__("Create Employee"), function () {
-				erpnext.job_offer.make_employee(frm);
+				nex.job_offer.make_employee(frm);
 			});
 		}
 
@@ -55,7 +55,7 @@ frappe.ui.form.on("Job Offer", {
 	},
 });
 
-erpnext.job_offer.make_employee = function (frm) {
+nex.job_offer.make_employee = function (frm) {
 	frappe.model.open_mapped_doc({
 		method: "hrms.hr.doctype.job_offer.job_offer.make_employee",
 		frm: frm,

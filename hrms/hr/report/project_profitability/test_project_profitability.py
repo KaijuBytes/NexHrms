@@ -2,9 +2,9 @@ import frappe
 from frappe.tests import IntegrationTestCase
 from frappe.utils import add_days, getdate
 
-from erpnext.projects.doctype.timesheet.test_timesheet import make_timesheet
-from erpnext.projects.doctype.timesheet.timesheet import make_sales_invoice
-from erpnext.setup.doctype.employee.test_employee import make_employee
+from nex.projects.doctype.timesheet.test_timesheet import make_timesheet
+from nex.projects.doctype.timesheet.timesheet import make_sales_invoice
+from nex.setup.doctype.employee.test_employee import make_employee
 
 from hrms.hr.report.project_profitability.project_profitability import execute
 from hrms.payroll.doctype.salary_slip.salary_slip import make_salary_slip_from_timesheet

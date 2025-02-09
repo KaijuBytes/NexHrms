@@ -6,8 +6,8 @@ import frappe
 from frappe.tests import IntegrationTestCase
 from frappe.utils import getdate
 
-from erpnext.accounts.utils import get_fiscal_year
-from erpnext.setup.doctype.employee.test_employee import make_employee
+from nex.accounts.utils import get_fiscal_year
+from nex.setup.doctype.employee.test_employee import make_employee
 
 from hrms.hr.doctype.vehicle_log.test_vehicle_log import get_vehicle, make_vehicle_log
 from hrms.hr.doctype.vehicle_log.vehicle_log import make_expense_claim

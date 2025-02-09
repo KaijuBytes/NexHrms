@@ -17,7 +17,7 @@ bench generate-pot-file --app hrms
 cd ./apps/hrms || exit
 
 echo "Configuring git user..."
-git config user.email "developers@erpnext.com"
+git config user.email "developers@nex.com"
 git config user.name "frappe-pr-bot"
 
 echo "Setting the correct git remote..."

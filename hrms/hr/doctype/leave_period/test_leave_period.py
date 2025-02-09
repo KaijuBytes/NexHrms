@@ -4,7 +4,7 @@
 import frappe
 from frappe.tests import IntegrationTestCase
 
-import erpnext
+import nex
 
 test_dependencies = ["Employee", "Leave Type", "Leave Policy"]
 
@@ -17,7 +17,7 @@ def create_leave_period(from_date, to_date, company=None):
 	leave_period = frappe.db.get_value(
 		"Leave Period",
 		dict(
-			company=company or erpnext.get_default_company(),
+			company=company or nex.get_default_company(),
 			from_date=from_date,
 			to_date=to_date,
 			is_active=1,
@@ -30,7 +30,7 @@ def create_leave_period(from_date, to_date, company=None):
 	leave_period = frappe.get_doc(
 		{
 			"doctype": "Leave Period",
-			"company": company or erpnext.get_default_company(),
+			"company": company or nex.get_default_company(),
 			"from_date": from_date,
 			"to_date": to_date,
 			"is_active": 1,

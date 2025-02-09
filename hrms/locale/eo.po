@@ -2753,7 +2753,7 @@ msgstr "crwdns141216:0crwdne141216:0"
 #: hrms/payroll/doctype/salary_structure/salary_structure.js:152
 #: hrms/payroll/doctype/salary_structure_assignment/salary_structure_assignment.js:68
 #: hrms/payroll/doctype/salary_structure_assignment/salary_structure_assignment.js:70
-#: hrms/public/js/erpnext/delivery_trip.js:15
+#: hrms/public/js/nex/delivery_trip.js:15
 msgid "Create"
 msgstr "crwdns105886:0crwdne105886:0"
 
@@ -2797,7 +2797,7 @@ msgstr "crwdns141220:0crwdne141220:0"
 msgid "Create Payment Entry"
 msgstr "crwdns105918:0crwdne105918:0"
 
-#: hrms/public/js/erpnext/timesheet.js:8
+#: hrms/public/js/nex/timesheet.js:8
 msgid "Create Salary Slip"
 msgstr "crwdns105924:0crwdne105924:0"
 
@@ -5349,7 +5349,7 @@ msgstr "crwdns141464:0crwdne141464:0"
 #: hrms/hr/report/unpaid_expense_claim/unpaid_expense_claim.py:20
 #: hrms/hr/workspace/expense_claims/expense_claims.json
 #: hrms/hr/workspace/overview/overview.json
-#: hrms/public/js/erpnext/delivery_trip.js:8
+#: hrms/public/js/nex/delivery_trip.js:8
 msgid "Expense Claim"
 msgstr "crwdns107130:0crwdne107130:0"
 

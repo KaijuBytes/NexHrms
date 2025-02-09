@@ -98,7 +98,7 @@ Use the following credentials to log in:
 2. In a separate terminal window, run the following commands
 	```sh
 	$ bench new-site hrms.local
-	$ bench get-app erpnext
+	$ bench get-app nex
 	$ bench get-app hrms
 	$ bench --site hrms.local install-app hrms
 	$ bench --site hrms.local add-to-hosts
@@ -109,15 +109,15 @@ Use the following credentials to log in:
 
 1. [Frappe School](https://frappe.school) - Learn Frappe Framework and ERPNext from the various courses by the maintainers or from the community.
 2. [Documentation](https://docs.frappe.io/hr) - Extensive documentation for Frappe HR.
-3. [User Forum](https://discuss.erpnext.com/) - Engage with the community of ERPNext users and service providers.
+3. [User Forum](https://discuss.nex.com/) - Engage with the community of ERPNext users and service providers.
 4. [Telegram Group](https://t.me/frappehr) - Get instant help from the community of users.
 
 
 ## Contributing
 
-1. [Issue Guidelines](https://github.com/frappe/erpnext/wiki/Issue-Guidelines)
-1. [Report Security Vulnerabilities](https://erpnext.com/security)
-1. [Pull Request Requirements](https://github.com/frappe/erpnext/wiki/Contribution-Guidelines)
+1. [Issue Guidelines](https://github.com/frappe/nex/wiki/Issue-Guidelines)
+1. [Report Security Vulnerabilities](https://nex.com/security)
+1. [Pull Request Requirements](https://github.com/frappe/nex/wiki/Contribution-Guidelines)
 
 
 ## Logo and Trademark Policy

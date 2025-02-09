@@ -10,8 +10,8 @@ from frappe import _
 from frappe.model.document import Document
 from frappe.utils import cint, create_batch, get_datetime, get_time, getdate
 
-from erpnext.setup.doctype.employee.employee import get_holiday_list_for_employee
-from erpnext.setup.doctype.holiday_list.holiday_list import is_holiday
+from nex.setup.doctype.employee.employee import get_holiday_list_for_employee
+from nex.setup.doctype.holiday_list.holiday_list import is_holiday
 
 from hrms.hr.doctype.attendance.attendance import mark_attendance
 from hrms.hr.doctype.employee_checkin.employee_checkin import (

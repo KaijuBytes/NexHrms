@@ -2778,7 +2778,7 @@ msgstr "Ön Yazı"
 #: hrms/payroll/doctype/salary_structure/salary_structure.js:152
 #: hrms/payroll/doctype/salary_structure_assignment/salary_structure_assignment.js:68
 #: hrms/payroll/doctype/salary_structure_assignment/salary_structure_assignment.js:70
-#: hrms/public/js/erpnext/delivery_trip.js:15
+#: hrms/public/js/nex/delivery_trip.js:15
 msgid "Create"
 msgstr "Oluştur"
 
@@ -2822,7 +2822,7 @@ msgstr "Yeni Personel ID Oluştur"
 msgid "Create Payment Entry"
 msgstr "Ödeme Girişi Oluştur"
 
-#: hrms/public/js/erpnext/timesheet.js:8
+#: hrms/public/js/nex/timesheet.js:8
 msgid "Create Salary Slip"
 msgstr "Maaş Bordrosu Oluştur"
 
@@ -5374,7 +5374,7 @@ msgstr "Harcama Talebinde Onaylayıcı Zorunlu Olsun"
 #: hrms/hr/report/unpaid_expense_claim/unpaid_expense_claim.py:20
 #: hrms/hr/workspace/expense_claims/expense_claims.json
 #: hrms/hr/workspace/overview/overview.json
-#: hrms/public/js/erpnext/delivery_trip.js:8
+#: hrms/public/js/nex/delivery_trip.js:8
 msgid "Expense Claim"
 msgstr "Harcama Talebi"
 
