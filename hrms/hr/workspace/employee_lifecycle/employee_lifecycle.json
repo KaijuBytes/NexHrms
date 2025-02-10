@@ -1,7 +1,7 @@
 {
  "app": "hrms",
  "charts": [],
- "content": "[{\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Your Shortcuts</b></span>\",\"col\":12}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Employee Onboarding\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Employee Separation\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Employee Grievance\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Dashboard\",\"col\":3}},{\"type\":\"spacer\",\"data\":{\"col\":12}},{\"type\":\"quick_list\",\"data\":{\"quick_list_name\":\"New Hires (This Month)\",\"col\":4}},{\"type\":\"quick_list\",\"data\":{\"quick_list_name\":\"Exits (This Month)\",\"col\":4}},{\"type\":\"quick_list\",\"data\":{\"quick_list_name\":\"Trainings (This Week)\",\"col\":4}},{\"type\":\"spacer\",\"data\":{\"col\":12}},{\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Masters &amp; Reports</b></span>\",\"col\":12}},{\"type\":\"card\",\"data\":{\"card_name\":\"Onboarding\",\"col\":4}},{\"type\":\"card\",\"data\":{\"card_name\":\"Journey\",\"col\":4}},{\"type\":\"card\",\"data\":{\"card_name\":\"Grievance\",\"col\":4}},{\"type\":\"card\",\"data\":{\"card_name\":\"Training\",\"col\":4}},{\"type\":\"card\",\"data\":{\"card_name\":\"Exit\",\"col\":4}},{\"type\":\"card\",\"data\":{\"card_name\":\"Daily Work Summary\",\"col\":4}},{\"type\":\"card\",\"data\":{\"card_name\":\"Reports\",\"col\":4}}]",
+ "content": "[{\"id\":\"fT8SN9Q1qv\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Your Shortcuts</b></span>\",\"col\":12}},{\"id\":\"wfcd6Sc5Y7\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Employee Onboarding\",\"col\":3}},{\"id\":\"T_IAZLg2vh\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Employee Separation\",\"col\":3}},{\"id\":\"jfk6yg6tl5\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Employee Grievance\",\"col\":3}},{\"id\":\"7VPIoUV4HP\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"KjnQ-qrZo4\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Masters &amp; Reports</b></span>\",\"col\":12}},{\"id\":\"DFDehXlOg9\",\"type\":\"card\",\"data\":{\"card_name\":\"Onboarding\",\"col\":4}},{\"id\":\"Ls57-zVIDn\",\"type\":\"card\",\"data\":{\"card_name\":\"Journey\",\"col\":4}},{\"id\":\"cUttt_JoqG\",\"type\":\"card\",\"data\":{\"card_name\":\"Grievance\",\"col\":4}},{\"id\":\"v9kXt6rSOm\",\"type\":\"card\",\"data\":{\"card_name\":\"Training\",\"col\":4}},{\"id\":\"OCTsUC5xdD\",\"type\":\"card\",\"data\":{\"card_name\":\"Exit\",\"col\":4}},{\"id\":\"SjjH5SnVeG\",\"type\":\"card\",\"data\":{\"card_name\":\"Daily Work Summary\",\"col\":4}},{\"id\":\"96NWt84HJ7\",\"type\":\"card\",\"data\":{\"card_name\":\"Reports\",\"col\":4}}]",
  "creation": "2022-08-20 14:06:34.309347",
  "custom_blocks": [],
  "docstatus": 0,
@@ -131,6 +131,16 @@
    "label": "Employee Separation",
    "link_count": 0,
    "link_to": "Employee Separation",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Full and Final Settlement",
+   "link_count": 0,
+   "link_to": "Full and Final Statement",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
@@ -280,7 +290,7 @@
    "type": "Link"
   }
  ],
- "modified": "2025-01-15 17:24:06.430487",
+ "modified": "2025-02-10 23:07:10.025237",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Employee Lifecycle",
@@ -288,33 +298,10 @@
  "owner": "Administrator",
  "parent_page": "",
  "public": 1,
- "quick_lists": [
-  {
-   "document_type": "Employee",
-   "label": "New Hires (This Month)",
-   "quick_list_filter": "{\"date_of_joining\":[\"Timespan\",\"this month\"]}"
-  },
-  {
-   "document_type": "Training Event",
-   "label": "Trainings (This Week)",
-   "quick_list_filter": "{\"start_time\":[\"Timespan\",\"this week\"]}"
-  },
-  {
-   "document_type": "Employee",
-   "label": "Exits (This Month)",
-   "quick_list_filter": "{\"relieving_date\":[\"Timespan\",\"this month\"]}"
-  }
- ],
+ "quick_lists": [],
  "roles": [],
  "sequence_id": 2.0,
  "shortcuts": [
-  {
-   "color": "Grey",
-   "doc_view": "List",
-   "label": "Dashboard",
-   "link_to": "Employee Lifecycle",
-   "type": "Dashboard"
-  },
   {
    "color": "Orange",
    "doc_view": "List",

@@ -18,19 +18,7 @@
  ],
  "charts": [
   {
-   "chart": "Grievance Type",
-   "width": "Half"
-  },
-  {
-   "chart": "Training Type",
-   "width": "Half"
-  },
-  {
-   "chart": "Y-O-Y Transfers",
-   "width": "Half"
-  },
-  {
-   "chart": "Y-O-Y Promotions",
+   "chart": "Employees by Age",
    "width": "Half"
   }
  ],
@@ -41,7 +29,7 @@
  "idx": 0,
  "is_default": 0,
  "is_standard": 1,
- "modified": "2022-08-22 11:05:25.627559",
+ "modified": "2025-02-10 23:06:41.847632",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Employee Lifecycle",

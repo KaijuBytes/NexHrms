@@ -164,14 +164,6 @@ doc_events = {
 		"validate": "nex.setup.doctype.employee.employee.validate_employee_role",
 		"on_update": "nex.setup.doctype.employee.employee.update_user_permissions",
 	},
-	"Agency": {
-		"validate": "hrms.overrides.agency.validate_default_accounts",
-		"on_update": [
-			"hrms.overrides.agency.make_agency_fixtures",
-			"hrms.overrides.agency.set_default_hr_accounts",
-		],
-		"on_trash": "hrms.overrides.agency.handle_linked_docs",
-	},
 	"Holiday List": {
 		"on_update": "hrms.utils.holiday_list.invalidate_cache",
 		"on_trash": "hrms.utils.holiday_list.invalidate_cache",

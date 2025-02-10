@@ -28,26 +28,6 @@
   {
    "chart": "Gender Diversity Ratio",
    "width": "Half"
-  },
-  {
-   "chart": "Employees by Type",
-   "width": "Half"
-  },
-  {
-   "chart": "Employees by Grade",
-   "width": "Half"
-  },
-  {
-   "chart": "Employees by Branch",
-   "width": "Half"
-  },
-  {
-   "chart": "Designation Wise Employee Count",
-   "width": "Half"
-  },
-  {
-   "chart": "Department Wise Employee Count",
-   "width": "Half"
   }
  ],
  "creation": "2023-11-17 14:10:56.741833",
@@ -57,7 +37,7 @@
  "idx": 0,
  "is_default": 0,
  "is_standard": 1,
- "modified": "2024-01-08 14:06:32.104261",
+ "modified": "2025-02-10 23:08:46.053474",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Human Resource",
