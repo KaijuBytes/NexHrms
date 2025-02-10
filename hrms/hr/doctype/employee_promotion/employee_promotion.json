@@ -59,8 +59,8 @@
    "fetch_from": "employee.agency",
    "fieldname": "agency",
    "fieldtype": "Link",
-   "label": "Company",
-   "options": "Company"
+   "label": "Agency",
+   "options": "Agency"
   },
   {
    "description": "Set the properties that should be updated in the Employee master on promotion submission",

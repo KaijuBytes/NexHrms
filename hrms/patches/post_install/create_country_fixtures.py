@@ -4,6 +4,6 @@
 
 
 # def execute():
-# 	for country in frappe.get_all("Company", pluck="country", distinct=True):
+# 	for country in frappe.get_all("Agency", pluck="country", distinct=True):
 # 		run_regional_setup(country)
 # 		make_salary_components(country)

@@ -20,7 +20,7 @@ class TestLeaveAllocation(IntegrationTestCase):
 		frappe.db.delete("Leave Application")
 		frappe.db.delete("Leave Ledger Entry")
 
-		emp_id = make_employee("test_leave_allocation@salary.com", agency="_Test Company")
+		emp_id = make_employee("test_leave_allocation@salary.com", agency="_Test Agency")
 		self.employee = frappe.get_doc("Employee", emp_id)
 
 	def test_overlapping_allocation(self):
@@ -132,7 +132,7 @@ class TestLeaveAllocation(IntegrationTestCase):
 				doctype="Leave Period",
 				from_date=add_months(nowdate(), -6),
 				to_date=add_months(nowdate(), 6),
-				agency="_Test Company",
+				agency="_Test Agency",
 				is_active=1,
 			)
 		).insert()
@@ -169,7 +169,7 @@ class TestLeaveAllocation(IntegrationTestCase):
 				doctype="Leave Period",
 				from_date=add_months(nowdate(), -6),
 				to_date=add_months(nowdate(), 6),
-				agency="_Test Company",
+				agency="_Test Agency",
 				is_active=1,
 			)
 		).insert()
@@ -584,7 +584,7 @@ class TestLeaveAllocation(IntegrationTestCase):
 
 		make_holiday_list()
 		frappe.db.set_value(
-			"Company", self.employee.agency, "default_holiday_list", "Salary Slip Test Holiday List"
+			"Agency", self.employee.agency, "default_holiday_list", "Salary Slip Test Holiday List"
 		)
 
 		leave_allocation = create_leave_allocation(

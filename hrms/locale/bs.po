@@ -405,7 +405,7 @@ msgid "Account {0} does not belong to agency: {1}"
 msgstr ""
 
 #: hrms/hr/doctype/expense_claim_type/expense_claim_type.py:29
-msgid "Account {0} does not match with Company {1}"
+msgid "Account {0} does not match with Agency {1}"
 msgstr ""
 
 #. Label of the section_break_7 (Section Break) field in DocType 'Employee
@@ -1174,7 +1174,7 @@ msgstr ""
 #. Label of the applies_to_all_departments (Check) field in DocType 'Leave
 #. Block List'
 #: hrms/hr/doctype/leave_block_list/leave_block_list.json
-msgid "Applies to Company"
+msgid "Applies to Agency"
 msgstr ""
 
 #: hrms/www/jobs/index.html:352
@@ -2461,17 +2461,17 @@ msgstr ""
 #: hrms/payroll/report/salary_register/salary_register.js:39
 #: hrms/payroll/report/salary_register/salary_register.py:155
 #: hrms/public/js/salary_slip_deductions_report_filters.js:7
-msgid "Company"
+msgid "Agency"
 msgstr "Kompanija"
 
 #. Label of the section_break_nngy (Section Break) field in DocType 'Job
 #. Opening'
 #: hrms/hr/doctype/job_opening/job_opening.json
-msgid "Company Details"
+msgid "Agency Details"
 msgstr ""
 
 #: frontend/src/views/Profile.vue:177
-msgid "Company Information"
+msgid "Agency Information"
 msgstr ""
 
 #. Name of a DocType
@@ -6234,7 +6234,7 @@ msgstr ""
 
 #. Label of the base_gross_pay (Currency) field in DocType 'Salary Slip'
 #: hrms/payroll/doctype/salary_slip/salary_slip.json
-msgid "Gross Pay (Company Currency)"
+msgid "Gross Pay (Agency Currency)"
 msgstr ""
 
 #. Label of the gross_year_to_date (Currency) field in DocType 'Salary Slip'
@@ -6245,7 +6245,7 @@ msgstr ""
 #. Label of the base_gross_year_to_date (Currency) field in DocType 'Salary
 #. Slip'
 #: hrms/payroll/doctype/salary_slip/salary_slip.json
-msgid "Gross Year To Date(Company Currency)"
+msgid "Gross Year To Date(Agency Currency)"
 msgstr ""
 
 #: hrms/hr/report/daily_work_summary_replies/daily_work_summary_replies.js:9
@@ -6606,7 +6606,7 @@ msgstr ""
 
 #. Label of the base_hour_rate (Currency) field in DocType 'Salary Slip'
 #: hrms/payroll/doctype/salary_slip/salary_slip.json
-msgid "Hour Rate (Company Currency)"
+msgid "Hour Rate (Agency Currency)"
 msgstr ""
 
 #. Label of the hours (Float) field in DocType 'Training Result Employee'
@@ -6725,7 +6725,7 @@ msgstr ""
 msgid "If enabled, total no. of working days will include holidays, and this will reduce the value of Salary Per Day"
 msgstr ""
 
-#. Description of the 'Applies to Company' (Check) field in DocType 'Leave
+#. Description of the 'Applies to Agency' (Check) field in DocType 'Leave
 #. Block List'
 #: hrms/hr/doctype/leave_block_list/leave_block_list.json
 msgid "If not checked, the list will have to be added to each Department where it has to be applied."
@@ -6823,7 +6823,7 @@ msgid "Incentives"
 msgstr ""
 
 #: hrms/hr/report/monthly_attendance_sheet/monthly_attendance_sheet.js:63
-msgid "Include Company Descendants"
+msgid "Include Agency Descendants"
 msgstr ""
 
 #. Label of the include_holidays (Check) field in DocType 'Attendance Request'
@@ -8551,7 +8551,7 @@ msgstr ""
 
 #. Label of the base_month_to_date (Currency) field in DocType 'Salary Slip'
 #: hrms/payroll/doctype/salary_slip/salary_slip.json
-msgid "Month To Date(Company Currency)"
+msgid "Month To Date(Agency Currency)"
 msgstr ""
 
 #. Option for the 'Set the frequency for holiday reminders' (Select) field in
@@ -8667,7 +8667,7 @@ msgstr ""
 
 #. Label of the base_net_pay (Currency) field in DocType 'Salary Slip'
 #: hrms/payroll/doctype/salary_slip/salary_slip.json
-msgid "Net Pay (Company Currency)"
+msgid "Net Pay (Agency Currency)"
 msgstr ""
 
 #. Label of the net_pay_info (Tab Break) field in DocType 'Salary Slip'
@@ -8697,7 +8697,7 @@ msgstr ""
 
 #. Label of the new_agency (Link) field in DocType 'Employee Transfer'
 #: hrms/hr/doctype/employee_transfer/employee_transfer.json
-msgid "New Company"
+msgid "New Agency"
 msgstr ""
 
 #. Label of the new_employee_id (Link) field in DocType 'Employee Transfer'
@@ -8844,7 +8844,7 @@ msgid "No employees found"
 msgstr ""
 
 #: hrms/payroll/doctype/payroll_entry/payroll_entry.py:185
-msgid "No employees found for the mentioned criteria:<br>Company: {0}<br> Currency: {1}<br>Payroll Payable Account: {2}"
+msgid "No employees found for the mentioned criteria:<br>Agency: {0}<br> Currency: {1}<br>Payroll Payable Account: {2}"
 msgstr ""
 
 #: hrms/hr/doctype/appraisal_cycle/appraisal_cycle.py:67
@@ -9760,7 +9760,7 @@ msgid "Please Enable Auto Attendance and complete the setup first."
 msgstr ""
 
 #: hrms/payroll/doctype/retention_bonus/retention_bonus.js:8
-msgid "Please Select Company First"
+msgid "Please Select Agency First"
 msgstr ""
 
 #: hrms/payroll/doctype/employee_benefit_application/employee_benefit_application.py:95
@@ -9800,7 +9800,7 @@ msgid "Please see attachment"
 msgstr ""
 
 #: hrms/hr/doctype/staffing_plan/staffing_plan.py:224
-msgid "Please select Company and Designation"
+msgid "Please select Agency and Designation"
 msgstr ""
 
 #: hrms/payroll/doctype/employee_tax_exemption_proof_submission/employee_tax_exemption_proof_submission.js:22
@@ -9829,7 +9829,7 @@ msgid "Please select Shift Type and assignment date(s)."
 msgstr ""
 
 #: hrms/hr/utils.py:724
-msgid "Please select a Company"
+msgid "Please select a Agency"
 msgstr ""
 
 #: hrms/public/js/hierarchy_chart/hierarchy_chart_mobile.js:233
@@ -9902,11 +9902,11 @@ msgid "Please select {0}"
 msgstr "Molimo odaberite {0}"
 
 #: hrms/payroll/doctype/salary_structure/salary_structure.py:311
-msgid "Please set \"Default Payroll Payable Account\" in Company Defaults"
+msgid "Please set \"Default Payroll Payable Account\" in Agency Defaults"
 msgstr ""
 
 #: hrms/regional/india/utils.py:18
-msgid "Please set Basic and HRA component in Company {0}"
+msgid "Please set Basic and HRA component in Agency {0}"
 msgstr ""
 
 #: hrms/hr/doctype/leave_encashment/leave_encashment.py:49
@@ -9923,7 +9923,7 @@ msgstr ""
 
 #: hrms/hr/doctype/employee_advance/employee_advance.py:197
 #: hrms/hr/doctype/employee_advance/employee_advance.py:301
-msgid "Please set a Default Cash Account in Company defaults"
+msgid "Please set a Default Cash Account in Agency defaults"
 msgstr ""
 
 #: hrms/payroll/doctype/payroll_entry/payroll_entry.py:318
@@ -9943,7 +9943,7 @@ msgid "Please set the Appraisal Template for all the {0} or select the template 
 msgstr ""
 
 #: hrms/hr/doctype/expense_claim/expense_claim.js:335
-msgid "Please set the Company"
+msgid "Please set the Agency"
 msgstr ""
 
 #: hrms/payroll/doctype/salary_slip/salary_slip.py:266
@@ -10938,7 +10938,7 @@ msgstr ""
 
 #. Label of the base_rounded_total (Currency) field in DocType 'Salary Slip'
 #: hrms/payroll/doctype/salary_slip/salary_slip.json
-msgid "Rounded Total (Company Currency)"
+msgid "Rounded Total (Agency Currency)"
 msgstr ""
 
 #. Label of the rounding (Select) field in DocType 'Leave Type'
@@ -10986,7 +10986,7 @@ msgid "Row {0}# Paid Amount cannot be greater than requested advance amount"
 msgstr ""
 
 #: hrms/payroll/doctype/salary_structure_assignment/salary_structure_assignment.py:139
-msgid "Row {0}: Cost Center {1} does not belong to Company {2}"
+msgid "Row {0}: Cost Center {1} does not belong to Agency {2}"
 msgstr ""
 
 #: hrms/payroll/doctype/gratuity_rule/gratuity_rule.py:15
@@ -11327,7 +11327,7 @@ msgid "Sales Invoice"
 msgstr ""
 
 #: hrms/hr/doctype/expense_claim_type/expense_claim_type.py:22
-msgid "Same Company is entered more than once"
+msgid "Same Agency is entered more than once"
 msgstr ""
 
 #: frontend/src/components/ExpenseItems.vue:23
@@ -11389,7 +11389,7 @@ msgstr ""
 
 #: hrms/public/js/hierarchy_chart/hierarchy_chart_desktop.js:86
 #: hrms/public/js/hierarchy_chart/hierarchy_chart_mobile.js:77
-msgid "Select Company"
+msgid "Select Agency"
 msgstr ""
 
 #. Label of the unmarked_attendance_section (Section Break) field in DocType
@@ -12970,11 +12970,11 @@ msgid "Today is {0}'s birthday 🎉"
 msgstr ""
 
 #: hrms/controllers/employee_reminders.py:259
-msgid "Today {0} at our Company! 🎉"
+msgid "Today {0} at our Agency! 🎉"
 msgstr ""
 
 #: hrms/controllers/employee_reminders.py:241
-msgid "Today {0} completed {1} year(s) at our Company! 🎉"
+msgid "Today {0} completed {1} year(s) at our Agency! 🎉"
 msgstr ""
 
 #. Label of the total (Currency) field in DocType 'Expense Taxes and Charges'
@@ -13066,7 +13066,7 @@ msgstr ""
 
 #. Label of the base_total_deduction (Currency) field in DocType 'Salary Slip'
 #: hrms/payroll/doctype/salary_slip/salary_slip.json
-msgid "Total Deduction (Company Currency)"
+msgid "Total Deduction (Agency Currency)"
 msgstr ""
 
 #: hrms/hr/report/monthly_attendance_sheet/monthly_attendance_sheet.py:146
@@ -13265,7 +13265,7 @@ msgstr ""
 
 #. Label of the base_total_in_words (Data) field in DocType 'Salary Slip'
 #: hrms/payroll/doctype/salary_slip/salary_slip.json
-msgid "Total in words (Company Currency)"
+msgid "Total in words (Agency Currency)"
 msgstr ""
 
 #: hrms/hr/doctype/leave_allocation/leave_allocation.py:364
@@ -14115,7 +14115,7 @@ msgstr ""
 
 #. Label of the base_year_to_date (Currency) field in DocType 'Salary Slip'
 #: hrms/payroll/doctype/salary_slip/salary_slip.json
-msgid "Year To Date(Company Currency)"
+msgid "Year To Date(Agency Currency)"
 msgstr ""
 
 #. Option for the 'Earned Leave Frequency' (Select) field in DocType 'Leave

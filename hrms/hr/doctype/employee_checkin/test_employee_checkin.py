@@ -165,7 +165,7 @@ class TestEmployeeCheckin(IntegrationTestCase):
 		self.assertEqual(working_hours, (5.0, logs_type_2[1].time, logs_type_2[-1].time))
 
 	def test_fetch_shift(self):
-		employee = make_employee("test_employee_checkin@example.com", agency="_Test Company")
+		employee = make_employee("test_employee_checkin@example.com", agency="_Test Agency")
 
 		# shift setup for 8-12
 		shift_type = setup_shift_type()
@@ -194,7 +194,7 @@ class TestEmployeeCheckin(IntegrationTestCase):
 
 	@change_settings("HR Settings", {"allow_multiple_shift_assignments": 1})
 	def test_fetch_shift_for_assignment_with_end_date(self):
-		employee = make_employee("test_employee_checkin@example.com", agency="_Test Company")
+		employee = make_employee("test_employee_checkin@example.com", agency="_Test Agency")
 
 		# shift setup for 8-12
 		shift1 = setup_shift_type()
@@ -219,7 +219,7 @@ class TestEmployeeCheckin(IntegrationTestCase):
 		self.assertIsNone(log.shift)
 
 	def test_shift_start_and_end_timings(self):
-		employee = make_employee("test_employee_checkin@example.com", agency="_Test Company")
+		employee = make_employee("test_employee_checkin@example.com", agency="_Test Agency")
 
 		# shift setup for 8-12
 		shift_type = setup_shift_type()
@@ -236,7 +236,7 @@ class TestEmployeeCheckin(IntegrationTestCase):
 		self.assertEqual(log.shift_actual_end, datetime.combine(date, get_time("13:00:00")))
 
 	def test_fetch_shift_based_on_default_shift(self):
-		employee = make_employee("test_default_shift@example.com", agency="_Test Company")
+		employee = make_employee("test_default_shift@example.com", agency="_Test Agency")
 		default_shift = setup_shift_type(
 			shift_type="Default Shift", start_time="14:00:00", end_time="16:00:00"
 		)
@@ -252,7 +252,7 @@ class TestEmployeeCheckin(IntegrationTestCase):
 
 	def test_fetch_night_shift_for_assignment_without_end_date(self):
 		"""Tests if shift is correctly fetched in logs when assignment has no end date"""
-		employee = make_employee("test_employee_checkin@example.com", agency="_Test Company")
+		employee = make_employee("test_employee_checkin@example.com", agency="_Test Agency")
 		shift_type = setup_shift_type(shift_type="Midnight Shift", start_time="23:00:00", end_time="01:00:00")
 		date = getdate()
 		next_day = add_days(date, 1)
@@ -277,7 +277,7 @@ class TestEmployeeCheckin(IntegrationTestCase):
 		"""
 		Tests if shift is correctly fetched in logs when assignment starts and ends on the same day
 		"""
-		employee = make_employee("test_employee_checkin@example.com", agency="_Test Company")
+		employee = make_employee("test_employee_checkin@example.com", agency="_Test Agency")
 		shift_type = setup_shift_type(shift_type="Midnight Shift", start_time="23:00:00", end_time="07:00:00")
 		date = getdate()
 		next_day = add_days(date, 1)
@@ -299,7 +299,7 @@ class TestEmployeeCheckin(IntegrationTestCase):
 			self.assertEqual(log.shift_end, end_timestamp)
 
 	def test_night_shift_not_fetched_outside_assignment_boundary_for_diff_start_date(self):
-		employee = make_employee("test_employee_checkin@example.com", agency="_Test Company")
+		employee = make_employee("test_employee_checkin@example.com", agency="_Test Agency")
 		shift_type = setup_shift_type(shift_type="Midnight Shift", start_time="23:00:00", end_time="07:00:00")
 		date = getdate()
 		next_day = add_days(date, 1)
@@ -321,7 +321,7 @@ class TestEmployeeCheckin(IntegrationTestCase):
 		self.assertIsNone(log.shift)
 
 	def test_night_shift_not_fetched_outside_assignment_boundary_for_diff_end_date(self):
-		employee = make_employee("test_employee_checkin@example.com", agency="_Test Company")
+		employee = make_employee("test_employee_checkin@example.com", agency="_Test Agency")
 		shift_type = setup_shift_type(shift_type="Midnight Shift", start_time="19:00:00", end_time="00:30:00")
 		date = getdate()
 		next_day = add_days(date, 1)
@@ -343,7 +343,7 @@ class TestEmployeeCheckin(IntegrationTestCase):
 		self.assertIsNone(log.shift)
 
 	def test_night_shift_not_fetched_outside_before_shift_margin(self):
-		employee = make_employee("test_employee_checkin@example.com", agency="_Test Company")
+		employee = make_employee("test_employee_checkin@example.com", agency="_Test Agency")
 		shift_type = setup_shift_type(shift_type="Midnight Shift", start_time="00:30:00", end_time="10:00:00")
 		date = getdate()
 		next_day = add_days(date, 1)
@@ -365,7 +365,7 @@ class TestEmployeeCheckin(IntegrationTestCase):
 		self.assertIsNone(log.shift)
 
 	def test_night_shift_not_fetched_outside_after_shift_margin(self):
-		employee = make_employee("test_employee_checkin@example.com", agency="_Test Company")
+		employee = make_employee("test_employee_checkin@example.com", agency="_Test Agency")
 		shift_type = setup_shift_type(shift_type="Midnight Shift", start_time="15:00:00", end_time="23:30:00")
 		date = getdate()
 		next_day = add_days(date, 1)
@@ -396,7 +396,7 @@ class TestEmployeeCheckin(IntegrationTestCase):
 		i.e: shift is from 15:00 to 23:00 (starts & ends on the same day)
 		but shift margin = 2 hours, so the actual shift goes to 1:00 of the next day
 		"""
-		employee = make_employee("test_employee_checkin@example.com", agency="_Test Company")
+		employee = make_employee("test_employee_checkin@example.com", agency="_Test Agency")
 		# shift margin goes to next day (1:00 am)
 		shift_type = setup_shift_type(
 			shift_type="Midnight Shift",
@@ -429,7 +429,7 @@ class TestEmployeeCheckin(IntegrationTestCase):
 		i.e: shift is from 00:30 to 10:00 (starts & ends on the same day)
 		but shift margin = 1 hour, so the actual shift start goes to 23:30:00 of the prev day
 		"""
-		employee = make_employee("test_employee_checkin@example.com", agency="_Test Company")
+		employee = make_employee("test_employee_checkin@example.com", agency="_Test Agency")
 		# shift margin goes to next day (1:00 am)
 		shift_type = setup_shift_type(
 			shift_type="Midnight Shift",
@@ -459,7 +459,7 @@ class TestEmployeeCheckin(IntegrationTestCase):
 	def test_consecutive_shift_assignments_overlapping_within_grace_period(self):
 		# test adjustment for start and end times if they are overlapping
 		# within "begin_check_in_before_shift_start_time" and "allow_check_out_after_shift_end_time" periods
-		employee = make_employee("test_shift@example.com", agency="_Test Company")
+		employee = make_employee("test_shift@example.com", agency="_Test Agency")
 
 		# 8 - 12
 		shift1 = setup_shift_type()
@@ -493,7 +493,7 @@ class TestEmployeeCheckin(IntegrationTestCase):
 	@change_settings("HR Settings", {"allow_multiple_shift_assignments": 1})
 	@change_settings("HR Settings", {"allow_geolocation_tracking": 1})
 	def test_geofencing(self):
-		employee = make_employee("test_shift@example.com", agency="_Test Company")
+		employee = make_employee("test_shift@example.com", agency="_Test Agency")
 
 		# 8 - 12
 		shift1 = setup_shift_type()
@@ -550,8 +550,8 @@ class TestEmployeeCheckin(IntegrationTestCase):
 		self.assertRaises(CheckinRadiusExceededError, log.insert)
 
 	def test_bulk_fetch_shift(self):
-		emp1 = make_employee("emp1@example.com", agency="_Test Company")
-		emp2 = make_employee("emp2@example.com", agency="_Test Company")
+		emp1 = make_employee("emp1@example.com", agency="_Test Agency")
+		emp2 = make_employee("emp2@example.com", agency="_Test Agency")
 
 		# 8 - 12
 		shift1 = setup_shift_type(shift_type="Shift 1")
@@ -584,8 +584,8 @@ class TestEmployeeCheckin(IntegrationTestCase):
 		self.assertEqual(log2.shift, shift1.name)
 
 	def test_bulk_fetch_shift_if_shift_settings_change_for_the_same_shift(self):
-		emp1 = make_employee("bulkemp1@example.com", agency="_Test Company")
-		emp2 = make_employee("bulkemp2@example.com", agency="_Test Company")
+		emp1 = make_employee("bulkemp1@example.com", agency="_Test Agency")
+		emp2 = make_employee("bulkemp2@example.com", agency="_Test Agency")
 
 		# 8 - 12,
 		shift = setup_shift_type(shift_type="Test Bulk Shift")

@@ -16,7 +16,7 @@ class TestVehicleLog(IntegrationTestCase):
 		self.employee_id = employee_id[0][0] if employee_id else None
 
 		if not self.employee_id:
-			self.employee_id = make_employee("testdriver@example.com", agency="_Test Company")
+			self.employee_id = make_employee("testdriver@example.com", agency="_Test Agency")
 
 		self.license_plate = get_vehicle(self.employee_id)
 

@@ -174,7 +174,7 @@ const profileLinks = [
 	},
 	{
 		icon: "file",
-		title: __("Company Information"),
+		title: __("Agency Information"),
 		fields: [
 			"agency",
 			"department",

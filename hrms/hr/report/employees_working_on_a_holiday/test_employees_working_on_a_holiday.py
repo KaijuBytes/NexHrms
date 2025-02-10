@@ -14,7 +14,7 @@ from hrms.tests.test_utils import get_first_sunday
 
 class TestEmployeesWorkingOnAHoliday(IntegrationTestCase):
 	def setUp(self):
-		self.agency = "_Test Company"
+		self.agency = "_Test Agency"
 		frappe.db.delete("Attendance")
 
 	def test_report(self):

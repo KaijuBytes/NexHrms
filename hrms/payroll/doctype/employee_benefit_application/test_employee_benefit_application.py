@@ -29,10 +29,10 @@ class TestEmployeeBenefitApplication(IntegrationTestCase):
 		date = getdate()
 		make_holiday_list(from_date=get_year_start(date), to_date=get_year_ending(date))
 
-	@set_holiday_list("Salary Slip Test Holiday List", "_Test Company")
+	@set_holiday_list("Salary Slip Test Holiday List", "_Test Agency")
 	def test_employee_benefit_application(self):
-		payroll_period = create_payroll_period(name="_Test Payroll Period 1", agency="_Test Company")
-		employee = make_employee("test_employee_benefits@salary.com", agency="_Test Company")
+		payroll_period = create_payroll_period(name="_Test Payroll Period 1", agency="_Test Agency")
+		employee = make_employee("test_employee_benefits@salary.com", agency="_Test Agency")
 		first_sunday = get_first_sunday("Salary Slip Test Holiday List")
 
 		leave_application = make_leave_application(
@@ -53,7 +53,7 @@ class TestEmployeeBenefitApplication(IntegrationTestCase):
 			include_flexi_benefits=True,
 			employee=employee,
 			payroll_period=payroll_period,
-			agency="_Test Company",
+			agency="_Test Agency",
 		)
 		salary_slip = make_salary_slip(salary_structure.name, employee=employee, posting_date=getdate())
 		salary_slip.insert()

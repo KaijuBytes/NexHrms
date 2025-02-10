@@ -21,11 +21,11 @@ class TestEmployeeTaxExemptionDeclaration(IntegrationTestCase):
 		frappe.db.delete("Salary Structure Assignment")
 		frappe.db.delete("Salary Slip")
 
-		make_employee("employee@taxexemption.com", agency="_Test Company")
-		make_employee("employee1@taxexemption.com", agency="_Test Company")
+		make_employee("employee@taxexemption.com", agency="_Test Agency")
+		make_employee("employee1@taxexemption.com", agency="_Test Agency")
 
 		create_payroll_period(
-			agency="_Test Company",
+			agency="_Test Agency",
 			name=PAYROLL_PERIOD_NAME,
 			start_date=PAYROLL_PERIOD_START,
 			end_date=PAYROLL_PERIOD_END,
@@ -139,7 +139,7 @@ class TestEmployeeTaxExemptionDeclaration(IntegrationTestCase):
 			{
 				"doctype": "Employee Tax Exemption Declaration",
 				"employee": employee,
-				"agency": "_Test Company",
+				"agency": "_Test Agency",
 				"payroll_period": PAYROLL_PERIOD_NAME,
 				"currency": "INR",
 				"monthly_house_rent": 50000,
@@ -181,7 +181,7 @@ class TestEmployeeTaxExemptionDeclaration(IntegrationTestCase):
 			{
 				"doctype": "Employee Tax Exemption Declaration",
 				"employee": employee,
-				"agency": "_Test Company",
+				"agency": "_Test Agency",
 				"payroll_period": PAYROLL_PERIOD_NAME,
 				"currency": "INR",
 				"monthly_house_rent": 170000,
@@ -218,7 +218,7 @@ class TestEmployeeTaxExemptionDeclaration(IntegrationTestCase):
 			{
 				"doctype": "Employee Tax Exemption Declaration",
 				"employee": employee,
-				"agency": "_Test Company",
+				"agency": "_Test Agency",
 				"payroll_period": PAYROLL_PERIOD_NAME,
 				"currency": "INR",
 				"monthly_house_rent": 170000,
@@ -255,7 +255,7 @@ class TestEmployeeTaxExemptionDeclaration(IntegrationTestCase):
 			{
 				"doctype": "Employee Tax Exemption Declaration",
 				"employee": employee,
-				"agency": "_Test Company",
+				"agency": "_Test Agency",
 				"payroll_period": PAYROLL_PERIOD_NAME,
 				"currency": "INR",
 				"monthly_house_rent": 170000,
@@ -292,7 +292,7 @@ class TestEmployeeTaxExemptionDeclaration(IntegrationTestCase):
 			{
 				"doctype": "Employee Tax Exemption Declaration",
 				"employee": employee,
-				"agency": "_Test Company",
+				"agency": "_Test Agency",
 				"payroll_period": PAYROLL_PERIOD_NAME,
 				"currency": "INR",
 				"monthly_house_rent": 50000,
@@ -333,7 +333,7 @@ class TestEmployeeTaxExemptionDeclaration(IntegrationTestCase):
 		current_country = frappe.flags.country
 		frappe.flags.country = "India"
 
-		employee = make_employee("employee@taxexemption2.com", agency="_Test Company")
+		employee = make_employee("employee@taxexemption2.com", agency="_Test Agency")
 
 		payroll_period = frappe.get_doc("Payroll Period", PAYROLL_PERIOD_NAME)
 		create_tax_slab(
@@ -341,11 +341,11 @@ class TestEmployeeTaxExemptionDeclaration(IntegrationTestCase):
 			allow_tax_exemption=True,
 			currency="INR",
 			effective_date=getdate("2019-04-01"),
-			agency="_Test Company",
+			agency="_Test Agency",
 		)
 
 		frappe.db.set_value(
-			"Company", "_Test Company", {"basic_component": "Basic Salary", "hra_component": "HRA"}
+			"Agency", "_Test Agency", {"basic_component": "Basic Salary", "hra_component": "HRA"}
 		)
 
 		# salary structure with base 50000, HRA 3000
@@ -354,7 +354,7 @@ class TestEmployeeTaxExemptionDeclaration(IntegrationTestCase):
 			"Monthly Structure for HRA Exemption 1",
 			"Monthly",
 			employee=employee,
-			agency="_Test Company",
+			agency="_Test Agency",
 			currency="INR",
 			payroll_period=payroll_period.name,
 			from_date=add_months(payroll_period.start_date, -3),
@@ -365,7 +365,7 @@ class TestEmployeeTaxExemptionDeclaration(IntegrationTestCase):
 			"Monthly Structure for HRA Exemption 2",
 			"Monthly",
 			employee=employee,
-			agency="_Test Company",
+			agency="_Test Agency",
 			currency="INR",
 			payroll_period=payroll_period.name,
 			from_date=payroll_period.start_date,
@@ -385,7 +385,7 @@ class TestEmployeeTaxExemptionDeclaration(IntegrationTestCase):
 			employee,
 			salary_structure.name,
 			from_date=add_months(payroll_period.start_date, 6),
-			agency="_Test Company",
+			agency="_Test Agency",
 			currency="INR",
 			payroll_period=payroll_period.name,
 			base=70000,
@@ -396,7 +396,7 @@ class TestEmployeeTaxExemptionDeclaration(IntegrationTestCase):
 			{
 				"doctype": "Employee Tax Exemption Declaration",
 				"employee": employee,
-				"agency": "_Test Company",
+				"agency": "_Test Agency",
 				"payroll_period": payroll_period.name,
 				"currency": "INR",
 				"monthly_house_rent": 50000,
@@ -480,7 +480,7 @@ def setup_hra_exemption_prerequisites(frequency, employee=None, from_date=None):
 
 	payroll_period = create_payroll_period(
 		name=PAYROLL_PERIOD_NAME,
-		agency="_Test Company",
+		agency="_Test Agency",
 		start_date=PAYROLL_PERIOD_START,
 		end_date=PAYROLL_PERIOD_END,
 	)
@@ -492,19 +492,19 @@ def setup_hra_exemption_prerequisites(frequency, employee=None, from_date=None):
 		allow_tax_exemption=True,
 		currency="INR",
 		effective_date=getdate("2019-04-01"),
-		agency="_Test Company",
+		agency="_Test Agency",
 	)
 
 	make_salary_structure(
 		f"{frequency} Structure for HRA Exemption",
 		frequency,
 		employee=employee,
-		agency="_Test Company",
+		agency="_Test Agency",
 		currency="INR",
 		payroll_period=payroll_period,
 		from_date=from_date,
 	)
 
 	frappe.db.set_value(
-		"Company", "_Test Company", {"basic_component": "Basic Salary", "hra_component": "HRA"}
+		"Agency", "_Test Agency", {"basic_component": "Basic Salary", "hra_component": "HRA"}
 	)

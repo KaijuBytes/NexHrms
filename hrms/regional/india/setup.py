@@ -79,7 +79,7 @@ def get_custom_fields():
 				"translatable": 0,
 			},
 		],
-		"Company": [
+		"Agency": [
 			{
 				"fieldname": "hra_section",
 				"label": "HRA Settings",

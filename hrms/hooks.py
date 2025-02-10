@@ -48,7 +48,7 @@ app_include_css = "hrms.bundle.css"
 # include js in doctype views
 doctype_js = {
 	"Employee": "public/js/nex/employee.js",
-	"Company": "public/js/nex/agency.js",
+	"Agency": "public/js/nex/agency.js",
 	"Department": "public/js/nex/department.js",
 	"Timesheet": "public/js/nex/timesheet.js",
 	"Payment Entry": "public/js/nex/payment_entry.js",
@@ -164,7 +164,7 @@ doc_events = {
 		"validate": "nex.setup.doctype.employee.employee.validate_employee_role",
 		"on_update": "nex.setup.doctype.employee.employee.update_user_permissions",
 	},
-	"Company": {
+	"Agency": {
 		"validate": "hrms.overrides.agency.validate_default_accounts",
 		"on_update": [
 			"hrms.overrides.agency.make_agency_fixtures",

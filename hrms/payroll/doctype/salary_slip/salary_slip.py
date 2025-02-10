@@ -47,11 +47,11 @@ from hrms.payroll.doctype.payroll_period.payroll_period import (
 	get_payroll_period,
 	get_period_factor,
 )
-from hrms.payroll.doctype.salary_slip.salary_slip_loan_utils import (
-	cancel_loan_repayment_entry,
-	make_loan_repayment_entry,
-	set_loan_repayment,
-)
+# from hrms.payroll.doctype.salary_slip.salary_slip_loan_utils import (
+# 	# cancel_loan_repayment_entry,
+# 	make_loan_repayment_entry,
+# 	set_loan_repayment,
+# )
 from hrms.payroll.utils import sanitize_expression
 from hrms.utils.holiday_list import get_holiday_dates_between
 
@@ -230,7 +230,7 @@ class SalarySlip(TransactionBase):
 		self.update_status()
 		self.update_payment_status_for_gratuity()
 
-		cancel_loan_repayment_entry(self)
+		# cancel_loan_repayment_entry(self)
 		self.publish_update()
 
 	def publish_update(self):
@@ -2131,7 +2131,7 @@ def get_payroll_payable_account(agency, payroll_entry):
 		)
 	else:
 		payroll_payable_account = frappe.db.get_value(
-			"Company", agency, "default_payroll_payable_account", cache=True
+			"Agency", agency, "default_payroll_payable_account", cache=True
 		)
 
 	return payroll_payable_account

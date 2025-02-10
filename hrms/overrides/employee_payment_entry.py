@@ -125,14 +125,14 @@ def get_payment_entry_for_employee(dt, dn, party_amount=None, bank_account=None,
 	pe.set_missing_values()
 	pe.set_missing_ref_details()
 
-	if party_account and bank:
-		reference_doc = None
-		if dt == "Employee Advance":
-			reference_doc = doc
-		pe.set_exchange_rate(ref_doc=reference_doc)
-		pe.set_amounts()
+	# if party_account and bank:
+	# 	reference_doc = None
+	# 	if dt == "Employee Advance":
+	# 		reference_doc = doc
+	# 	pe.set_exchange_rate(ref_doc=reference_doc)
+	# 	pe.set_amounts()
 
-	return pe
+	# return pe
 
 
 def get_party_account(doc):
@@ -213,10 +213,10 @@ def get_payment_reference_details(
 ):
 	if reference_doctype in ("Expense Claim", "Employee Advance", "Gratuity"):
 		return get_reference_details_for_employee(reference_doctype, reference_name, party_account_currency)
-	else:
-		return get_reference_details(
-			reference_doctype, reference_name, party_account_currency, party_type, party
-		)
+	# else:
+	# 	return get_reference_details(
+	# 		reference_doctype, reference_name, party_account_currency, party_type, party
+	# 	)
 
 
 @frappe.whitelist()

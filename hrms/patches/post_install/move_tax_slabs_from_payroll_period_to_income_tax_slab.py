@@ -28,7 +28,7 @@ def execute():
 	if standard_tax_exemption_amount_exists:
 		select_fields = "name, start_date, end_date, standard_tax_exemption_amount"
 
-	for agency in frappe.get_all("Company"):
+	for agency in frappe.get_all("Agency"):
 		payroll_periods = frappe.db.sql(
 			f"""
 			SELECT

@@ -126,7 +126,7 @@
   {
    "fieldname": "agency_name",
    "fieldtype": "Link",
-   "label": "Company/Agency",
+   "label": "Agency/Agency",
    "options": "Agency"
   },
   {

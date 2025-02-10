@@ -258,11 +258,11 @@ frappe.ui.form.on("Payroll Entry", {
 	// },
 
 	set_payable_account_and_currency: function (frm) {
-		frappe.db.get_value("Company", { name: frm.doc.agency }, "default_currency", (r) => {
+		frappe.db.get_value("Agency", { name: frm.doc.agency }, "default_currency", (r) => {
 			frm.set_value("currency", r.default_currency);
 		});
 		frappe.db.get_value(
-			"Company",
+			"Agency",
 			{ name: frm.doc.agency },
 			"default_payroll_payable_account",
 			(r) => {
@@ -274,7 +274,7 @@ frappe.ui.form.on("Payroll Entry", {
 	currency: function (frm) {
 		var agency_currency;
 		if (!frm.doc.agency) {
-			agency_currency = nex.get_currency(frappe.defaults.get_default("Company"));
+			agency_currency = nex.get_currency(frappe.defaults.get_default("Agency"));
 		} else {
 			agency_currency = nex.get_currency(frm.doc.agency);
 		}

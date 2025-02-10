@@ -31,11 +31,11 @@ frappe.query_reports["Employees working on a holiday"] = {
 		},
 		{
 			fieldname: "agency",
-			label: __("Company"),
+			label: __("Agency"),
 			fieldtype: "Link",
-			options: "Company",
+			options: "Agency",
 			reqd: 1,
-			default: frappe.defaults.get_user_default("Company"),
+			default: frappe.defaults.get_user_default("Agency"),
 		},
 	],
 };

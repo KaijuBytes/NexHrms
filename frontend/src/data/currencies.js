@@ -10,11 +10,11 @@ const currencySymbols = createResource({
 	auto: true,
 })
 
-export function getCompanyCurrency(agency) {
+export function getAgencyCurrency(agency) {
 	return agencyCurrency?.data?.[agency]?.[0]
 }
 
-export function getCompanyCurrencySymbol(agency) {
+export function getAgencyCurrencySymbol(agency) {
 	return agencyCurrency?.data?.[agency]?.[1]
 }
 

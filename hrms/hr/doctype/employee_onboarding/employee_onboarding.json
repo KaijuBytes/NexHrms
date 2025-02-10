@@ -95,8 +95,8 @@
    "fetch_from": "employee_onboarding_template.agency",
    "fieldname": "agency",
    "fieldtype": "Link",
-   "label": "Company",
-   "options": "Company",
+   "label": "Agency",
+   "options": "Agency",
    "reqd": 1
   },
   {

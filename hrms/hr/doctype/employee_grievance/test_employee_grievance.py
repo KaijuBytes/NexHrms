@@ -15,8 +15,8 @@ class TestEmployeeGrievance(IntegrationTestCase):
 
 def create_employee_grievance():
 	grievance_type = create_grievance_type()
-	emp_1 = make_employee("test_emp_grievance_@example.com", agency="_Test Company")
-	emp_2 = make_employee("testculprit@example.com", agency="_Test Company")
+	emp_1 = make_employee("test_emp_grievance_@example.com", agency="_Test Agency")
+	emp_2 = make_employee("testculprit@example.com", agency="_Test Agency")
 
 	grievance = frappe.new_doc("Employee Grievance")
 	grievance.subject = "Test Employee Grievance"

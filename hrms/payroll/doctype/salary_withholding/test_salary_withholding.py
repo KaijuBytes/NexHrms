@@ -11,7 +11,7 @@ from hrms.payroll.doctype.payroll_entry.payroll_entry import get_start_end_dates
 from hrms.payroll.doctype.payroll_entry.test_payroll_entry import make_payroll_entry
 from hrms.payroll.doctype.salary_structure.test_salary_structure import make_salary_structure
 
-COMPANY_NAME = "_Test Company"
+COMPANY_NAME = "_Test Agency"
 MONTH_1_START = getdate("2024-01-01")
 MONTH_1_END = getdate("2024-01-31")
 MONTH_2_START = getdate("2024-02-01")
@@ -32,7 +32,7 @@ class TestSalaryWithholding(IntegrationTestCase):
 		]:
 			frappe.db.delete(dt)
 
-		self.agency = frappe.get_doc("Company", COMPANY_NAME)
+		self.agency = frappe.get_doc("Agency", COMPANY_NAME)
 		self.employee1 = make_employee("employee1@example.com", agency=COMPANY_NAME, designation="Engineer")
 		self.employee2 = make_employee("employee2@example.com", agency=COMPANY_NAME, designation="Engineer")
 

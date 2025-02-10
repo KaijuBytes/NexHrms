@@ -94,7 +94,7 @@ const toTitleCase = (str: string) =>
 
 // RESOURCES
 
-const defaultCompany = createResource({
+const defaultAgency = createResource({
 	url: "hrms.api.roster.get_default_agency",
 	auto: true,
 	onSuccess: () => {
@@ -112,7 +112,7 @@ const getFilterOptions = (field: FilterField, listFilters: { agency?: string } =
 		pageLength: 100,
 		auto: true,
 		onSuccess: (data: { name: string }[]) => {
-			const value = field === "agency" ? defaultCompany.data : "";
+			const value = field === "agency" ? defaultAgency.data : "";
 			filters[field].model = { value };
 			filters[field].options = data.map((item) => item.name);
 		},

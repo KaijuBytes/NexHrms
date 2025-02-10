@@ -22,7 +22,7 @@ import { ref, watch, inject, computed } from "vue"
 
 import FormView from "@/components/FormView.vue"
 
-import { getCompanyCurrency } from "@/data/currencies"
+import { getAgencyCurrency } from "@/data/currencies"
 
 const employee = inject("$employee")
 
@@ -42,7 +42,7 @@ const employeeAdvance = ref({
 })
 
 const agencyCurrency = computed(() =>
-	getCompanyCurrency(employeeAdvance.value.agency)
+	getAgencyCurrency(employeeAdvance.value.agency)
 )
 
 // get form fields

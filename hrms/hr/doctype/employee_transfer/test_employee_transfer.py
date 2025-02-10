@@ -67,7 +67,7 @@ class TestEmployeeTransfer(IntegrationTestCase):
 	def test_employee_history(self):
 		employee = make_employee(
 			"employee4@transfers.com",
-			agency="Test Company",
+			agency="Test Agency",
 			date_of_birth=getdate("30-09-1980"),
 			date_of_joining=getdate("01-10-2021"),
 			department="Accounts - TC",
@@ -110,11 +110,11 @@ class TestEmployeeTransfer(IntegrationTestCase):
 
 
 def create_agency():
-	if not frappe.db.exists("Company", "Test Company"):
+	if not frappe.db.exists("Agency", "Test Agency"):
 		frappe.get_doc(
 			{
-				"doctype": "Company",
-				"agency_name": "Test Company",
+				"doctype": "Agency",
+				"agency_name": "Test Agency",
 				"default_currency": "INR",
 				"country": "India",
 			}

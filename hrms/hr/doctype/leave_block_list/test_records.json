@@ -1,6 +1,6 @@
 [
     {
-        "agency": "_Test Company",
+        "agency": "_Test Agency",
         "doctype": "Leave Block List",
         "leave_block_list_allowed": [
             {
@@ -26,7 +26,7 @@
         "applies_to_all_departments": 1
     },
     {
-        "agency": "_Test Company",
+        "agency": "_Test Agency",
         "doctype": "Leave Block List",
         "leave_type": "Casual Leave",
         "leave_block_list_allowed": [
@@ -53,7 +53,7 @@
         "applies_to_all_departments": 1
     },
     {
-        "agency": "_Test Company",
+        "agency": "_Test Agency",
         "doctype": "Leave Block List",
         "leave_type": "Casual Leave",
         "leave_block_list_allowed": [],
@@ -72,7 +72,7 @@
         "applies_to_all_departments": 1
     },
     {
-        "agency": "_Test Company",
+        "agency": "_Test Agency",
         "doctype": "Leave Block List",
         "leave_type": "Leave Without Pay",
         "leave_block_list_allowed": [

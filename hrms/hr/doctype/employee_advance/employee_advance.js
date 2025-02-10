@@ -189,7 +189,7 @@ frappe.ui.form.on("Employee Advance", {
 			var from_currency = frm.doc.currency;
 			var agency_currency;
 			if (!frm.doc.agency) {
-				agency_currency = nex.get_currency(frappe.defaults.get_default("Company"));
+				agency_currency = nex.get_currency(frappe.defaults.get_default("Agency"));
 			} else {
 				agency_currency = nex.get_currency(frm.doc.agency);
 			}

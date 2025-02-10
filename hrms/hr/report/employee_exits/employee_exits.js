@@ -18,9 +18,9 @@ frappe.query_reports["Employee Exits"] = {
 		},
 		{
 			fieldname: "agency",
-			label: __("Company"),
+			label: __("Agency"),
 			fieldtype: "Link",
-			options: "Company",
+			options: "Agency",
 		},
 		{
 			fieldname: "department",

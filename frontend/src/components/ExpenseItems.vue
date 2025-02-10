@@ -44,7 +44,7 @@
 <script setup>
 import { computed, inject } from "vue"
 
-import { getCompanyCurrency } from "@/data/currencies"
+import { getAgencyCurrency } from "@/data/currencies"
 import { formatCurrency } from "@/utils/formatters"
 
 const props = defineProps({
@@ -55,5 +55,5 @@ const props = defineProps({
 })
 
 const dayjs = inject("$dayjs")
-const currency = computed(() => getCompanyCurrency(props.doc.agency))
+const currency = computed(() => getAgencyCurrency(props.doc.agency))
 </script>

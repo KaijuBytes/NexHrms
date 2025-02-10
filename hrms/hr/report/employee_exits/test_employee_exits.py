@@ -16,10 +16,10 @@ class TestEmployeeExits(IntegrationTestCase):
 	@classmethod
 	def setUpClass(cls):
 		super().setUpClass()
-		create_agency("Test Company")
-		frappe.db.delete("Employee", {"agency": "Test Company"})
-		frappe.db.delete("Full and Final Statement", {"agency": "Test Company"})
-		frappe.db.delete("Exit Interview", {"agency": "Test Company"})
+		create_agency("Test Agency")
+		frappe.db.delete("Employee", {"agency": "Test Agency"})
+		frappe.db.delete("Full and Final Statement", {"agency": "Test Agency"})
+		frappe.db.delete("Exit Interview", {"agency": "Test Agency"})
 
 		cls.create_records()
 
@@ -31,14 +31,14 @@ class TestEmployeeExits(IntegrationTestCase):
 	def create_records(cls):
 		cls.emp1 = make_employee(
 			"employeeexit1@example.com",
-			agency="Test Company",
+			agency="Test Agency",
 			date_of_joining=getdate("01-10-2021"),
 			relieving_date=add_days(getdate(), 14),
 			designation="Accountant",
 		)
 		cls.emp2 = make_employee(
 			"employeeexit2@example.com",
-			agency="Test Company",
+			agency="Test Agency",
 			date_of_joining=getdate("01-12-2021"),
 			relieving_date=add_days(getdate(), 15),
 			designation="Accountant",
@@ -46,14 +46,14 @@ class TestEmployeeExits(IntegrationTestCase):
 
 		cls.emp3 = make_employee(
 			"employeeexit3@example.com",
-			agency="Test Company",
+			agency="Test Agency",
 			date_of_joining=getdate("02-12-2021"),
 			relieving_date=add_days(getdate(), 29),
 			designation="Engineer",
 		)
 		cls.emp4 = make_employee(
 			"employeeexit4@example.com",
-			agency="Test Company",
+			agency="Test Agency",
 			date_of_joining=getdate("01-12-2021"),
 			relieving_date=add_days(getdate(), 30),
 			designation="Engineer",
@@ -91,7 +91,7 @@ class TestEmployeeExits(IntegrationTestCase):
 
 	def test_employee_exits_summary(self):
 		filters = {
-			"agency": "Test Company",
+			"agency": "Test Agency",
 			"from_date": getdate(),
 			"to_date": add_days(getdate(), 15),
 			"designation": "Accountant",
@@ -136,7 +136,7 @@ class TestEmployeeExits(IntegrationTestCase):
 
 	def test_pending_exit_interviews_summary(self):
 		filters = {
-			"agency": "Test Company",
+			"agency": "Test Agency",
 			"from_date": getdate(),
 			"to_date": add_days(getdate(), 30),
 			"exit_interview_pending": 1,
@@ -166,7 +166,7 @@ class TestEmployeeExits(IntegrationTestCase):
 
 	def test_pending_exit_questionnaire_summary(self):
 		filters = {
-			"agency": "Test Company",
+			"agency": "Test Agency",
 			"from_date": getdate(),
 			"to_date": add_days(getdate(), 30),
 			"questionnaire_pending": 1,
@@ -195,7 +195,7 @@ class TestEmployeeExits(IntegrationTestCase):
 		self.assertEqual(expected_data, report[1])  # rows
 
 	def test_pending_fnf_summary(self):
-		filters = {"agency": "Test Company", "fnf_pending": 1}
+		filters = {"agency": "Test Agency", "fnf_pending": 1}
 
 		report = execute(filters)
 

@@ -3,7 +3,7 @@ from frappe.custom.doctype.custom_field.custom_field import create_custom_fields
 
 def execute():
 	custom_fields = {
-		"Company": [
+		"Agency": [
 			{
 				"fieldname": "hr_and_payroll_tab",
 				"fieldtype": "Tab Break",

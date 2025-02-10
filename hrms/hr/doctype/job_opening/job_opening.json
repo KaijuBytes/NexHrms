@@ -54,8 +54,8 @@
   {
    "fieldname": "agency",
    "fieldtype": "Link",
-   "label": "Company",
-   "options": "Company",
+   "label": "Agency",
+   "options": "Agency",
    "reqd": 1
   },
   {
@@ -220,7 +220,7 @@
   {
    "fieldname": "section_break_nngy",
    "fieldtype": "Section Break",
-   "label": "Company Details"
+   "label": "Agency Details"
   },
   {
    "fieldname": "column_break_dxpv",

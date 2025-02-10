@@ -24,7 +24,7 @@ frappe.query_reports["Salary Register"] = {
 			fieldtype: "Link",
 			options: "Currency",
 			label: __("Currency"),
-			default: nex.get_currency(frappe.defaults.get_default("Company")),
+			default: nex.get_currency(frappe.defaults.get_default("Agency")),
 			width: "50px",
 		},
 		{
@@ -36,10 +36,10 @@ frappe.query_reports["Salary Register"] = {
 		},
 		{
 			fieldname: "agency",
-			label: __("Company"),
+			label: __("Agency"),
 			fieldtype: "Link",
-			options: "Company",
-			default: frappe.defaults.get_user_default("Company"),
+			options: "Agency",
+			default: frappe.defaults.get_user_default("Agency"),
 			width: "100px",
 			reqd: 1,
 		},

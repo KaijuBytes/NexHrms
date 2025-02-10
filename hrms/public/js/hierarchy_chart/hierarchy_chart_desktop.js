@@ -81,9 +81,9 @@ hrms.HierarchyChart = class {
 
 		let agency = this.page.add_field({
 			fieldtype: "Link",
-			options: "Company",
+			options: "Agency",
 			fieldname: "agency",
-			placeholder: __("Select Company"),
+			placeholder: __("Select Agency"),
 			default: frappe.defaults.get_default("agency"),
 			only_select: true,
 			reqd: 1,

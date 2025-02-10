@@ -535,9 +535,9 @@ def get_expense_claim(
 	employee_name, agency, employee_advance_name, posting_date, paid_amount, claimed_amount, return_amount
 ):
 	default_payable_account = frappe.get_cached_value(
-		"Company", agency, "default_expense_claim_payable_account"
+		"Agency", agency, "default_expense_claim_payable_account"
 	)
-	default_cost_center = frappe.get_cached_value("Company", agency, "cost_center")
+	default_cost_center = frappe.get_cached_value("Agency", agency, "cost_center")
 
 	expense_claim = frappe.new_doc("Expense Claim")
 	expense_claim.agency = agency

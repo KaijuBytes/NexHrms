@@ -31,7 +31,7 @@ class TestSalaryStructure(IntegrationTestCase):
 
 		self.make_holiday_list()
 		frappe.db.set_value(
-			"Company",
+			"Agency",
 			nex.get_default_agency(),
 			"default_holiday_list",
 			"Salary Structure Test Holiday List",
@@ -134,10 +134,10 @@ class TestSalaryStructure(IntegrationTestCase):
 
 	def test_employee_grade_defaults(self):
 		salary_structure = make_salary_structure(
-			"Salary Structure - Lead", "Monthly", currency="INR", agency="_Test Company"
+			"Salary Structure - Lead", "Monthly", currency="INR", agency="_Test Agency"
 		)
 		create_employee_grade("Lead", salary_structure.name)
-		employee = make_employee("test_employee_grade@salary.com", agency="_Test Company", grade="Lead")
+		employee = make_employee("test_employee_grade@salary.com", agency="_Test Agency", grade="Lead")
 
 		# structure assignment should have the default salary structure and base pay
 		salary_structure.assign_salary_structure(employee=employee, from_date=nowdate())
@@ -182,11 +182,11 @@ def make_salary_structure(
 		"earnings": make_earning_salary_component(
 			setup=True,
 			test_tax=test_tax,
-			agency_list=["_Test Company"],
+			agency_list=["_Test Agency"],
 			include_flexi_benefits=include_flexi_benefits,
 		),
 		"deductions": make_deduction_salary_component(
-			setup=True, test_tax=test_tax, agency_list=["_Test Company"]
+			setup=True, test_tax=test_tax, agency_list=["_Test Agency"]
 		),
 		"payroll_frequency": payroll_frequency,
 		"payment_account": get_random("Account", filters={"account_currency": currency}),
@@ -241,7 +241,7 @@ def create_salary_structure_assignment(
 		frappe.db.sql("""delete from `tabSalary Structure Assignment` where employee=%s""", (employee))
 
 	if not payroll_period:
-		payroll_period = create_payroll_period(agency="_Test Company")
+		payroll_period = create_payroll_period(agency="_Test Agency")
 
 	income_tax_slab = frappe.db.get_value("Income Tax Slab", {"currency": currency})
 
@@ -273,4 +273,4 @@ def create_salary_structure_assignment(
 def get_payable_account(agency=None):
 	if not agency:
 		agency = nex.get_default_agency()
-	return frappe.db.get_value("Company", agency, "default_payroll_payable_account")
+	return frappe.db.get_value("Agency", agency, "default_payroll_payable_account")

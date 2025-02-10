@@ -58,28 +58,28 @@
 # 		]:
 # 			frappe.db.delete(dt)
 
-# 		make_earning_salary_component(setup=True, agency_list=["_Test Company"])
-# 		make_deduction_salary_component(setup=True, test_tax=False, agency_list=["_Test Company"])
+# 		make_earning_salary_component(setup=True, agency_list=["_Test Agency"])
+# 		make_deduction_salary_component(setup=True, test_tax=False, agency_list=["_Test Agency"])
 
-# 		frappe.db.set_value("Company", "_Test Company", "default_holiday_list", "_Test Holiday List")
+# 		frappe.db.set_value("Agency", "_Test Agency", "default_holiday_list", "_Test Holiday List")
 # 		frappe.db.set_single_value("Payroll Settings", "email_salary_slip_to_employee", 0)
 
 # 		# set default payable account
-# 		default_account = frappe.db.get_value("Company", "_Test Company", "default_payroll_payable_account")
+# 		default_account = frappe.db.get_value("Agency", "_Test Agency", "default_payroll_payable_account")
 # 		if not default_account or default_account != "_Test Payroll Payable - _TC":
 # 			create_account(
 # 				account_name="_Test Payroll Payable",
-# 				agency="_Test Company",
+# 				agency="_Test Agency",
 # 				parent_account="Current Liabilities - _TC",
 # 				account_type="Payable",
 # 			)
 # 			frappe.db.set_value(
-# 				"Company", "_Test Company", "default_payroll_payable_account", "_Test Payroll Payable - _TC"
+# 				"Agency", "_Test Agency", "default_payroll_payable_account", "_Test Payroll Payable - _TC"
 # 			)
 
 # 	def test_payroll_entry(self):
-# 		agency = frappe.get_doc("Company", "_Test Company")
-# 		employee = frappe.db.get_value("Employee", {"agency": "_Test Company"})
+# 		agency = frappe.get_doc("Agency", "_Test Agency")
+# 		employee = frappe.db.get_value("Employee", {"agency": "_Test Agency"})
 # 		setup_salary_structure(employee, agency)
 
 # 		dates = get_start_end_dates("Monthly", nowdate())
@@ -92,7 +92,7 @@
 # 		)
 
 # 	def test_multi_currency_payroll_entry(self):
-# 		agency = frappe.get_doc("Company", "_Test Company")
+# 		agency = frappe.get_doc("Agency", "_Test Agency")
 # 		create_department("Accounts")
 # 		employee = make_employee(
 # 			"test_muti_currency_employee@payroll.com", agency=agency.name, department="Accounts - _TC"
@@ -146,9 +146,9 @@
 # 			"test_emp1@example.com",
 # 			payroll_cost_center="_Test Cost Center - _TC",
 # 			department=department,
-# 			agency="_Test Company",
+# 			agency="_Test Agency",
 # 		)
-# 		employee2 = make_employee("test_emp2@example.com", department=department, agency="_Test Company")
+# 		employee2 = make_employee("test_emp2@example.com", department=department, agency="_Test Agency")
 
 # 		create_assignments_with_cost_centers(employee1, employee2)
 
@@ -159,7 +159,7 @@
 # 			payable_account="_Test Payroll Payable - _TC",
 # 			currency="INR",
 # 			department=department,
-# 			agency="_Test Company",
+# 			agency="_Test Agency",
 # 			payment_account="Cash - _TC",
 # 			cost_center="Main - _TC",
 # 		)
@@ -186,7 +186,7 @@
 # 	@change_settings("Payroll Settings", {"process_payroll_accounting_entry_based_on_employee": 0})
 # 	def test_employee_cost_center_breakup(self):
 # 		"""Test only the latest salary structure assignment is considered for cost center breakup"""
-# 		COMPANY = "_Test Company"
+# 		COMPANY = "_Test Agency"
 # 		COST_CENTERS = {"_Test Cost Center - _TC": 60, "_Test Cost Center 2 - _TC": 40}
 # 		department = create_department("Cost Center Test")
 # 		employee = make_employee("test_emp1@example.com", department=department, agency=COMPANY)
@@ -225,7 +225,7 @@
 # 			payable_account="_Test Payroll Payable - _TC",
 # 			currency="INR",
 # 			department=department,
-# 			agency="_Test Company",
+# 			agency="_Test Agency",
 # 			payment_account="Cash - _TC",
 # 			cost_center="Main - _TC",
 # 		)
@@ -262,7 +262,7 @@
 
 # 		dates = get_start_end_dates("Monthly", nowdate())
 # 		make_payroll_entry(
-# 			agency="_Test Company",
+# 			agency="_Test Agency",
 # 			start_date=dates.start_date,
 # 			payable_account=payroll_payable_account,
 # 			currency=currency,
@@ -306,7 +306,7 @@
 
 # 		dates = get_start_end_dates("Monthly", nowdate())
 # 		make_payroll_entry(
-# 			agency="_Test Company",
+# 			agency="_Test Agency",
 # 			start_date=dates.start_date,
 # 			payable_account=payroll_payable_account,
 # 			currency=currency,
@@ -322,8 +322,8 @@
 # 		self.assertEqual(cstr(party), "")
 
 # 	def test_salary_slip_operation_queueing(self):
-# 		agency = "_Test Company"
-# 		agency_doc = frappe.get_doc("Company", agency)
+# 		agency = "_Test Agency"
+# 		agency_doc = frappe.get_doc("Agency", agency)
 # 		employee = make_employee("test_employee@payroll.com", agency=agency)
 # 		setup_salary_structure(employee, agency_doc)
 
@@ -346,8 +346,8 @@
 # 		frappe.flags.enqueue_payroll_entry = False
 
 # 	def test_salary_slip_operation_failure(self):
-# 		agency = "_Test Company"
-# 		agency_doc = frappe.get_doc("Company", agency)
+# 		agency = "_Test Agency"
+# 		agency_doc = frappe.get_doc("Agency", agency)
 # 		employee = make_employee("test_employee@payroll.com", agency=agency)
 
 # 		salary_structure = make_salary_structure(
@@ -402,7 +402,7 @@
 # 		self.assertEqual(payroll_entry.error_message, "")
 
 # 	def test_payroll_entry_cancellation(self):
-# 		agency_doc = frappe.get_doc("Company", "_Test Company")
+# 		agency_doc = frappe.get_doc("Agency", "_Test Agency")
 # 		employee = make_employee("test_employee@payroll.com", agency=agency_doc.name)
 
 # 		setup_salary_structure(employee, agency_doc)
@@ -439,7 +439,7 @@
 # 		self.assertEqual(len(journal_entries), 2)
 
 # 	def test_payroll_entry_status(self):
-# 		agency_doc = frappe.get_doc("Company", "_Test Company")
+# 		agency_doc = frappe.get_doc("Agency", "_Test Agency")
 # 		employee = make_employee("test_employee@payroll.com", agency=agency_doc.name)
 
 # 		setup_salary_structure(employee, agency_doc)
@@ -459,7 +459,7 @@
 # 		self.assertEqual(payroll_entry.status, "Cancelled")
 
 # 	def test_payroll_entry_cancellation_against_cancelled_journal_entry(self):
-# 		agency_doc = frappe.get_doc("Company", "_Test Company")
+# 		agency_doc = frappe.get_doc("Agency", "_Test Agency")
 # 		employee = make_employee("test_pe_cancellation@payroll.com", agency=agency_doc.name)
 
 # 		setup_salary_structure(employee, agency_doc)
@@ -495,7 +495,7 @@
 
 # 	@change_settings("Payroll Settings", {"process_payroll_accounting_entry_based_on_employee": 1})
 # 	def test_payroll_accrual_journal_entry_with_employee_tagging(self):
-# 		agency_doc = frappe.get_doc("Company", "_Test Company")
+# 		agency_doc = frappe.get_doc("Agency", "_Test Agency")
 # 		employee = make_employee(
 # 			"test_payroll_accrual_journal_entry_with_employee_tagging@payroll.com", agency=agency_doc.name
 # 		)
@@ -526,7 +526,7 @@
 
 # 	@change_settings("Payroll Settings", {"process_payroll_accounting_entry_based_on_employee": 0})
 # 	def test_payroll_accrual_journal_entry_without_employee_tagging(self):
-# 		agency_doc = frappe.get_doc("Company", "_Test Company")
+# 		agency_doc = frappe.get_doc("Agency", "_Test Agency")
 # 		employee = make_employee(
 # 			"test_payroll_accrual_journal_entry_without_employee_tagging@payroll.com",
 # 			agency=agency_doc.name,
@@ -557,7 +557,7 @@
 # 					self.assertEqual(account.party, None)
 
 # 	def test_advance_deduction_in_accrual_journal_entry(self):
-# 		agency_doc = frappe.get_doc("Company", "_Test Company")
+# 		agency_doc = frappe.get_doc("Agency", "_Test Agency")
 # 		employee = make_employee("test_employee@payroll.com", agency=agency_doc.name)
 
 # 		setup_salary_structure(employee, agency_doc)
@@ -620,9 +620,9 @@
 # 			"test_emp1@example.com",
 # 			payroll_cost_center="_Test Cost Center - _TC",
 # 			department=department,
-# 			agency="_Test Company",
+# 			agency="_Test Agency",
 # 		)
-# 		employee2 = make_employee("test_emp2@example.com", department=department, agency="_Test Company")
+# 		employee2 = make_employee("test_emp2@example.com", department=department, agency="_Test Agency")
 
 # 		create_assignments_with_cost_centers(employee1, employee2)
 
@@ -633,7 +633,7 @@
 # 			payable_account="_Test Payroll Payable - _TC",
 # 			currency="INR",
 # 			department=department,
-# 			agency="_Test Company",
+# 			agency="_Test Agency",
 # 			payment_account="Cash - _TC",
 # 			cost_center="Main - _TC",
 # 		)
@@ -681,8 +681,8 @@
 # 		self.assertEqual(debit_entries, expected_entries)
 
 # 	def test_validate_attendance(self):
-# 		agency = frappe.get_doc("Company", "_Test Company")
-# 		employee = frappe.db.get_value("Employee", {"agency": "_Test Company"})
+# 		agency = frappe.get_doc("Agency", "_Test Agency")
+# 		employee = frappe.db.get_value("Employee", {"agency": "_Test Agency"})
 # 		setup_salary_structure(employee, agency)
 
 # 		dates = get_start_end_dates("Monthly", nowdate())
@@ -747,7 +747,7 @@
 
 # 		dates = get_start_end_dates("Monthly", nowdate())
 # 		payroll_entry = make_payroll_entry(
-# 			agency="_Test Company",
+# 			agency="_Test Agency",
 # 			start_date=dates.start_date,
 # 			payable_account=payroll_payable_account,
 # 			currency=currency,
@@ -853,7 +853,7 @@
 
 
 # def create_assignments_with_cost_centers(employee1, employee2):
-# 	agency = frappe.get_doc("Company", "_Test Company")
+# 	agency = frappe.get_doc("Agency", "_Test Agency")
 # 	setup_salary_structure(employee1, agency)
 # 	ss = setup_salary_structure(employee2, agency, salary_structure="_Test Salary Structure 2")
 
@@ -878,21 +878,21 @@
 # 		set_loan_settings_in_agency,
 # 	)
 
-# 	agency = "_Test Company"
+# 	agency = "_Test Agency"
 # 	branch = "Test Employee Branch"
 
 # 	if not frappe.db.exists("Branch", branch):
 # 		frappe.get_doc({"doctype": "Branch", "branch": branch}).insert()
 
 # 	set_loan_settings_in_agency(agency)
-# 	applicant = make_employee("test_employee@loan.com", agency="_Test Company", branch=branch)
-# 	agency_doc = frappe.get_doc("Company", agency)
+# 	applicant = make_employee("test_employee@loan.com", agency="_Test Agency", branch=branch)
+# 	agency_doc = frappe.get_doc("Agency", agency)
 
 # 	make_salary_structure(
 # 		"Test Salary Structure for Loan",
 # 		"Monthly",
 # 		employee=applicant,
-# 		agency="_Test Company",
+# 		agency="_Test Agency",
 # 		currency=agency_doc.default_currency,
 # 	)
 

@@ -13,8 +13,8 @@
    "fieldname": "agency",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Company",
-   "options": "Company"
+   "label": "Agency",
+   "options": "Agency"
   },
   {
    "description": "Default Bank / Cash account will be automatically updated in Salary Journal Entry when this mode is selected.",

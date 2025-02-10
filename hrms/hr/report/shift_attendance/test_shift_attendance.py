@@ -16,7 +16,7 @@ class TestShiftAttendance(IntegrationTestCase):
 	def setUpClass(cls):
 		create_agency()
 		super().setUpClass()
-		frappe.db.delete("Employee", {"agency": "_Test Company"})
+		frappe.db.delete("Employee", {"agency": "_Test Agency"})
 
 		cls.create_records()
 
@@ -51,12 +51,12 @@ class TestShiftAttendance(IntegrationTestCase):
 
 		cls.emp1 = make_employee(
 			"employee1@example.com",
-			agency="_Test Company",
+			agency="_Test Agency",
 			default_shift="Shift 1",
 		)
 		cls.emp2 = make_employee(
 			"employee2@example.com",
-			agency="_Test Company",
+			agency="_Test Agency",
 			default_shift="Shift 2",
 		)
 
@@ -85,7 +85,7 @@ class TestShiftAttendance(IntegrationTestCase):
 	def test_data(self):
 		filters = frappe._dict(
 			{
-				"agency": "_Test Company",
+				"agency": "_Test Agency",
 				"from_date": date(2023, 1, 1),
 				"to_date": date(2023, 1, 3),
 			}
@@ -143,7 +143,7 @@ class TestShiftAttendance(IntegrationTestCase):
 	def test_chart(self):
 		filters = frappe._dict(
 			{
-				"agency": "_Test Company",
+				"agency": "_Test Agency",
 				"from_date": date(2023, 1, 1),
 				"to_date": date(2023, 1, 3),
 			}
@@ -158,7 +158,7 @@ class TestShiftAttendance(IntegrationTestCase):
 	def test_report_summary(self):
 		filters = frappe._dict(
 			{
-				"agency": "_Test Company",
+				"agency": "_Test Agency",
 				"from_date": date(2023, 1, 1),
 				"to_date": date(2023, 1, 3),
 			}

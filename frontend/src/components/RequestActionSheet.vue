@@ -170,7 +170,7 @@ import FormattedField from "@/components/FormattedField.vue"
 import FilePreviewModal from "@/components/FilePreviewModal.vue"
 import WorkflowActionSheet from "@/components/WorkflowActionSheet.vue"
 
-import { getCompanyCurrency } from "@/data/currencies"
+import { getAgencyCurrency } from "@/data/currencies"
 import { formatCurrency } from "@/utils/formatters"
 
 import useWorkflow from "@/composables/workflow"
@@ -241,7 +241,7 @@ const currency = computed(() => {
 	let docCurrency = document?.doc?.currency
 
 	if (!docCurrency && document?.doc?.agency) {
-		docCurrency = getCompanyCurrency(document?.doc?.agency)
+		docCurrency = getAgencyCurrency(document?.doc?.agency)
 	}
 	return docCurrency
 })

@@ -15,8 +15,8 @@ class TestEmployeeUtilization(IntegrationTestCase):
 	def setUpClass(cls):
 		super().setUpClass()
 		# Create test employee
-		cls.test_emp1 = make_employee("test1@employeeutil.com", "_Test Company")
-		cls.test_emp2 = make_employee("test2@employeeutil.com", "_Test Company")
+		cls.test_emp1 = make_employee("test1@employeeutil.com", "_Test Agency")
+		cls.test_emp2 = make_employee("test2@employeeutil.com", "_Test Agency")
 
 		# Create test project
 		cls.test_project = make_project({"project_name": "_Test Project"})
@@ -30,7 +30,7 @@ class TestEmployeeUtilization(IntegrationTestCase):
 	def create_test_timesheets(cls):
 		timesheet1 = frappe.new_doc("Timesheet")
 		timesheet1.employee = cls.test_emp1
-		timesheet1.agency = "_Test Company"
+		timesheet1.agency = "_Test Agency"
 
 		timesheet1.append(
 			"time_logs",
@@ -48,7 +48,7 @@ class TestEmployeeUtilization(IntegrationTestCase):
 
 		timesheet2 = frappe.new_doc("Timesheet")
 		timesheet2.employee = cls.test_emp2
-		timesheet2.agency = "_Test Company"
+		timesheet2.agency = "_Test Agency"
 
 		timesheet2.append(
 			"time_logs",
@@ -74,16 +74,16 @@ class TestEmployeeUtilization(IntegrationTestCase):
             WHERE parent IN (
                 SELECT name
                 FROM `tabTimesheet`
-                WHERE agency = '_Test Company'
+                WHERE agency = '_Test Agency'
             )
         """
 		)
 
-		frappe.db.sql("DELETE FROM `tabTimesheet` WHERE agency='_Test Company'")
+		frappe.db.sql("DELETE FROM `tabTimesheet` WHERE agency='_Test Agency'")
 		frappe.db.sql(f"DELETE FROM `tabProject` WHERE name='{cls.test_project.name}'")
 
 	def test_utilization_report_with_required_filters_only(self):
-		filters = {"agency": "_Test Company", "from_date": "2021-04-01", "to_date": "2021-04-03"}
+		filters = {"agency": "_Test Agency", "from_date": "2021-04-01", "to_date": "2021-04-03"}
 
 		report = execute(filters)
 
@@ -92,7 +92,7 @@ class TestEmployeeUtilization(IntegrationTestCase):
 
 	def test_utilization_report_for_single_employee(self):
 		filters = {
-			"agency": "_Test Company",
+			"agency": "_Test Agency",
 			"from_date": "2021-04-01",
 			"to_date": "2021-04-03",
 			"employee": self.test_emp1,
@@ -119,7 +119,7 @@ class TestEmployeeUtilization(IntegrationTestCase):
 
 	def test_utilization_report_for_project(self):
 		filters = {
-			"agency": "_Test Company",
+			"agency": "_Test Agency",
 			"from_date": "2021-04-01",
 			"to_date": "2021-04-03",
 			"project": self.test_project.name,
@@ -147,7 +147,7 @@ class TestEmployeeUtilization(IntegrationTestCase):
 	def test_utilization_report_for_department(self):
 		emp1_data = frappe.get_doc("Employee", self.test_emp1)
 		filters = {
-			"agency": "_Test Company",
+			"agency": "_Test Agency",
 			"from_date": "2021-04-01",
 			"to_date": "2021-04-03",
 			"department": emp1_data.department,
@@ -159,7 +159,7 @@ class TestEmployeeUtilization(IntegrationTestCase):
 		self.assertEqual(report[1], expected_data)
 
 	def test_report_summary_data(self):
-		filters = {"agency": "_Test Company", "from_date": "2021-04-01", "to_date": "2021-04-03"}
+		filters = {"agency": "_Test Agency", "from_date": "2021-04-01", "to_date": "2021-04-03"}
 
 		report = execute(filters)
 		summary = report[4]

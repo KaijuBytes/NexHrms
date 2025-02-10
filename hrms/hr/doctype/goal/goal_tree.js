@@ -7,7 +7,7 @@ frappe.treeview_settings["Goal"] = {
 			fieldname: "agency",
 			fieldtype: "Select",
 			options: nex.utils.get_tree_options("agency"),
-			label: __("Company"),
+			label: __("Agency"),
 			default: nex.utils.get_tree_default("agency"),
 		},
 		{

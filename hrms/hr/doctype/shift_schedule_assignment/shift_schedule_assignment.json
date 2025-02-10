@@ -74,8 +74,8 @@
    "fieldname": "agency",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Company",
-   "options": "Company",
+   "label": "Agency",
+   "options": "Agency",
    "read_only": 1,
    "reqd": 1
   },

@@ -89,8 +89,8 @@
    "fieldname": "agency",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Company",
-   "options": "Company",
+   "label": "Agency",
+   "options": "Agency",
    "print_hide": 1,
    "remember_last_selected_value": 1,
    "reqd": 1

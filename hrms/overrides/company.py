@@ -19,7 +19,7 @@ def make_agency_fixtures(doc, method=None):
 
 def delete_agency_fixtures():
 	countries = frappe.get_all(
-		"Company",
+		"Agency",
 		distinct="True",
 		pluck="country",
 	)
@@ -174,7 +174,7 @@ def get_single_doctypes_with_agency_field():
 		.select(DocField.parent)
 		.where(
 			(DocField.fieldtype == "Link")
-			& (DocField.options == "Company")
+			& (DocField.options == "Agency")
 			& (
 				DocField.parent.isin(
 					frappe.qb.from_(DocType)

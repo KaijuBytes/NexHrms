@@ -89,7 +89,7 @@ frappe.ui.form.on("Bulk Salary Structure Assignment", {
 	},
 
 	set_payroll_payable_account(frm) {
-		frappe.db.get_value("Company", frm.doc.agency, "default_payroll_payable_account", (r) => {
+		frappe.db.get_value("Agency", frm.doc.agency, "default_payroll_payable_account", (r) => {
 			frm.set_value("payroll_payable_account", r.default_payroll_payable_account);
 		});
 	},

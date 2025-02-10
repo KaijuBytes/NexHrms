@@ -36,7 +36,7 @@ class TestEmployeeReminders(IntegrationTestCase):
 			to_date=getdate() + timedelta(weeks=5),
 		)
 
-		test_employee = frappe.get_doc("Employee", make_employee("test@gopher.io", agency="_Test Company"))
+		test_employee = frappe.get_doc("Employee", make_employee("test@gopher.io", agency="_Test Agency"))
 
 		# Attach the holiday list to employee
 		test_employee.holiday_list = test_holiday_list.name
@@ -47,7 +47,7 @@ class TestEmployeeReminders(IntegrationTestCase):
 		cls.test_holiday_dates = test_holiday_dates
 
 		# Employee without holidays in this month/week
-		test_employee_2 = make_employee("test@empwithoutholiday.io", agency="_Test Company")
+		test_employee_2 = make_employee("test@empwithoutholiday.io", agency="_Test Agency")
 		test_employee_2 = frappe.get_doc("Employee", test_employee_2)
 
 		test_holiday_list = make_holiday_list(
@@ -103,7 +103,7 @@ class TestEmployeeReminders(IntegrationTestCase):
 		employee = frappe.get_doc("Employee", frappe.db.sql_list("select name from tabEmployee limit 1")[0])
 		employee.date_of_birth = "1992" + frappe.utils.nowdate()[4:]
 		employee.agency_email = "test@example.com"
-		employee.agency = "_Test Company"
+		employee.agency = "_Test Agency"
 		employee.save()
 
 		from hrms.controllers.employee_reminders import (
@@ -112,7 +112,7 @@ class TestEmployeeReminders(IntegrationTestCase):
 		)
 
 		employees_born_today = get_employees_who_are_born_today()
-		self.assertTrue(employees_born_today.get("_Test Company"))
+		self.assertTrue(employees_born_today.get("_Test Agency"))
 
 		hr_settings = frappe.get_doc("HR Settings", "HR Settings")
 		hr_settings.send_birthday_reminders = 1
@@ -131,12 +131,12 @@ class TestEmployeeReminders(IntegrationTestCase):
 
 		make_employee(
 			"test_emp_work_anniversary@gmail.com",
-			agency="_Test Company",
+			agency="_Test Agency",
 			date_of_joining=frappe.utils.add_years(getdate(), -2),
 		)
 
 		employees_having_work_anniversary = get_employees_having_an_event_today("work_anniversary")
-		employees = employees_having_work_anniversary.get("_Test Company") or []
+		employees = employees_having_work_anniversary.get("_Test Agency") or []
 		user_ids = []
 		for entry in employees:
 			user_ids.append(entry.user_id)
@@ -156,13 +156,13 @@ class TestEmployeeReminders(IntegrationTestCase):
 		make_employee(
 			"test_work_anniversary_2@gmail.com",
 			date_of_joining=getdate(),
-			agency="_Test Company",
+			agency="_Test Agency",
 		)
 
 		from hrms.controllers.employee_reminders import get_employees_having_an_event_today
 
 		employees_having_work_anniversary = get_employees_having_an_event_today("work_anniversary")
-		employees = employees_having_work_anniversary.get("_Test Company") or []
+		employees = employees_having_work_anniversary.get("_Test Agency") or []
 		user_ids = []
 		for entry in employees:
 			user_ids.append(entry.user_id)

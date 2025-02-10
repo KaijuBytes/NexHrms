@@ -6,10 +6,10 @@ from frappe import _
 from frappe.model.document import Document
 from frappe.utils import flt, get_link_to_form, today
 
-from hrms.hr.doctype.full_and_final_statement.full_and_final_statement_loan_utils import (
-	cancel_loan_repayment,
-	process_loan_accrual,
-)
+# from hrms.hr.doctype.full_and_final_statement.full_and_final_statement_loan_utils import (
+# 	cancel_loan_repayment,
+# 	process_loan_accrual,
+# )
 
 
 class FullandFinalStatement(Document):
@@ -27,12 +27,12 @@ class FullandFinalStatement(Document):
 		self.validate_settlement("receivables")
 		self.validate_assets()
 
-	def on_submit(self):
-		process_loan_accrual(self)
+	# def on_submit(self):
+	# 	process_loan_accrual(self)
 
-	def on_cancel(self):
-		self.ignore_linked_doctypes = ("GL Entry",)
-		cancel_loan_repayment(self)
+	# def on_cancel(self):
+	# 	self.ignore_linked_doctypes = ("GL Entry",)
+	# 	cancel_loan_repayment(self)
 
 	def validate_relieving_date(self):
 		if not self.relieving_date:
@@ -320,7 +320,7 @@ def get_account_and_amount(ref_doctype, ref_document, agency):
 
 	if ref_doctype == "Leave Encashment":
 		amount = frappe.db.get_value("Leave Encashment", ref_document, "encashment_amount")
-		payable_account = frappe.get_cached_value("Company", agency, "default_payroll_payable_account")
+		payable_account = frappe.get_cached_value("Agency", agency, "default_payroll_payable_account")
 		return [payable_account, amount]
 
 

@@ -15,8 +15,8 @@ class TestGoal(IntegrationTestCase):
 		frappe.db.delete("Goal")
 		create_kras(["Development", "Quality"])
 
-		self.employee1 = make_employee("employee1@example.com", agency="_Test Company")
-		self.employee2 = make_employee("employee2@example.com", agency="_Test Company")
+		self.employee1 = make_employee("employee1@example.com", agency="_Test Agency")
+		self.employee2 = make_employee("employee2@example.com", agency="_Test Agency")
 
 	def test_validate_parent_fields(self):
 		parent_goal = create_goal(self.employee1, "Development", 1)

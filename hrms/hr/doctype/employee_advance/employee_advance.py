@@ -194,7 +194,7 @@ class EmployeeAdvance(Document):
 # 		doc.agency, account_type="Cash", mode_of_payment=doc.mode_of_payment
 # 	)
 # 	if not payment_account:
-# 		frappe.throw(_("Please set a Default Cash Account in Company defaults"))
+# 		frappe.throw(_("Please set a Default Cash Account in Agency defaults"))
 
 # 	advance_account_currency = frappe.db.get_value("Account", doc.advance_account, "account_currency")
 
@@ -298,7 +298,7 @@ def make_return_entry(
 	# 	agency, account_type="Cash", mode_of_payment=mode_of_payment
 	# )
 	# if not bank_cash_account:
-	# 	frappe.throw(_("Please set a Default Cash Account in Company defaults"))
+	# 	frappe.throw(_("Please set a Default Cash Account in Agency defaults"))
 
 	advance_account_currency = frappe.db.get_value("Account", advance_account, "account_currency")
 

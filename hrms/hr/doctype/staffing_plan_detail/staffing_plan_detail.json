@@ -35,7 +35,7 @@
    "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "Estimated Cost Per Position",
-   "options": "Company:agency:default_currency"
+   "options": "Agency:agency:default_currency"
   },
   {
    "fieldname": "column_break_5",
@@ -64,7 +64,7 @@
    "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "Total Estimated Cost",
-   "options": "Company:agency:default_currency",
+   "options": "Agency:agency:default_currency",
    "read_only": 1
   }
  ],

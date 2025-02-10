@@ -522,7 +522,7 @@ def get_expense_claim_summary(employee: str) -> dict:
 		.where((Claim.docstatus != 2) & (Claim.employee == employee))
 	).run(as_dict=True)[0]
 
-	currency = frappe.db.get_value("Company", summary.agency, "default_currency")
+	currency = frappe.db.get_value("Agency", summary.agency, "default_currency")
 	summary["currency"] = currency
 
 	return summary
@@ -601,22 +601,22 @@ def get_employee_advance_balance(employee: str) -> list[dict]:
 
 @frappe.whitelist()
 def get_advance_account(agency: str) -> str | None:
-	return frappe.db.get_value("Company", agency, "default_employee_advance_account", cache=True)
+	return frappe.db.get_value("Agency", agency, "default_employee_advance_account", cache=True)
 
 
-# Company
+# Agency
 @frappe.whitelist()
 def get_agency_currencies() -> dict:
-	Company = frappe.qb.DocType("Company")
+	Agency = frappe.qb.DocType("Agency")
 	Currency = frappe.qb.DocType("Currency")
 
 	query = (
-		frappe.qb.from_(Company)
+		frappe.qb.from_(Agency)
 		.join(Currency)
-		.on(Company.default_currency == Currency.name)
+		.on(Agency.default_currency == Currency.name)
 		.select(
-			Company.name,
-			Company.default_currency,
+			Agency.name,
+			Agency.default_currency,
 			Currency.name.as_("currency"),
 			Currency.symbol.as_("symbol"),
 		)
@@ -638,7 +638,7 @@ def get_currency_symbols() -> dict:
 @frappe.whitelist()
 def get_agency_cost_center_and_expense_account(agency: str) -> dict:
 	return frappe.db.get_value(
-		"Company", agency, ["cost_center", "default_expense_claim_payable_account"], as_dict=True
+		"Agency", agency, ["cost_center", "default_expense_claim_payable_account"], as_dict=True
 	)
 
 

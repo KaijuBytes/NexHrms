@@ -218,8 +218,8 @@
    "fetch_from": "employee.agency",
    "fieldname": "agency",
    "fieldtype": "Link",
-   "label": "Company",
-   "options": "Company",
+   "label": "Agency",
+   "options": "Agency",
    "read_only": 1
   }
  ],

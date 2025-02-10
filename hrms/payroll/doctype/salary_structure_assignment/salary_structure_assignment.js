@@ -90,7 +90,7 @@ frappe.ui.form.on("Salary Structure Assignment", {
 	agency: function (frm) {
 		if (frm.doc.agency) {
 			frappe.db.get_value(
-				"Company",
+				"Agency",
 				frm.doc.agency,
 				"default_payroll_payable_account",
 				(r) => {

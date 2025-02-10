@@ -29,7 +29,7 @@ class TestEmployeeAdvance(IntegrationTestCase):
 		self.update_agency_in_fiscal_year()
 
 	def test_paid_amount_and_status(self):
-		employee_name = make_employee("_T@employee.advance", "_Test Company")
+		employee_name = make_employee("_T@employee.advance", "_Test Agency")
 		advance = make_employee_advance(employee_name)
 
 		journal_entry = make_journal_entry_for_advance(advance)
@@ -45,7 +45,7 @@ class TestEmployeeAdvance(IntegrationTestCase):
 		self.assertRaises(EmployeeAdvanceOverPayment, journal_entry1.submit)
 
 	def test_paid_amount_on_pe_cancellation(self):
-		employee_name = make_employee("_T@employee.advance", "_Test Company")
+		employee_name = make_employee("_T@employee.advance", "_Test Agency")
 		advance = make_employee_advance(employee_name)
 
 		journal_entry = make_journal_entry_for_advance(advance)
@@ -68,9 +68,9 @@ class TestEmployeeAdvance(IntegrationTestCase):
 
 	def test_claimed_status(self):
 		# CLAIMED Status check, full amount claimed
-		payable_account = get_payable_account("_Test Company")
+		payable_account = get_payable_account("_Test Agency")
 		claim = make_expense_claim(
-			payable_account, 1000, 1000, "_Test Company", "Travel Expenses - _TC", do_not_submit=True
+			payable_account, 1000, 1000, "_Test Agency", "Travel Expenses - _TC", do_not_submit=True
 		)
 
 		advance = make_employee_advance(claim.employee)
@@ -97,9 +97,9 @@ class TestEmployeeAdvance(IntegrationTestCase):
 		self.assertEqual(advance.status, "Paid")
 
 	def test_partly_claimed_and_returned_status(self):
-		payable_account = get_payable_account("_Test Company")
+		payable_account = get_payable_account("_Test Agency")
 		claim = make_expense_claim(
-			payable_account, 1000, 1000, "_Test Company", "Travel Expenses - _TC", do_not_submit=True
+			payable_account, 1000, 1000, "_Test Agency", "Travel Expenses - _TC", do_not_submit=True
 		)
 
 		advance = make_employee_advance(claim.employee)
@@ -109,7 +109,7 @@ class TestEmployeeAdvance(IntegrationTestCase):
 		# PARTLY CLAIMED AND RETURNED status check
 		# 500 Claimed, 500 Returned
 		claim = make_expense_claim(
-			payable_account, 500, 500, "_Test Company", "Travel Expenses - _TC", do_not_submit=True
+			payable_account, 500, 500, "_Test Agency", "Travel Expenses - _TC", do_not_submit=True
 		)
 
 		advance = make_employee_advance(claim.employee)
@@ -160,7 +160,7 @@ class TestEmployeeAdvance(IntegrationTestCase):
 		self.assertTrue(advance.name in advances)
 
 	def test_repay_unclaimed_amount_from_salary(self):
-		employee_name = make_employee("_T@employee.advance", "_Test Company")
+		employee_name = make_employee("_T@employee.advance", "_Test Agency")
 		advance = make_employee_advance(employee_name, {"repay_unclaimed_amount_from_salary": 1})
 		journal_entry = make_journal_entry_for_advance(advance)
 		journal_entry.submit()
@@ -171,7 +171,7 @@ class TestEmployeeAdvance(IntegrationTestCase):
 			"Test Additional Salary for Advance Return",
 			"Monthly",
 			employee=employee_name,
-			agency="_Test Company",
+			agency="_Test Agency",
 		)
 
 		# additional salary for 700 first
@@ -205,7 +205,7 @@ class TestEmployeeAdvance(IntegrationTestCase):
 		self.assertEqual(advance.status, "Paid")
 
 	def test_payment_entry_against_advance(self):
-		employee_name = make_employee("_T@employee.advance", "_Test Company")
+		employee_name = make_employee("_T@employee.advance", "_Test Agency")
 		advance = make_employee_advance(employee_name)
 
 		pe = make_payment_entry(advance, 700)
@@ -224,15 +224,15 @@ class TestEmployeeAdvance(IntegrationTestCase):
 		self.assertEqual(advance.paid_amount, 700)
 
 	def test_precision(self):
-		employee_name = make_employee("_T@employee.advance", "_Test Company")
+		employee_name = make_employee("_T@employee.advance", "_Test Agency")
 		advance = make_employee_advance(employee_name)
 		journal_entry = make_journal_entry_for_advance(advance)
 		journal_entry.submit()
 
 		# PARTLY CLAIMED AND RETURNED
-		payable_account = get_payable_account("_Test Company")
+		payable_account = get_payable_account("_Test Agency")
 		claim = make_expense_claim(
-			payable_account, 650.35, 619.34, "_Test Company", "Travel Expenses - _TC", do_not_submit=True
+			payable_account, 650.35, 619.34, "_Test Agency", "Travel Expenses - _TC", do_not_submit=True
 		)
 
 		claim = get_advances_for_claim(claim, advance.name, amount=619.34)
@@ -263,7 +263,7 @@ class TestEmployeeAdvance(IntegrationTestCase):
 		self.assertEqual(advance.status, "Partly Claimed and Returned")
 
 	def test_pending_amount(self):
-		employee_name = make_employee("_T@employee.advance", "_Test Company")
+		employee_name = make_employee("_T@employee.advance", "_Test Agency")
 
 		advance1 = make_employee_advance(employee_name)
 		make_payment_entry(advance1, 500)
@@ -279,7 +279,7 @@ class TestEmployeeAdvance(IntegrationTestCase):
 
 	@change_settings("HR Settings", {"unlink_payment_on_cancellation_of_employee_advance": True})
 	def test_unlink_payment_entries(self):
-		employee_name = make_employee("_T@employee.advance", "_Test Company")
+		employee_name = make_employee("_T@employee.advance", "_Test Agency")
 		self.assertTrue(frappe.db.exists("Employee", employee_name))
 
 		advance = make_employee_advance(employee_name)
@@ -300,8 +300,8 @@ class TestEmployeeAdvance(IntegrationTestCase):
 		for fy_entry in fy_entries:
 			fiscal_year = frappe.get_doc("Fiscal Year", fy_entry.name)
 			agency_list = [fy_c.agency for fy_c in fiscal_year.companies if fy_c.agency]
-			if "_Test Company" not in agency_list:
-				fiscal_year.append("companies", {"agency": "_Test Company"})
+			if "_Test Agency" not in agency_list:
+				fiscal_year.append("companies", {"agency": "_Test Agency"})
 				fiscal_year.save()
 
 
@@ -329,7 +329,7 @@ def make_payment_entry(advance, amount):
 def make_employee_advance(employee_name, args=None):
 	doc = frappe.new_doc("Employee Advance")
 	doc.employee = employee_name
-	doc.agency = "_Test Company"
+	doc.agency = "_Test Agency"
 	doc.purpose = "For site visit"
 	doc.currency = nex.get_agency_currency("_Test agency")
 	doc.exchange_rate = 1

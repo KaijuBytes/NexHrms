@@ -38,7 +38,7 @@
 			@addToMonth="addToMonth"
 		/>
 		<MonthViewTable
-			v-if="isCompanySelected"
+			v-if="isAgencySelected"
 			ref="monthViewTable"
 			:firstOfMonth="firstOfMonth"
 			:employees="employees.data || []"
@@ -75,7 +75,7 @@ export type ShiftFilters = {
 };
 
 const monthViewTable = ref<InstanceType<typeof MonthViewTable>>();
-const isCompanySelected = ref(false);
+const isAgencySelected = ref(false);
 const showShiftAssignmentDialog = ref(false);
 const firstOfMonth = ref(dayjs().date(1).startOf("D"));
 const employeeFilters = reactive<EmployeeFilters>({
@@ -99,8 +99,8 @@ const addToMonth = (change: number) => {
 };
 
 const updateFilters = (newFilters: EmployeeFilters & ShiftFilters) => {
-	isCompanySelected.value = !!newFilters.agency;
-	if (!isCompanySelected.value) return;
+	isAgencySelected.value = !!newFilters.agency;
+	if (!isAgencySelected.value) return;
 	let employeeUpdated = false;
 	(Object.entries(newFilters) as [keyof EmployeeFilters | keyof ShiftFilters, string][]).forEach(
 		([key, value]) => {

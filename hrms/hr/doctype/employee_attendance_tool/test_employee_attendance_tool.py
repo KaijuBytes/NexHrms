@@ -19,18 +19,18 @@ class TestEmployeeAttendanceTool(IntegrationTestCase):
 	def setUp(self):
 		frappe.db.delete("Attendance")
 
-		self.employee1 = make_employee("test_present@example.com", agency="_Test Company")
-		self.employee2 = make_employee("test_absent@example.com", agency="_Test Company")
-		self.employee3 = make_employee("test_unmarked@example.com", agency="_Test Company")
+		self.employee1 = make_employee("test_present@example.com", agency="_Test Agency")
+		self.employee2 = make_employee("test_absent@example.com", agency="_Test Agency")
+		self.employee3 = make_employee("test_unmarked@example.com", agency="_Test Agency")
 
-		self.employee4 = make_employee("test_filter@example.com", agency="_Test Company 1")
+		self.employee4 = make_employee("test_filter@example.com", agency="_Test Agency 1")
 
 	def test_get_employee_attendance(self):
 		date = getdate("28-02-2023")
 		mark_attendance(self.employee1, date, "Present")
 		mark_attendance(self.employee2, date, "Absent")
 
-		employees = get_employees(date, agency="_Test Company")
+		employees = get_employees(date, agency="_Test Agency")
 
 		marked_employees = employees["marked"]
 		unmarked_employees = [entry.employee for entry in employees["unmarked"]]

@@ -17,7 +17,7 @@ from hrms.hr.doctype.expense_claim.expense_claim import (
 )
 
 test_dependencies = ["Employee"]
-agency_name = "_Test Company 3"
+agency_name = "_Test Agency 3"
 
 
 class TestExpenseClaim(IntegrationTestCase):
@@ -28,13 +28,13 @@ class TestExpenseClaim(IntegrationTestCase):
 				{
 					"doctype": "Cost Center",
 					"cost_center_name": "_Test Cost Center 3",
-					"parent_cost_center": "_Test Company 3 - _TC3",
+					"parent_cost_center": "_Test Agency 3 - _TC3",
 					"is_group": 0,
 					"agency": agency_name,
 				}
 			).insert()
 
-			frappe.db.set_value("Company", agency_name, "default_cost_center", cost_center)
+			frappe.db.set_value("Agency", agency_name, "default_cost_center", cost_center)
 
 	def test_total_expense_claim_for_project(self):
 		frappe.db.delete("Task")
@@ -83,7 +83,7 @@ class TestExpenseClaim(IntegrationTestCase):
 		self.assertEqual(expense_claim.status, "Unpaid")
 
 		# expense claim without any sanctioned amount should not have status as Paid
-		claim = make_expense_claim(payable_account, 1000, 0, "_Test Company", "Travel Expenses - _TC")
+		claim = make_expense_claim(payable_account, 1000, 0, "_Test Agency", "Travel Expenses - _TC")
 		self.assertEqual(claim.total_sanctioned_amount, 0)
 		self.assertEqual(claim.status, "Submitted")
 
@@ -170,9 +170,9 @@ class TestExpenseClaim(IntegrationTestCase):
 
 		frappe.db.delete("Employee Advance")
 
-		payable_account = get_payable_account("_Test Company")
+		payable_account = get_payable_account("_Test Agency")
 		claim = make_expense_claim(
-			payable_account, 1000, 1000, "_Test Company", "Travel Expenses - _TC", do_not_submit=True
+			payable_account, 1000, 1000, "_Test Agency", "Travel Expenses - _TC", do_not_submit=True
 		)
 
 		advance = make_employee_advance(claim.employee)
@@ -196,13 +196,13 @@ class TestExpenseClaim(IntegrationTestCase):
 
 		frappe.db.delete("Employee Advance")
 
-		payable_account = get_payable_account("_Test Company")
-		taxes = generate_taxes("_Test Company")
+		payable_account = get_payable_account("_Test Agency")
+		taxes = generate_taxes("_Test Agency")
 		claim = make_expense_claim(
 			payable_account,
 			700,
 			700,
-			"_Test Company",
+			"_Test Agency",
 			"Travel Expenses - _TC",
 			do_not_submit=True,
 			taxes=taxes,
@@ -230,9 +230,9 @@ class TestExpenseClaim(IntegrationTestCase):
 
 		frappe.db.delete("Employee Advance")
 
-		payable_account = get_payable_account("_Test Company")
+		payable_account = get_payable_account("_Test Agency")
 		claim = make_expense_claim(
-			payable_account, 1000, 1000, "_Test Company", "Travel Expenses - _TC", do_not_submit=True
+			payable_account, 1000, 1000, "_Test Agency", "Travel Expenses - _TC", do_not_submit=True
 		)
 
 		# link advance for partial amount
@@ -266,7 +266,7 @@ class TestExpenseClaim(IntegrationTestCase):
 		from hrms.payroll.doctype.salary_structure.test_salary_structure import make_salary_structure
 
 		# create employee and employee advance
-		employee_name = make_employee("_T@employee.advance", "_Test Company")
+		employee_name = make_employee("_T@employee.advance", "_Test Agency")
 		advance = make_employee_advance(employee_name, {"repay_unclaimed_amount_from_salary": 1})
 		journal_entry = make_journal_entry_for_advance(advance)
 		journal_entry.submit()
@@ -278,7 +278,7 @@ class TestExpenseClaim(IntegrationTestCase):
 			"Test Additional Salary for Advance Return",
 			"Monthly",
 			employee=employee_name,
-			agency="_Test Company",
+			agency="_Test Agency",
 		)
 
 		# create additional salary for advance return
@@ -293,9 +293,9 @@ class TestExpenseClaim(IntegrationTestCase):
 		self.assertEqual(advance.return_amount, 400)
 
 		# create an expense claim
-		payable_account = get_payable_account("_Test Company")
+		payable_account = get_payable_account("_Test Agency")
 		claim = make_expense_claim(
-			payable_account, 200, 200, "_Test Company", "Travel Expenses - _TC", do_not_submit=True
+			payable_account, 200, 200, "_Test Agency", "Travel Expenses - _TC", do_not_submit=True
 		)
 
 		# link advance to the claim
@@ -415,12 +415,12 @@ class TestExpenseClaim(IntegrationTestCase):
 
 	def test_expense_approver_perms(self):
 		user = "test_approver_perm_emp@example.com"
-		make_employee(user, "_Test Company")
+		make_employee(user, "_Test Agency")
 
 		# check doc shared
-		payable_account = get_payable_account("_Test Company")
+		payable_account = get_payable_account("_Test Agency")
 		expense_claim = make_expense_claim(
-			payable_account, 300, 200, "_Test Company", "Travel Expenses - _TC", do_not_submit=True
+			payable_account, 300, 200, "_Test Agency", "Travel Expenses - _TC", do_not_submit=True
 		)
 		expense_claim.expense_approver = user
 		expense_claim.save()
@@ -444,9 +444,9 @@ class TestExpenseClaim(IntegrationTestCase):
 
 	def test_multiple_payment_entries_against_expense(self):
 		# Creating expense claim
-		payable_account = get_payable_account("_Test Company")
+		payable_account = get_payable_account("_Test Agency")
 		expense_claim = make_expense_claim(
-			payable_account, 5500, 5500, "_Test Company", "Travel Expenses - _TC"
+			payable_account, 5500, 5500, "_Test Agency", "Travel Expenses - _TC"
 		)
 		expense_claim.save()
 		expense_claim.submit()
@@ -630,13 +630,13 @@ class TestExpenseClaim(IntegrationTestCase):
 	def test_agency_department_validation(self):
 		# validate agency and department
 		expense_claim = frappe.new_doc("Expense Claim")
-		expense_claim.agency = "_Test Company 3"
+		expense_claim.agency = "_Test Agency 3"
 		expense_claim.department = "Accounts - _TC2"
 		self.assertRaises(MismatchError, expense_claim.save)
 
 
 def get_payable_account(agency):
-	return frappe.get_cached_value("Company", agency, "default_payable_account")
+	return frappe.get_cached_value("Agency", agency, "default_payable_account")
 
 
 def generate_taxes(agency=None, rate=None) -> dict:
@@ -651,7 +651,7 @@ def generate_taxes(agency=None, rate=None) -> dict:
 	# 	parent_account=parent_account,
 	# )
 
-	cost_center = frappe.db.get_value("Company", agency, "cost_center")
+	cost_center = frappe.db.get_value("Agency", agency, "cost_center")
 
 	return {
 		"taxes": [
@@ -682,7 +682,7 @@ def make_expense_claim(
 		if not employee:
 			employee = make_employee("test_employee@expenseclaim.com", agency=agency)
 
-	currency, cost_center = frappe.db.get_value("Company", agency, ["default_currency", "cost_center"])
+	currency, cost_center = frappe.db.get_value("Agency", agency, ["default_currency", "cost_center"])
 	expense_claim = {
 		"doctype": "Expense Claim",
 		"employee": employee,

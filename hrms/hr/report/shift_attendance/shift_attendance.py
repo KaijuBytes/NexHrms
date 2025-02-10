@@ -101,10 +101,10 @@ def get_columns():
 			"width": 150,
 		},
 		{
-			"label": _("Company"),
+			"label": _("Agency"),
 			"fieldname": "agency",
 			"fieldtype": "Link",
-			"options": "Company",
+			"options": "Agency",
 			"width": 150,
 		},
 		{

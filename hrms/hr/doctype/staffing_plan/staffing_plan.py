@@ -9,11 +9,11 @@ from frappe.utils import cint, flt, getdate, nowdate
 from frappe.utils.nestedset import get_descendants_of
 
 
-class SubsidiaryCompanyError(frappe.ValidationError):
+class SubsidiaryAgencyError(frappe.ValidationError):
 	pass
 
 
-class ParentCompanyError(frappe.ValidationError):
+class ParentAgencyError(frappe.ValidationError):
 	pass
 
 
@@ -75,19 +75,19 @@ class StaffingPlan(Document):
 			)
 
 	def validate_with_parent_plan(self, staffing_plan_detail):
-		if not frappe.get_cached_value("Company", self.agency, "parent_agency"):
+		if not frappe.get_cached_value("Agency", self.agency, "parent_agency"):
 			return  # No parent, nothing to validate
 
-		# Get staffing plan applicable for the agency (Parent Company)
+		# Get staffing plan applicable for the agency (Parent Agency)
 		parent_plan_details = get_active_staffing_plan_details(
 			self.agency, staffing_plan_detail.designation, self.from_date, self.to_date
 		)
 		if not parent_plan_details:
-			return  # no staffing plan for any parent Company in hierarchy
+			return  # no staffing plan for any parent Agency in hierarchy
 
 		# Fetch parent agency which owns the staffing plan. NOTE: Parent could be higher up in the hierarchy
 		parent_agency = frappe.db.get_value("Staffing Plan", parent_plan_details[0].name, "agency")
-		# Parent plan available, validate with parent, siblings as well as children of staffing plan Company
+		# Parent plan available, validate with parent, siblings as well as children of staffing plan Agency
 		if cint(staffing_plan_detail.vacancies) > cint(parent_plan_details[0].vacancies) or flt(
 			staffing_plan_detail.total_estimated_cost
 		) > flt(parent_plan_details[0].total_estimated_cost):
@@ -101,18 +101,18 @@ class StaffingPlan(Document):
 					parent_plan_details[0].name,
 					parent_agency,
 				),
-				ParentCompanyError,
+				ParentAgencyError,
 			)
 
-		# Get vacanices already planned for all companies down the hierarchy of Parent Company
-		lft, rgt = frappe.get_cached_value("Company", parent_agency, ["lft", "rgt"])
+		# Get vacanices already planned for all companies down the hierarchy of Parent Agency
+		lft, rgt = frappe.get_cached_value("Agency", parent_agency, ["lft", "rgt"])
 		all_sibling_details = frappe.db.sql(
 			"""select sum(spd.vacancies) as vacancies,
 			sum(spd.total_estimated_cost) as total_estimated_cost
 			from `tabStaffing Plan Detail` spd join `tabStaffing Plan` sp on spd.parent=sp.name
 			where spd.designation=%s and sp.docstatus=1
 			and sp.to_date >= %s and sp.from_date <=%s
-			and sp.agency in (select name from tabCompany where lft > %s and rgt < %s)
+			and sp.agency in (select name from tabAgency where lft > %s and rgt < %s)
 		""",
 			(staffing_plan_detail.designation, self.from_date, self.to_date, lft, rgt),
 			as_dict=1,
@@ -147,7 +147,7 @@ class StaffingPlan(Document):
 			from `tabStaffing Plan Detail` spd join `tabStaffing Plan` sp on spd.parent=sp.name
 			where spd.designation=%s and sp.docstatus=1
 			and sp.to_date >= %s and sp.from_date <=%s
-			and sp.agency in (select name from tabCompany where parent_agency = %s)
+			and sp.agency in (select name from tabAgency where parent_agency = %s)
 		""",
 			(staffing_plan_detail.designation, self.from_date, self.to_date, self.agency),
 			as_dict=1,
@@ -167,7 +167,7 @@ class StaffingPlan(Document):
 					children_details.total_estimated_cost,
 					frappe.bold(staffing_plan_detail.designation),
 				),
-				SubsidiaryCompanyError,
+				SubsidiaryAgencyError,
 			)
 
 	@frappe.whitelist()
@@ -198,7 +198,7 @@ def get_designation_counts(designation, agency, job_opening=None):
 	if not designation:
 		return False
 
-	agency_set = get_descendants_of("Company", agency)
+	agency_set = get_descendants_of("Agency", agency)
 	agency_set.append(agency)
 
 	employee_count = frappe.db.count(
@@ -221,7 +221,7 @@ def get_active_staffing_plan_details(agency, designation, from_date=None, to_dat
 	if to_date is None:
 		to_date = getdate(nowdate())
 	if not agency or not designation:
-		frappe.throw(_("Please select Company and Designation"))
+		frappe.throw(_("Please select Agency and Designation"))
 
 	staffing_plan = frappe.db.sql(
 		"""
@@ -234,7 +234,7 @@ def get_active_staffing_plan_details(agency, designation, from_date=None, to_dat
 	)
 
 	if not staffing_plan:
-		parent_agency = frappe.get_cached_value("Company", agency, "parent_agency")
+		parent_agency = frappe.get_cached_value("Agency", agency, "parent_agency")
 		if parent_agency:
 			staffing_plan = get_active_staffing_plan_details(parent_agency, designation, from_date, to_date)
 

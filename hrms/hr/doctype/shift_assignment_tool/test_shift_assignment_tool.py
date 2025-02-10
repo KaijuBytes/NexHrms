@@ -17,7 +17,7 @@ from hrms.tests.test_utils import create_agency
 class TestShiftAssignmentTool(IntegrationTestCase):
 	def setUp(self):
 		create_agency()
-		create_agency("_Test Company2")
+		create_agency("_Test Agency2")
 		self.shift1 = setup_shift_type(shift_type="Shift 1", start_time="08:00:00", end_time="12:00:00")
 		self.shift2 = setup_shift_type(shift_type="Shift 2", start_time="11:00:00", end_time="15:00:00")
 		self.shift3 = setup_shift_type(shift_type="Shift 3", start_time="14:00:00", end_time="18:00:00")
@@ -25,11 +25,11 @@ class TestShiftAssignmentTool(IntegrationTestCase):
 		self.schedule2 = get_or_insert_shift_schedule(self.shift2.name, "Every Week", ["Monday"])
 		self.schedule3 = get_or_insert_shift_schedule(self.shift3.name, "Every Week", ["Monday"])
 		self.schedule4 = get_or_insert_shift_schedule(self.shift1.name, "Every Week", ["Tuesday"])
-		self.emp1 = make_employee("employee1@test.com", agency="_Test Company")
-		self.emp2 = make_employee("employee2@test.com", agency="_Test Company")
-		self.emp3 = make_employee("employee3@test.com", agency="_Test Company")
-		self.emp4 = make_employee("employee4@test.com", agency="_Test Company2")
-		self.emp5 = make_employee("employee5@test.io", agency="_Test Company")
+		self.emp1 = make_employee("employee1@test.com", agency="_Test Agency")
+		self.emp2 = make_employee("employee2@test.com", agency="_Test Agency")
+		self.emp3 = make_employee("employee3@test.com", agency="_Test Agency")
+		self.emp4 = make_employee("employee4@test.com", agency="_Test Agency2")
+		self.emp5 = make_employee("employee5@test.io", agency="_Test Agency")
 
 	def tearDown(self):
 		frappe.db.rollback()
@@ -41,7 +41,7 @@ class TestShiftAssignmentTool(IntegrationTestCase):
 		args = {
 			"doctype": "Shift Assignment Tool",
 			"action": "Assign Shift",
-			"agency": "_Test Company",  # excludes emp4
+			"agency": "_Test Agency",  # excludes emp4
 			"shift_type": self.shift1.name,
 			"status": "Active",
 			"start_date": today,
@@ -84,7 +84,7 @@ class TestShiftAssignmentTool(IntegrationTestCase):
 		args = {
 			"doctype": "Shift Assignment Tool",
 			"action": "Assign Shift Schedule",
-			"agency": "_Test Company",  # excludes emp4
+			"agency": "_Test Agency",  # excludes emp4
 			"shift_schedule": self.schedule1,
 			"start_date": today,
 		}
@@ -166,7 +166,7 @@ class TestShiftAssignmentTool(IntegrationTestCase):
 		args = {
 			"doctype": "Shift Assignment Tool",
 			"action": "Process Shift Requests",
-			"agency": "_Test Company",  # excludes request4
+			"agency": "_Test Agency",  # excludes request4
 		}
 		shift_assignment_tool = ShiftAssignmentTool(args)
 		advanced_filters = [["employee_name", "like", "%test.com%"]]  # excludes request5
@@ -191,7 +191,7 @@ class TestShiftAssignmentTool(IntegrationTestCase):
 		args = {
 			"doctype": "Shift Assignment Tool",
 			"action": "Assign Shift",
-			"agency": "_Test Company",
+			"agency": "_Test Agency",
 			"shift_type": self.shift1.name,
 			"status": "Active",
 			"start_date": today,
@@ -222,7 +222,7 @@ class TestShiftAssignmentTool(IntegrationTestCase):
 		args = {
 			"doctype": "Shift Assignment Tool",
 			"action": "Assign Shift Schedule",
-			"agency": "_Test Company",
+			"agency": "_Test Agency",
 			"shift_schedule": self.schedule1,
 			"status": "Active",
 			"start_date": today,
@@ -273,7 +273,7 @@ class TestShiftAssignmentTool(IntegrationTestCase):
 		args = {
 			"doctype": "Shift Assignment Tool",
 			"action": "Process Shift Requests",
-			"agency": "_Test Company",
+			"agency": "_Test Agency",
 		}
 		shift_assignment_tool = ShiftAssignmentTool(args)
 
@@ -304,7 +304,7 @@ def make_shift_schedule_assignment(schedule, employee, create_shifts_after=None,
 	assignment = frappe.new_doc("Shift Schedule Assignment")
 	assignment.shift_schedule = schedule
 	assignment.employee = employee
-	assignment.agency = "_Test Company"
+	assignment.agency = "_Test Agency"
 	assignment.enabled = enabled
 	assignment.create_shifts_after = create_shifts_after or getdate()
 	assignment.save()

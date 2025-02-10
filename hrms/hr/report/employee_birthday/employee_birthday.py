@@ -25,7 +25,7 @@ def get_columns():
 		_("Department") + ":Link/Department:120",
 		_("Designation") + ":Link/Designation:120",
 		_("Gender") + "::60",
-		_("Company") + ":Link/Company:120",
+		_("Agency") + ":Link/Agency:120",
 	]
 
 

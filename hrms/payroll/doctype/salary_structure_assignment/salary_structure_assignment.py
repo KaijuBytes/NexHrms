@@ -97,7 +97,7 @@ class SalaryStructureAssignment(Document):
 	def set_payroll_payable_account(self):
 		if not self.payroll_payable_account:
 			payroll_payable_account = frappe.db.get_value(
-				"Company", self.agency, "default_payroll_payable_account"
+				"Agency", self.agency, "default_payroll_payable_account"
 			)
 			if not payroll_payable_account:
 				payroll_payable_account = frappe.db.get_value(
@@ -105,7 +105,7 @@ class SalaryStructureAssignment(Document):
 					{
 						"account_name": _("Payroll Payable"),
 						"agency": self.agency,
-						"account_currency": frappe.db.get_value("Company", self.agency, "default_currency"),
+						"account_currency": frappe.db.get_value("Agency", self.agency, "default_currency"),
 						"is_group": 0,
 					},
 				)
@@ -136,7 +136,7 @@ class SalaryStructureAssignment(Document):
 			agency = frappe.db.get_value("Cost Center", entry.cost_center, "agency")
 			if agency != self.agency:
 				frappe.throw(
-					_("Row {0}: Cost Center {1} does not belong to Company {2}").format(
+					_("Row {0}: Cost Center {1} does not belong to Agency {2}").format(
 						entry.idx, frappe.bold(entry.cost_center), frappe.bold(self.agency)
 					),
 					title=_("Invalid Cost Center"),

@@ -78,8 +78,8 @@
    "fieldname": "agency",
    "fieldtype": "Link",
    "in_standard_filter": 1,
-   "label": "Company",
-   "options": "Company",
+   "label": "Agency",
+   "options": "Agency",
    "read_only": 1
   },
   {

@@ -23,8 +23,8 @@
    "fieldname": "agency",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Company",
-   "options": "Company",
+   "label": "Agency",
+   "options": "Agency",
    "reqd": 1
   },
   {
@@ -70,7 +70,7 @@
    "fieldname": "total_estimated_budget",
    "fieldtype": "Currency",
    "label": "Total Estimated Budget",
-   "options": "Company:agency:default_currency",
+   "options": "Agency:agency:default_currency",
    "read_only": 1
   },
   {

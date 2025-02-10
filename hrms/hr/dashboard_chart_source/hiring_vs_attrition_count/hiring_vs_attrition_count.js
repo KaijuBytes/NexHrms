@@ -5,10 +5,10 @@ frappe.dashboards.chart_sources["Hiring vs Attrition Count"] = {
 	filters: [
 		{
 			fieldname: "agency",
-			label: __("Company"),
+			label: __("Agency"),
 			fieldtype: "Link",
-			options: "Company",
-			default: frappe.defaults.get_user_default("Company"),
+			options: "Agency",
+			default: frappe.defaults.get_user_default("Agency"),
 		},
 		{
 			fieldname: "from_date",

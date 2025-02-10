@@ -152,6 +152,6 @@
 # 			"Payroll Entry", payroll_entry, "payroll_payable_account"
 # 		)
 # 	else:
-# 		payroll_payable_account = frappe.db.get_value("Company", agency, "default_payroll_payable_account")
+# 		payroll_payable_account = frappe.db.get_value("Agency", agency, "default_payroll_payable_account")
 
 # 	return payroll_payable_account

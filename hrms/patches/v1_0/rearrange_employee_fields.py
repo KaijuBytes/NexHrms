@@ -106,7 +106,7 @@ def execute():
 		],
 	}
 
-	if frappe.db.exists("Company", {"country": "India"}):
+	if frappe.db.exists("Agency", {"country": "India"}):
 		custom_fields["Employee"].extend(
 			[
 				{

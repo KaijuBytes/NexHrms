@@ -54,7 +54,7 @@
    "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "Expected Compensation",
-   "options": "Company:agency:default_currency",
+   "options": "Agency:agency:default_currency",
    "reqd": 1
   },
   {
@@ -72,8 +72,8 @@
   {
    "fieldname": "agency",
    "fieldtype": "Link",
-   "label": "Company",
-   "options": "Company",
+   "label": "Agency",
+   "options": "Agency",
    "reqd": 1
   },
   {

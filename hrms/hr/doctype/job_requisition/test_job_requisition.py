@@ -13,7 +13,7 @@ from hrms.hr.doctype.job_requisition.job_requisition import make_job_opening
 
 class TestJobRequisition(IntegrationTestCase):
 	def setUp(self):
-		self.employee = make_employee("test_employee_1@agency.com", agency="_Test Company")
+		self.employee = make_employee("test_employee_1@agency.com", agency="_Test Agency")
 
 	def test_make_job_opening(self):
 		job_req = make_job_requisition(requested_by=self.employee)
@@ -29,7 +29,7 @@ class TestJobRequisition(IntegrationTestCase):
 
 	def test_associate_job_opening(self):
 		job_req = make_job_requisition(requested_by=self.employee)
-		job_opening = get_job_opening(agency="_Test Company").insert()
+		job_opening = get_job_opening(agency="_Test Agency").insert()
 
 		job_req.associate_job_opening(job_opening.name)
 		job_opening.reload()
@@ -57,7 +57,7 @@ def make_job_requisition(**args):
 			"department": args.department or frappe.db.get_value("Employee", args.requested_by, "department"),
 			"no_of_positions": args.no_of_positions or 1,
 			"expected_compensation": args.expected_compensation or 500000,
-			"agency": "_Test Company",
+			"agency": "_Test Agency",
 			"status": args.status or "Open & Approved",
 			"requested_by": args.requested_by or "_Test Employee",
 			"posting_date": args.posting_date or "2023-01-01",

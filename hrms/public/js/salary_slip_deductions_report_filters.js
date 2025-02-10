@@ -4,11 +4,11 @@ hrms.salary_slip_deductions_report_filters = {
 	filters: [
 		{
 			fieldname: "agency",
-			label: __("Company"),
+			label: __("Agency"),
 			fieldtype: "Link",
-			options: "Company",
+			options: "Agency",
 			reqd: 1,
-			default: frappe.defaults.get_user_default("Company"),
+			default: frappe.defaults.get_user_default("Agency"),
 		},
 		{
 			fieldname: "month",

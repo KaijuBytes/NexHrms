@@ -45,7 +45,7 @@ test_dependencies = ["Leave Type", "Leave Allocation", "Leave Block List", "Empl
 
 _test_records = [
 	{
-		"agency": "_Test Company",
+		"agency": "_Test Agency",
 		"doctype": "Leave Application",
 		"employee": "_T-Employee-00001",
 		"from_date": "2013-05-01",
@@ -55,7 +55,7 @@ _test_records = [
 		"to_date": "2013-05-05",
 	},
 	{
-		"agency": "_Test Company",
+		"agency": "_Test Agency",
 		"doctype": "Leave Application",
 		"employee": "_T-Employee-00002",
 		"from_date": "2013-05-01",
@@ -65,7 +65,7 @@ _test_records = [
 		"to_date": "2013-05-05",
 	},
 	{
-		"agency": "_Test Company",
+		"agency": "_Test Agency",
 		"doctype": "Leave Application",
 		"employee": "_T-Employee-00001",
 		"from_date": "2013-01-15",
@@ -127,7 +127,7 @@ class TestLeaveApplication(IntegrationTestCase):
 		application.to_date = "2013-01-05"
 		return application
 
-	@set_holiday_list("Salary Slip Test Holiday List", "_Test Company")
+	@set_holiday_list("Salary Slip Test Holiday List", "_Test Agency")
 	def test_validate_application_across_allocations(self):
 		# Test validation for application dates when negative balance is disabled
 		frappe.delete_doc_if_exists("Leave Type", "Test Leave Validation", force=1)
@@ -146,7 +146,7 @@ class TestLeaveApplication(IntegrationTestCase):
 				leave_type=leave_type.name,
 				from_date=add_days(first_sunday, 1),
 				to_date=add_days(first_sunday, 4),
-				agency="_Test Company",
+				agency="_Test Agency",
 				status="Approved",
 				leave_approver="test@example.com",
 			)
@@ -165,7 +165,7 @@ class TestLeaveApplication(IntegrationTestCase):
 				leave_type=leave_type.name,
 				from_date=add_days(first_sunday, -10),
 				to_date=add_days(first_sunday, 1),
-				agency="_Test Company",
+				agency="_Test Agency",
 				status="Approved",
 				leave_approver="test@example.com",
 			)
@@ -174,7 +174,7 @@ class TestLeaveApplication(IntegrationTestCase):
 		# Application period cannot be across two allocation records
 		self.assertRaises(LeaveAcrossAllocationsError, leave_application.insert)
 
-	@set_holiday_list("Salary Slip Test Holiday List", "_Test Company")
+	@set_holiday_list("Salary Slip Test Holiday List", "_Test Agency")
 	def test_insufficient_leave_balance_validation(self):
 		# CASE 1: Validation when allow negative is disabled
 		frappe.delete_doc_if_exists("Leave Type", "Test Leave Validation", force=1)
@@ -200,7 +200,7 @@ class TestLeaveApplication(IntegrationTestCase):
 				leave_type=leave_type.name,
 				from_date=add_days(first_sunday, 1),
 				to_date=add_days(first_sunday, 3),
-				agency="_Test Company",
+				agency="_Test Agency",
 				status="Approved",
 				leave_approver="test@example.com",
 			)
@@ -213,7 +213,7 @@ class TestLeaveApplication(IntegrationTestCase):
 			employee.name, add_days(first_sunday, 1), add_days(first_sunday, 3), leave_type.name
 		)
 
-	@set_holiday_list("Salary Slip Test Holiday List", "_Test Company")
+	@set_holiday_list("Salary Slip Test Holiday List", "_Test Agency")
 	def test_separate_leave_ledger_entry_for_boundary_applications(self):
 		# When application falls in 2 different allocations and Allow Negative is enabled
 		# creates separate leave ledger entries
@@ -331,7 +331,7 @@ class TestLeaveApplication(IntegrationTestCase):
 		self.assertEqual(attendance.leave_type, "_Test Leave Type")
 		self.assertEqual(attendance.leave_application, application.name)
 
-	@set_holiday_list("Salary Slip Test Holiday List", "_Test Company")
+	@set_holiday_list("Salary Slip Test Holiday List", "_Test Agency")
 	def test_attendance_for_include_holidays(self):
 		# Case 1: leave type with 'Include holidays within leaves as leaves' enabled
 		frappe.delete_doc_if_exists("Leave Type", "Test Include Holidays", force=1)
@@ -356,7 +356,7 @@ class TestLeaveApplication(IntegrationTestCase):
 
 		leave_application.cancel()
 
-	@set_holiday_list("Salary Slip Test Holiday List", "_Test Company")
+	@set_holiday_list("Salary Slip Test Holiday List", "_Test Agency")
 	def test_attendance_update_for_exclude_holidays(self):
 		# Case 2: leave type with 'Include holidays within leaves as leaves' disabled
 		frappe.delete_doc_if_exists("Leave Type", "Test Do Not Include Holidays", force=1)
@@ -541,7 +541,7 @@ class TestLeaveApplication(IntegrationTestCase):
 		application.half_day_date = "2013-01-05"
 		application.insert()
 
-	@set_holiday_list("Salary Slip Test Holiday List", "_Test Company")
+	@set_holiday_list("Salary Slip Test Holiday List", "_Test Agency")
 	def test_optional_leave(self):
 		leave_period = get_leave_period()
 		today = nowdate()
@@ -577,7 +577,7 @@ class TestLeaveApplication(IntegrationTestCase):
 			dict(
 				doctype="Leave Application",
 				employee=employee.name,
-				agency="_Test Company",
+				agency="_Test Agency",
 				description="_Test Reason",
 				leave_type=leave_type,
 				from_date=date,
@@ -617,7 +617,7 @@ class TestLeaveApplication(IntegrationTestCase):
 				description="_Test Reason",
 				from_date=date,
 				to_date=add_days(date, 2),
-				agency="_Test Company",
+				agency="_Test Agency",
 				docstatus=1,
 				status="Approved",
 			)
@@ -632,7 +632,7 @@ class TestLeaveApplication(IntegrationTestCase):
 				description="_Test Reason",
 				from_date=add_days(date, 4),
 				to_date=add_days(date, 8),
-				agency="_Test Company",
+				agency="_Test Agency",
 				docstatus=1,
 				status="Approved",
 			)
@@ -658,7 +658,7 @@ class TestLeaveApplication(IntegrationTestCase):
 				description="_Test Reason",
 				from_date=date,
 				to_date=add_days(date, 4),
-				agency="_Test Company",
+				agency="_Test Agency",
 				docstatus=1,
 				status="Approved",
 			)
@@ -681,7 +681,7 @@ class TestLeaveApplication(IntegrationTestCase):
 				description="_Test Reason",
 				from_date=date,
 				to_date=add_days(date, 4),
-				agency="_Test Company",
+				agency="_Test Agency",
 				docstatus=1,
 				status="Approved",
 			)
@@ -715,7 +715,7 @@ class TestLeaveApplication(IntegrationTestCase):
 				description="_Test Reason",
 				from_date=date,
 				to_date=add_days(date, 4),
-				agency="_Test Company",
+				agency="_Test Agency",
 				docstatus=1,
 				status="Approved",
 			)
@@ -723,7 +723,7 @@ class TestLeaveApplication(IntegrationTestCase):
 
 		self.assertRaises(frappe.ValidationError, leave_application.insert)
 
-	@set_holiday_list("_Test Holiday List", "_Test Company")
+	@set_holiday_list("_Test Holiday List", "_Test Agency")
 	def test_max_consecutive_leaves_across_leave_applications(self):
 		employee = get_employee()
 		leave_type = frappe.get_doc(
@@ -745,7 +745,7 @@ class TestLeaveApplication(IntegrationTestCase):
 				leave_type=leave_type.name,
 				from_date="2013-01-30",
 				to_date="2013-02-03",
-				agency="_Test Company",
+				agency="_Test Agency",
 				status="Approved",
 			)
 		).insert()
@@ -758,7 +758,7 @@ class TestLeaveApplication(IntegrationTestCase):
 				leave_type=leave_type.name,
 				from_date="2013-02-06",
 				to_date="2013-02-10",
-				agency="_Test Company",
+				agency="_Test Agency",
 				status="Approved",
 			)
 		).insert()
@@ -773,7 +773,7 @@ class TestLeaveApplication(IntegrationTestCase):
 				leave_type=leave_type.name,
 				from_date=from_date,
 				to_date=to_date,
-				agency="_Test Company",
+				agency="_Test Agency",
 				status="Approved",
 			)
 		)
@@ -825,7 +825,7 @@ class TestLeaveApplication(IntegrationTestCase):
 				description="_Test Reason",
 				from_date="2018-10-02",
 				to_date="2018-10-02",
-				agency="_Test Company",
+				agency="_Test Agency",
 				status="Approved",
 				leave_approver="test@example.com",
 			)
@@ -852,7 +852,7 @@ class TestLeaveApplication(IntegrationTestCase):
 				from_date=add_days(nowdate(), 1),
 				to_date=add_days(nowdate(), 4),
 				description="_Test Reason",
-				agency="_Test Company",
+				agency="_Test Agency",
 				docstatus=1,
 				status="Approved",
 			)
@@ -891,7 +891,7 @@ class TestLeaveApplication(IntegrationTestCase):
 				half_day=1,
 				half_day_date=add_days(nowdate(), -3),
 				description="_Test Reason",
-				agency="_Test Company",
+				agency="_Test Agency",
 				docstatus=1,
 				status="Approved",
 			)
@@ -929,7 +929,7 @@ class TestLeaveApplication(IntegrationTestCase):
 	def test_leave_approver_perms(self):
 		employee = get_employee()
 		user = "test_approver_perm_emp@example.com"
-		make_employee(user, "_Test Company")
+		make_employee(user, "_Test Agency")
 
 		# set approver for employee
 		employee.reload()
@@ -971,7 +971,7 @@ class TestLeaveApplication(IntegrationTestCase):
 		frappe.db.set_single_value("HR Settings", "prevent_self_leave_approval", 0)
 
 		leave_approver = "test_leave_approver@example.com"
-		make_employee(leave_approver, "_Test Company")
+		make_employee(leave_approver, "_Test Agency")
 
 		employee = get_employee()
 		if not employee.user_id:
@@ -992,7 +992,7 @@ class TestLeaveApplication(IntegrationTestCase):
 			to_date="2014-06-02",
 			posting_date="2014-05-30",
 			description="_Test Reason",
-			agency="_Test Company",
+			agency="_Test Agency",
 			leave_approver=leave_approver,
 		)
 		application.insert()
@@ -1009,7 +1009,7 @@ class TestLeaveApplication(IntegrationTestCase):
 		frappe.db.set_single_value("HR Settings", "prevent_self_leave_approval", 1)
 
 		leave_approver = "test_leave_approver@example.com"
-		make_employee(leave_approver, "_Test Company")
+		make_employee(leave_approver, "_Test Agency")
 
 		employee = get_employee()
 		employee.leave_approver = leave_approver
@@ -1030,7 +1030,7 @@ class TestLeaveApplication(IntegrationTestCase):
 			to_date="2014-06-04",
 			posting_date="2014-05-30",
 			description="_Test Reason",
-			agency="_Test Company",
+			agency="_Test Agency",
 			leave_approver=leave_approver,
 		)
 		application.insert()
@@ -1045,7 +1045,7 @@ class TestLeaveApplication(IntegrationTestCase):
 		application.submit()
 		self.assertEqual(1, application.docstatus)
 
-	@set_holiday_list("Salary Slip Test Holiday List", "_Test Company")
+	@set_holiday_list("Salary Slip Test Holiday List", "_Test Agency")
 	def test_get_leave_details_for_dashboard(self):
 		employee = get_employee()
 		date = getdate()
@@ -1081,7 +1081,7 @@ class TestLeaveApplication(IntegrationTestCase):
 		self.assertEqual(leave_allocation["leaves_pending_approval"], 1)
 		self.assertEqual(leave_allocation["remaining_leaves"], 26)
 
-	@set_holiday_list("Holiday List w/o Weekly Offs", "_Test Company")
+	@set_holiday_list("Holiday List w/o Weekly Offs", "_Test Agency")
 	def test_leave_details_with_expired_cf_leaves(self):
 		"""Tests leave details:
 		Case 1: All leaves available before cf leave expiry
@@ -1115,7 +1115,7 @@ class TestLeaveApplication(IntegrationTestCase):
 
 		self.assertEqual(leave_details["leave_allocation"][leave_type.name], expected_data)
 
-	@set_holiday_list("Holiday List w/o Weekly Offs", "_Test Company")
+	@set_holiday_list("Holiday List w/o Weekly Offs", "_Test Agency")
 	def test_leave_details_with_application_across_cf_expiry(self):
 		"""Tests leave details with leave application across cf expiry, such that:
 		cf leaves are partially expired and partially consumed
@@ -1151,7 +1151,7 @@ class TestLeaveApplication(IntegrationTestCase):
 
 		self.assertEqual(leave_details["leave_allocation"][leave_type.name], expected_data)
 
-	@set_holiday_list("Holiday List w/o Weekly Offs", "_Test Company")
+	@set_holiday_list("Holiday List w/o Weekly Offs", "_Test Agency")
 	def test_leave_details_with_application_across_cf_expiry_2(self):
 		"""Tests the same case as above but with leave days greater than cf leaves allocated"""
 		employee = get_employee()
@@ -1191,7 +1191,7 @@ class TestLeaveApplication(IntegrationTestCase):
 
 		self.assertEqual(leave_details["leave_allocation"][leave_type.name], expected_data)
 
-	@set_holiday_list("Holiday List w/o Weekly Offs", "_Test Company")
+	@set_holiday_list("Holiday List w/o Weekly Offs", "_Test Agency")
 	def test_leave_details_with_application_after_cf_expiry(self):
 		"""Tests leave details with leave application after cf expiry, such that:
 		cf leaves are completely expired and only newly allocated leaves are consumed
@@ -1227,7 +1227,7 @@ class TestLeaveApplication(IntegrationTestCase):
 
 		self.assertEqual(leave_details["leave_allocation"][leave_type.name], expected_data)
 
-	@set_holiday_list("Salary Slip Test Holiday List", "_Test Company")
+	@set_holiday_list("Salary Slip Test Holiday List", "_Test Agency")
 	def test_get_leave_allocation_records(self):
 		"""Tests if total leaves allocated before and after carry forwarded leave expiry is same"""
 		employee = get_employee()
@@ -1260,7 +1260,7 @@ class TestLeaveApplication(IntegrationTestCase):
 		details = get_leave_allocation_records(employee.name, add_days(cf_expiry, 1), leave_type.name)
 		self.assertEqual(details.get(leave_type.name), expected_data)
 
-	@set_holiday_list("Salary Slip Test Holiday List", "_Test Company")
+	@set_holiday_list("Salary Slip Test Holiday List", "_Test Agency")
 	def test_filtered_old_cf_entries_in_get_leave_allocation_records(self):
 		"""Tests whether old cf entries are ignored while fetching current allocation records"""
 		employee = get_employee()
@@ -1345,7 +1345,7 @@ def set_leave_approver():
 
 
 def get_leave_period():
-	leave_period_name = frappe.db.get_value("Leave Period", {"agency": "_Test Company"})
+	leave_period_name = frappe.db.get_value("Leave Period", {"agency": "_Test Agency"})
 	if leave_period_name:
 		return frappe.get_doc("Leave Period", leave_period_name)
 	else:
@@ -1355,7 +1355,7 @@ def get_leave_period():
 				doctype="Leave Period",
 				from_date=add_months(nowdate(), -6),
 				to_date=add_months(nowdate(), 6),
-				agency="_Test Company",
+				agency="_Test Agency",
 				is_active=1,
 			)
 		).insert()

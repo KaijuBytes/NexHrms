@@ -128,7 +128,7 @@ def create_employee_onboarding():
 	onboarding.job_applicant = applicant.name
 	onboarding.job_offer = job_offer.name
 	onboarding.date_of_joining = onboarding.boarding_begins_on = getdate()
-	onboarding.agency = "_Test Company"
+	onboarding.agency = "_Test Agency"
 	onboarding.holiday_list = holiday_list.name
 	onboarding.designation = "Researcher"
 	onboarding.append(

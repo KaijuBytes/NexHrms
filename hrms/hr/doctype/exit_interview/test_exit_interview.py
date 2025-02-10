@@ -91,7 +91,7 @@ def create_exit_interview(employee, save=True):
 		{
 			"doctype": "Exit Interview",
 			"employee": employee,
-			"agency": "_Test Company",
+			"agency": "_Test Agency",
 			"status": "Pending",
 			"date": getdate(),
 			"interviewers": [{"interviewer": interviewer.name}],

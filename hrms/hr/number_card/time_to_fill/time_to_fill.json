@@ -3,7 +3,7 @@
  "docstatus": 0,
  "doctype": "Number Card",
  "dynamic_filters_json": "",
- "filters_config": "[{\n\tfieldname: \"agency\",\n\tlabel: __(\"Company\"),\n\tfieldtype: \"Link\",\n\toptions: \"Company\",\n\tdefault: frappe.defaults.get_user_default(\"Company\")\n},\n{\n\tfieldname: \"department\",\n\tlabel: __(\"Department\"),\n\tfieldtype: \"Link\",\n\toptions: \"Department\"\n},\n{\n    fieldname: \"designation\",\n\tlabel: __(\"Designation\"),\n\tfieldtype: \"Link\",\n\toptions: \"Designation\"\n}]",
+ "filters_config": "[{\n\tfieldname: \"agency\",\n\tlabel: __(\"Agency\"),\n\tfieldtype: \"Link\",\n\toptions: \"Agency\",\n\tdefault: frappe.defaults.get_user_default(\"Agency\")\n},\n{\n\tfieldname: \"department\",\n\tlabel: __(\"Department\"),\n\tfieldtype: \"Link\",\n\toptions: \"Department\"\n},\n{\n    fieldname: \"designation\",\n\tlabel: __(\"Designation\"),\n\tfieldtype: \"Link\",\n\toptions: \"Designation\"\n}]",
  "filters_json": "{\"agency\":\"Frappe\"}",
  "function": "Count",
  "idx": 0,

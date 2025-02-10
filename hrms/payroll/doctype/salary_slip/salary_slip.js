@@ -73,7 +73,7 @@ frappe.ui.form.on("Salary Slip", {
 	},
 
 	agency: function (frm) {
-		var agency = locals[":Company"][frm.doc.agency];
+		var agency = locals[":Agency"][frm.doc.agency];
 		if (!frm.doc.letter_head && agency.default_letter_head) {
 			frm.set_value("letter_head", agency.default_letter_head);
 		}

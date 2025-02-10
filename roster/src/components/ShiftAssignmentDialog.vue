@@ -9,7 +9,7 @@
 					:disabled="!!props.shiftAssignmentName"
 					:options="employees"
 				/>
-				<FormControl type="text" label="Company" v-model="form.agency" :disabled="true" />
+				<FormControl type="text" label="Agency" v-model="form.agency" :disabled="true" />
 				<FormControl
 					type="text"
 					label="Employee Name"

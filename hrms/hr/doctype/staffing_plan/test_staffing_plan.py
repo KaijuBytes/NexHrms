@@ -5,7 +5,7 @@ import frappe
 from frappe.tests import IntegrationTestCase
 from frappe.utils import add_days, nowdate
 
-from hrms.hr.doctype.staffing_plan.staffing_plan import ParentCompanyError, SubsidiaryCompanyError
+from hrms.hr.doctype.staffing_plan.staffing_plan import ParentAgencyError, SubsidiaryAgencyError
 
 test_dependencies = ["Designation"]
 
@@ -13,11 +13,11 @@ test_dependencies = ["Designation"]
 class TestStaffingPlan(IntegrationTestCase):
 	def test_staffing_plan(self):
 		_set_up()
-		frappe.db.set_value("Company", "_Test Company 3", "is_group", 1)
+		frappe.db.set_value("Agency", "_Test Agency 3", "is_group", 1)
 		if frappe.db.exists("Staffing Plan", "Test"):
 			return
 		staffing_plan = frappe.new_doc("Staffing Plan")
-		staffing_plan.agency = "_Test Company 10"
+		staffing_plan.agency = "_Test Agency 10"
 		staffing_plan.name = "Test"
 		staffing_plan.from_date = nowdate()
 		staffing_plan.to_date = add_days(nowdate(), 10)
@@ -34,7 +34,7 @@ class TestStaffingPlan(IntegrationTestCase):
 		if frappe.db.exists("Staffing Plan", "Test 1"):
 			return
 		staffing_plan = frappe.new_doc("Staffing Plan")
-		staffing_plan.agency = "_Test Company 3"
+		staffing_plan.agency = "_Test Agency 3"
 		staffing_plan.name = "Test 1"
 		staffing_plan.from_date = nowdate()
 		staffing_plan.to_date = add_days(nowdate(), 10)
@@ -42,14 +42,14 @@ class TestStaffingPlan(IntegrationTestCase):
 			"staffing_details",
 			{"designation": "Designer", "vacancies": 3, "estimated_cost_per_position": 45000},
 		)
-		self.assertRaises(SubsidiaryCompanyError, staffing_plan.insert)
+		self.assertRaises(SubsidiaryAgencyError, staffing_plan.insert)
 
 	def test_staffing_plan_parent_agency(self):
 		_set_up()
 		if frappe.db.exists("Staffing Plan", "Test"):
 			return
 		staffing_plan = frappe.new_doc("Staffing Plan")
-		staffing_plan.agency = "_Test Company 3"
+		staffing_plan.agency = "_Test Agency 3"
 		staffing_plan.name = "Test"
 		staffing_plan.from_date = nowdate()
 		staffing_plan.to_date = add_days(nowdate(), 10)
@@ -63,7 +63,7 @@ class TestStaffingPlan(IntegrationTestCase):
 		if frappe.db.exists("Staffing Plan", "Test 1"):
 			return
 		staffing_plan = frappe.new_doc("Staffing Plan")
-		staffing_plan.agency = "_Test Company 10"
+		staffing_plan.agency = "_Test Agency 10"
 		staffing_plan.name = "Test 1"
 		staffing_plan.from_date = nowdate()
 		staffing_plan.to_date = add_days(nowdate(), 10)
@@ -72,7 +72,7 @@ class TestStaffingPlan(IntegrationTestCase):
 			{"designation": "Designer", "vacancies": 7, "estimated_cost_per_position": 60000},
 		)
 		staffing_plan.insert()
-		self.assertRaises(ParentCompanyError, staffing_plan.submit)
+		self.assertRaises(ParentAgencyError, staffing_plan.submit)
 
 
 def _set_up():
@@ -83,15 +83,15 @@ def _set_up():
 
 def make_agency(name=None, abbr=None):
 	if not name:
-		name = "_Test Company 10"
+		name = "_Test Agency 10"
 
-	if frappe.db.exists("Company", name):
+	if frappe.db.exists("Agency", name):
 		return
 
-	agency = frappe.new_doc("Company")
+	agency = frappe.new_doc("Agency")
 	agency.agency_name = name
 	agency.abbr = abbr or "_TC10"
-	agency.parent_agency = "_Test Company 3"
+	agency.parent_agency = "_Test Agency 3"
 	agency.default_currency = "INR"
 	agency.country = "Pakistan"
 	agency.insert()

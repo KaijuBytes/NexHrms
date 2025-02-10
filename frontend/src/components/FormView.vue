@@ -330,7 +330,7 @@ import WorkflowActionSheet from "@/components/WorkflowActionSheet.vue"
 
 import { FileAttachment, guessStatusColor } from "@/composables"
 import useWorkflow from "@/composables/workflow"
-import { getCompanyCurrency } from "@/data/currencies"
+import { getAgencyCurrency } from "@/data/currencies"
 import { formatCurrency } from "@/utils/formatters"
 
 const props = defineProps({
@@ -712,7 +712,7 @@ function resetForm() {
 }
 
 async function setFormattedCurrency() {
-	const agencyCurrency = await getCompanyCurrency(formModel.value.agency)
+	const agencyCurrency = await getAgencyCurrency(formModel.value.agency)
 
 	props.fields.forEach((field) => {
 		if (field.fieldtype !== "Currency") return

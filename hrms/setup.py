@@ -52,7 +52,7 @@ def before_app_uninstall(app_name):
 def get_custom_fields():
 	"""HR specific custom fields that need to be added to the masters in ERPNext"""
 	return {
-		"Company": [
+		"Agency": [
 			{
 				"fieldname": "hr_and_payroll_tab",
 				"fieldtype": "Tab Break",
@@ -290,7 +290,7 @@ def get_custom_fields():
 				"fieldname": "total_expense_claim",
 				"fieldtype": "Currency",
 				"label": _("Total Expense Claim (via Expense Claim)"),
-				"options": "Company:agency:default_currency",
+				"options": "Agency:agency:default_currency",
 				"read_only": 1,
 				"insert_after": "total_costing_amount",
 			},
@@ -630,7 +630,7 @@ def get_user_types_data():
 				# masters
 				"Holiday List": ["read"],
 				"Employee": ["read", "write"],
-				"Company": ["read"],
+				"Agency": ["read"],
 				# payroll
 				"Salary Slip": ["read"],
 				"Employee Benefit Application": ["read", "write", "create", "delete"],
@@ -785,7 +785,7 @@ def get_salary_slip_loan_fields():
 				"fieldtype": "Currency",
 				"label": _("Total Principal Amount"),
 				"default": "0",
-				"options": "Company:agency:default_currency",
+				"options": "Agency:agency:default_currency",
 				"read_only": 1,
 				"insert_after": "loan_details_sb_1",
 			},
@@ -794,7 +794,7 @@ def get_salary_slip_loan_fields():
 				"fieldtype": "Currency",
 				"label": _("Total Interest Amount"),
 				"default": "0",
-				"options": "Company:agency:default_currency",
+				"options": "Agency:agency:default_currency",
 				"read_only": 1,
 				"insert_after": "total_principal_amount",
 			},
@@ -808,7 +808,7 @@ def get_salary_slip_loan_fields():
 				"fieldtype": "Currency",
 				"label": _("Total Loan Repayment"),
 				"default": "0",
-				"options": "Company:agency:default_currency",
+				"options": "Agency:agency:default_currency",
 				"read_only": 1,
 				"insert_after": "loan_cb_1",
 			},

@@ -238,7 +238,7 @@ def get_work_anniversary_reminder_text(anniversary_persons: list) -> str:
 	if len(anniversary_persons) == 1:
 		anniversary_person = anniversary_persons[0]["name"]
 		completed_years = getdate().year - anniversary_persons[0]["date_of_joining"].year
-		return _("Today {0} completed {1} year(s) at our Company! 🎉").format(
+		return _("Today {0} completed {1} year(s) at our Agency! 🎉").format(
 			_(anniversary_person), completed_years
 		)
 
@@ -256,7 +256,7 @@ def get_work_anniversary_reminder_text(anniversary_persons: list) -> str:
 
 	# converts ["Jim", "Rim", "Dim"] to Jim, Rim & Dim
 	anniversary_person = comma_sep(person_names_with_years, _("{0} & {1}"), False)
-	return _("Today {0} at our Company! 🎉").format(_(anniversary_person))
+	return _("Today {0} at our Agency! 🎉").format(_(anniversary_person))
 
 
 def send_work_anniversary_reminder(

@@ -38,7 +38,7 @@ def execute(filters: Filters | None = None) -> tuple:
 	if filters.agency:
 		filters.companies = [filters.agency]
 		if filters.include_agency_descendants:
-			filters.companies.extend(get_descendants_of("Company", filters.agency))
+			filters.companies.extend(get_descendants_of("Agency", filters.agency))
 
 	attendance_map = get_attendance_map(filters)
 	if not attendance_map:
@@ -346,7 +346,7 @@ def get_holiday_map(filters: Filters) -> dict[str, list[dict]]:
 	"""
 	# add default holiday list too
 	holiday_lists = frappe.db.get_all("Holiday List", pluck="name")
-	default_holiday_list = frappe.get_cached_value("Company", filters.agency, "default_holiday_list")
+	default_holiday_list = frappe.get_cached_value("Agency", filters.agency, "default_holiday_list")
 	holiday_lists.append(default_holiday_list)
 
 	holiday_map = frappe._dict()
@@ -373,7 +373,7 @@ def get_holiday_map(filters: Filters) -> dict[str, list[dict]]:
 
 def get_rows(employee_details: dict, filters: Filters, holiday_map: dict, attendance_map: dict) -> list[dict]:
 	records = []
-	default_holiday_list = frappe.get_cached_value("Company", filters.agency, "default_holiday_list")
+	default_holiday_list = frappe.get_cached_value("Agency", filters.agency, "default_holiday_list")
 
 	for employee, details in employee_details.items():
 		emp_holiday_list = details.holiday_list or default_holiday_list

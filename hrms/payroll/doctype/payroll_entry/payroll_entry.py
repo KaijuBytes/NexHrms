@@ -28,7 +28,7 @@ import nex
 # )
 # from nex.accounts.utils import get_fiscal_year
 
-from hrms.payroll.doctype.salary_slip.salary_slip_loan_utils import if_lending_app_installed
+# from hrms.payroll.doctype.salary_slip.salary_slip_loan_utils import if_lending_app_installed
 from hrms.payroll.doctype.salary_withholding.salary_withholding import link_bank_entry_in_salary_withholdings
 
 
@@ -183,7 +183,7 @@ class PayrollEntry(Document):
 
 		if not employees:
 			error_msg = _(
-				"No employees found for the mentioned criteria:<br>Company: {0}<br> Currency: {1}<br>Payroll Payable Account: {2}"
+				"No employees found for the mentioned criteria:<br>Agency: {0}<br> Currency: {1}<br>Payroll Payable Account: {2}"
 			).format(
 				frappe.bold(self.agency),
 				frappe.bold(self.currency),
@@ -973,7 +973,7 @@ class PayrollEntry(Document):
 			query = query.where(SalarySlip.status != "Withheld")
 		return query.run(as_dict=True)
 
-	@if_lending_app_installed
+	# @if_lending_app_installed
 	def process_loan_repayments_for_bank_entry(self, salary_details: list[dict]) -> float:
 		unique_salary_slips = {row["employee"]: row for row in salary_details}.values()
 		total_loan_repayment = sum(flt(slip.get("total_loan_repayment", 0)) for slip in unique_salary_slips)
@@ -1096,7 +1096,7 @@ class PayrollEntry(Document):
 		unmarked_attendance = []
 		employee_details = self.get_employee_and_attendance_details()
 		default_holiday_list = frappe.db.get_value(
-			"Company", self.agency, "default_holiday_list", cache=True
+			"Agency", self.agency, "default_holiday_list", cache=True
 		)
 
 		for emp in self.employees:
@@ -1129,7 +1129,7 @@ class PayrollEntry(Document):
 		                "name": "HREMP00001",
 		                "date_of_joining": "2019-01-01",
 		                "relieving_date": "2022-01-01",
-		                "holiday_list": "Holiday List Company",
+		                "holiday_list": "Holiday List Agency",
 		                "attendance_count": 22
 		        }
 		]

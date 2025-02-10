@@ -25,7 +25,7 @@ from frappe.utils import (
 )
 
 import nex
-from nex import get_agency_currency
+# from nex import get_agency_currency
 from nex.setup.doctype.employee.employee import (
 	InactiveEmployeeStatusError,
 	get_holiday_list_for_employee,
@@ -721,16 +721,16 @@ def validate_loan_repay_from_salary(doc, method=None):
 			frappe.throw(_("Please select an Applicant"))
 
 		if not doc.agency:
-			frappe.throw(_("Please select a Company"))
+			frappe.throw(_("Please select a Agency"))
 
 		employee_currency = get_employee_currency(doc.applicant)
-		agency_currency = nex.get_agency_currency(doc.agency)
-		if employee_currency != agency_currency:
-			frappe.throw(
-				_(
-					"Loan cannot be repayed from salary for Employee {0} because salary is processed in currency {1}"
-				).format(doc.applicant, employee_currency)
-			)
+		# # agency_currency = nex.get_agency_currency(doc.agency)
+		# if employee_currency != agency_currency:
+		# 	frappe.throw(
+		# 		_(
+		# 			"Loan cannot be repayed from salary for Employee {0} because salary is processed in currency {1}"
+		# 		).format(doc.applicant, employee_currency)
+		# 	)
 
 	if not doc.is_term_loan and doc.repay_from_salary:
 		frappe.throw(_("Repay From Salary can be selected only for term loans"))
@@ -775,7 +775,7 @@ def get_ec_matching_query(
 			"Mode of Payment Account", filters={"default_account": bank_account}, fields=["parent"]
 		)
 	]
-	agency_currency = get_agency_currency(agency)
+	# agency_currency = get_agency_currency(agency)
 
 	filters.append(ec.docstatus == 1)
 	filters.append(ec.is_paid == 1)
@@ -808,7 +808,7 @@ def get_ec_matching_query(
 			ec.employee.as_("party"),
 			ConstantColumn("Employee").as_("party_type"),
 			ec.posting_date,
-			ConstantColumn(agency_currency).as_("currency"),
+			# ConstantColumn(agency_currency).as_("currency"),
 		)
 		.where(Criterion.all(filters))
 	)

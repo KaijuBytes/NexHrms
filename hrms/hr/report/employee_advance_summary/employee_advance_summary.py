@@ -51,10 +51,10 @@ def get_columns():
 			"width": 120,
 		},
 		{
-			"label": _("Company"),
+			"label": _("Agency"),
 			"fieldname": "agency",
 			"fieldtype": "Link",
-			"options": "Company",
+			"options": "Agency",
 			"width": 120,
 		},
 		{"label": _("Posting Date"), "fieldname": "posting_date", "fieldtype": "Date", "width": 120},

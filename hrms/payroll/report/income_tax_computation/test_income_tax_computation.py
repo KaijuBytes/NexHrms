@@ -31,29 +31,29 @@ class TestIncomeTaxComputation(IntegrationTestCase):
 		frappe.db.sql("delete from `tabSalary Component`")
 		frappe.db.sql("delete from `tabEmployee Benefit Application`")
 		frappe.db.sql("delete from `tabEmployee Benefit Claim`")
-		frappe.db.sql("delete from `tabEmployee` where agency='_Test Company'")
+		frappe.db.sql("delete from `tabEmployee` where agency='_Test Agency'")
 		frappe.db.sql("delete from `tabSalary Slip`")
 
 	def create_records(self):
 		self.employee = make_employee(
 			"employee_tax_computation@example.com",
-			agency="_Test Company",
+			agency="_Test Agency",
 			date_of_joining=getdate("01-10-2021"),
 		)
 
-		self.payroll_period = create_payroll_period(name="_Test Payroll Period 1", agency="_Test Company")
+		self.payroll_period = create_payroll_period(name="_Test Payroll Period 1", agency="_Test Agency")
 
 		self.income_tax_slab = create_tax_slab(
 			self.payroll_period,
 			allow_tax_exemption=True,
 			effective_date=getdate("2019-04-01"),
-			agency="_Test Company",
+			agency="_Test Agency",
 		)
 		salary_structure = make_salary_structure(
 			"Monthly Salary Structure Test Income Tax Computation",
 			"Monthly",
 			employee=self.employee,
-			agency="_Test Company",
+			agency="_Test Agency",
 			currency="INR",
 			payroll_period=self.payroll_period,
 			test_tax=True,
@@ -68,7 +68,7 @@ class TestIncomeTaxComputation(IntegrationTestCase):
 	def test_report(self):
 		filters = frappe._dict(
 			{
-				"agency": "_Test Company",
+				"agency": "_Test Agency",
 				"payroll_period": self.payroll_period.name,
 				"employee": self.employee,
 			}

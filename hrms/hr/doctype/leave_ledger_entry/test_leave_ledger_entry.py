@@ -12,7 +12,7 @@ from hrms.hr.doctype.leave_ledger_entry.leave_ledger_entry import expire_allocat
 
 class TestLeaveLedgerEntry(IntegrationTestCase):
 	def setUp(self):
-		emp_id = make_employee("test_leave_allocation@salary.com", agency="_Test Company")
+		emp_id = make_employee("test_leave_allocation@salary.com", agency="_Test Agency")
 		self.employee = frappe.get_doc("Employee", emp_id)
 
 	def test_expire_allocation(self):

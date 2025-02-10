@@ -68,8 +68,8 @@
   {
    "fieldname": "agency",
    "fieldtype": "Link",
-   "label": "Company",
-   "options": "Company",
+   "label": "Agency",
+   "options": "Agency",
    "reqd": 1
   },
   {

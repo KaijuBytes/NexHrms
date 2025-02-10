@@ -11,7 +11,7 @@ def execute(filters=None):
 		filters = {}
 
 	if not filters["agency"]:
-		frappe.throw(_("{0} is mandatory").format(_("Company")))
+		frappe.throw(_("{0} is mandatory").format(_("Agency")))
 
 	columns = get_columns()
 	employees = get_employees(filters)
@@ -34,7 +34,7 @@ def get_columns():
 		_("Department") + ":Link/Department:120",
 		_("Designation") + ":Link/Designation:120",
 		_("Gender") + "::100",
-		_("Company") + ":Link/Company:120",
+		_("Agency") + ":Link/Agency:120",
 	]
 
 

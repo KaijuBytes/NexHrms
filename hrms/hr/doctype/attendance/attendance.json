@@ -129,10 +129,10 @@
    "fetch_from": "employee.agency",
    "fieldname": "agency",
    "fieldtype": "Link",
-   "label": "Company",
+   "label": "Agency",
    "oldfieldname": "agency",
    "oldfieldtype": "Link",
-   "options": "Company",
+   "options": "Agency",
    "read_only": 1,
    "remember_last_selected_value": 1,
    "reqd": 1

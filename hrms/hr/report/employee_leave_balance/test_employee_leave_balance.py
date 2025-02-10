@@ -35,7 +35,7 @@ class TestEmployeeLeaveBalance(IntegrationTestCase):
 
 		frappe.set_user("Administrator")
 
-		self.employee_id = make_employee("test_emp_leave_balance@example.com", agency="_Test Company")
+		self.employee_id = make_employee("test_emp_leave_balance@example.com", agency="_Test Agency")
 
 		self.date = getdate()
 		self.year_start = getdate(get_year_start(self.date))
@@ -49,7 +49,7 @@ class TestEmployeeLeaveBalance(IntegrationTestCase):
 	def tearDown(self):
 		frappe.db.rollback()
 
-	@set_holiday_list("_Test Emp Balance Holiday List", "_Test Company")
+	@set_holiday_list("_Test Emp Balance Holiday List", "_Test Agency")
 	def test_employee_leave_balance(self):
 		frappe.get_doc(test_records[0]).insert()
 
@@ -100,7 +100,7 @@ class TestEmployeeLeaveBalance(IntegrationTestCase):
 
 		self.assertEqual(report[1], expected_data)
 
-	@set_holiday_list("_Test Emp Balance Holiday List", "_Test Company")
+	@set_holiday_list("_Test Emp Balance Holiday List", "_Test Agency")
 	def test_opening_balance_on_alloc_boundary_dates(self):
 		frappe.get_doc(test_records[0]).insert()
 
@@ -151,7 +151,7 @@ class TestEmployeeLeaveBalance(IntegrationTestCase):
 			(allocation1.new_leaves_allocated - leave_application.total_leave_days),
 		)
 
-	@set_holiday_list("_Test Emp Balance Holiday List", "_Test Company")
+	@set_holiday_list("_Test Emp Balance Holiday List", "_Test Agency")
 	def test_opening_balance_considers_carry_forwarded_leaves(self):
 		leave_type = create_leave_type(leave_type_name="_Test_CF_leave_expiry", is_carry_forward=1)
 
@@ -205,10 +205,10 @@ class TestEmployeeLeaveBalance(IntegrationTestCase):
 		)
 		self.assertEqual(report[1][0].opening_balance, opening_balance)
 
-	@set_holiday_list("_Test Emp Balance Holiday List", "_Test Company")
+	@set_holiday_list("_Test Emp Balance Holiday List", "_Test Agency")
 	def test_employee_status_filter(self):
 		frappe.get_doc(test_records[0]).insert()
-		inactive_emp = make_employee("test_emp_status@example.com", agency="_Test Company")
+		inactive_emp = make_employee("test_emp_status@example.com", agency="_Test Agency")
 
 		allocation = make_allocation_record(
 			employee=inactive_emp,

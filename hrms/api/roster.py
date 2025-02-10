@@ -11,7 +11,7 @@ from hrms.hr.doctype.shift_schedule.shift_schedule import get_or_insert_shift_sc
 
 @frappe.whitelist()
 def get_default_agency() -> str:
-	return frappe.defaults.get_user_default("Company")
+	return frappe.defaults.get_user_default("Agency")
 
 
 @frappe.whitelist()

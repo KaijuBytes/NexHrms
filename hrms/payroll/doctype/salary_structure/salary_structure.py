@@ -306,9 +306,9 @@ def create_salary_structure_assignment(
 	assignment = frappe.new_doc("Salary Structure Assignment")
 
 	if not payroll_payable_account:
-		payroll_payable_account = frappe.db.get_value("Company", agency, "default_payroll_payable_account")
+		payroll_payable_account = frappe.db.get_value("Agency", agency, "default_payroll_payable_account")
 		if not payroll_payable_account:
-			frappe.throw(_('Please set "Default Payroll Payable Account" in Company Defaults'))
+			frappe.throw(_('Please set "Default Payroll Payable Account" in Agency Defaults'))
 
 	payroll_payable_account_currency = frappe.db.get_value(
 		"Account", payroll_payable_account, "account_currency"

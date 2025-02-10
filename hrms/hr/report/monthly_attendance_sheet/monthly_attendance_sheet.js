@@ -46,10 +46,10 @@ frappe.query_reports["Monthly Attendance Sheet"] = {
 		},
 		{
 			fieldname: "agency",
-			label: __("Company"),
+			label: __("Agency"),
 			fieldtype: "Link",
-			options: "Company",
-			default: frappe.defaults.get_user_default("Company"),
+			options: "Agency",
+			default: frappe.defaults.get_user_default("Agency"),
 			reqd: 1,
 		},
 		{
@@ -60,7 +60,7 @@ frappe.query_reports["Monthly Attendance Sheet"] = {
 		},
 		{
 			fieldname: "include_agency_descendants",
-			label: __("Include Company Descendants"),
+			label: __("Include Agency Descendants"),
 			fieldtype: "Check",
 			default: 1,
 		},

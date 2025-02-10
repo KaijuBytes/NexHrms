@@ -32,8 +32,8 @@
    "fieldname": "agency",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Company",
-   "options": "Company",
+   "label": "Agency",
+   "options": "Agency",
    "remember_last_selected_value": 1,
    "reqd": 1
   },
@@ -43,7 +43,7 @@
    "fieldname": "applies_to_all_departments",
    "fieldtype": "Check",
    "in_list_view": 1,
-   "label": "Applies to Company"
+   "label": "Applies to Agency"
   },
   {
    "description": "Stop users from making Leave Applications on following days.",

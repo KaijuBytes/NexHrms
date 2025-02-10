@@ -12,12 +12,12 @@
 # 	from frappe.desk.page.setup_wizard.setup_wizard import setup_complete
 
 # 	year = now_datetime().year
-# 	if not frappe.get_list("Company"):
+# 	if not frappe.get_list("Agency"):
 # 		setup_complete(
 # 			{
 # 				"currency": "INR",
 # 				"full_name": "Test User",
-# 				"agency_name": "_Test Company",
+# 				"agency_name": "_Test Agency",
 # 				"timezone": "Asia/Kolkata",
 # 				"agency_abbr": "_TC",
 # 				"industry": "Manufacturing",
@@ -41,7 +41,7 @@
 # 	from hrms.payroll.doctype.salary_slip.test_salary_slip import make_holiday_list
 
 # 	make_holiday_list("Salary Slip Test Holiday List")
-# 	frappe.db.set_value("Company", "_Test Company", "default_holiday_list", "Salary Slip Test Holiday List")
+# 	frappe.db.set_value("Agency", "_Test Agency", "default_holiday_list", "Salary Slip Test Holiday List")
 
 
 # def get_first_sunday(holiday_list="Salary Slip Test Holiday List", for_date=None, find_after_for_date=False):
@@ -88,13 +88,13 @@
 # 	holiday_list.save()
 
 
-# def create_agency(name: str = "_Test Company", is_group: 0 | 1 = 0, parent_agency: str | None = None):
-# 	if frappe.db.exists("Company", name):
-# 		return frappe.get_doc("Company", name)
+# def create_agency(name: str = "_Test Agency", is_group: 0 | 1 = 0, parent_agency: str | None = None):
+# 	if frappe.db.exists("Agency", name):
+# 		return frappe.get_doc("Agency", name)
 
 # 	return frappe.get_doc(
 # 		{
-# 			"doctype": "Company",
+# 			"doctype": "Agency",
 # 			"agency_name": name,
 # 			"default_currency": "INR",
 # 			"country": "India",
@@ -104,14 +104,14 @@
 # 	).insert()
 
 
-# def create_department(name: str, agency: str = "_Test Company") -> str:
+# def create_department(name: str, agency: str = "_Test Agency") -> str:
 # 	# docname = get_abbreviated_name(name, agency)
 
 # 	if frappe.db.exists("Department", docname):
 # 		return docname
 
 # 	department = frappe.new_doc("Department")
-# 	department.update({"doctype": "Department", "department_name": name, "agency": "_Test Company"})
+# 	department.update({"doctype": "Department", "department_name": name, "agency": "_Test Agency"})
 # 	department.insert()
 # 	return department.name
 

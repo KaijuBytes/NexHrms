@@ -54,9 +54,9 @@ class TestLeaveEncashment(IntegrationTestCase):
 		leave_policy.submit()
 
 		# create employee, salary structure and assignment
-		self.employee = make_employee("test_employee_encashment@example.com", agency="_Test Company")
+		self.employee = make_employee("test_employee_encashment@example.com", agency="_Test Agency")
 
-		self.leave_period = create_leave_period(year_start, year_end, "_Test Company")
+		self.leave_period = create_leave_period(year_start, year_end, "_Test Agency")
 
 		data = {
 			"assignment_based_on": "Leave Period",
@@ -73,7 +73,7 @@ class TestLeaveEncashment(IntegrationTestCase):
 			other_details={"leave_encashment_amount_per_day": 50},
 		)
 
-	@set_holiday_list("_Test Leave Encashment", "_Test Company")
+	@set_holiday_list("_Test Leave Encashment", "_Test Agency")
 	def test_leave_balance_value_and_amount(self):
 		leave_encashment = frappe.get_doc(
 			dict(
@@ -99,7 +99,7 @@ class TestLeaveEncashment(IntegrationTestCase):
 		)
 		self.assertEqual(additional_salary_amount, leave_encashment.encashment_amount)
 
-	@set_holiday_list("_Test Leave Encashment", "_Test Company")
+	@set_holiday_list("_Test Leave Encashment", "_Test Agency")
 	def test_non_encashable_leaves_setting(self):
 		frappe.db.set_value(
 			"Leave Type",
@@ -144,7 +144,7 @@ class TestLeaveEncashment(IntegrationTestCase):
 		)
 		self.assertEqual(additional_salary_amount, leave_encashment.encashment_amount)
 
-	@set_holiday_list("_Test Leave Encashment", "_Test Company")
+	@set_holiday_list("_Test Leave Encashment", "_Test Agency")
 	def test_max_encashable_leaves_setting(self):
 		frappe.db.set_value(
 			"Leave Type",
@@ -188,7 +188,7 @@ class TestLeaveEncashment(IntegrationTestCase):
 		)
 		self.assertEqual(additional_salary_amount, leave_encashment.encashment_amount)
 
-	@set_holiday_list("_Test Leave Encashment", "_Test Company")
+	@set_holiday_list("_Test Leave Encashment", "_Test Agency")
 	def test_max_encashable_leaves_and_non_encashable_leaves_setting(self):
 		frappe.db.set_value(
 			"Leave Type",
@@ -233,7 +233,7 @@ class TestLeaveEncashment(IntegrationTestCase):
 		)
 		self.assertEqual(additional_salary_amount, leave_encashment.encashment_amount)
 
-	@set_holiday_list("_Test Leave Encashment", "_Test Company")
+	@set_holiday_list("_Test Leave Encashment", "_Test Agency")
 	def test_creation_of_leave_ledger_entry_on_submit(self):
 		leave_encashment = frappe.get_doc(
 			dict(
@@ -262,9 +262,9 @@ class TestLeaveEncashment(IntegrationTestCase):
 		leave_encashment.cancel()
 		self.assertFalse(frappe.db.exists("Leave Ledger Entry", {"transaction_name": leave_encashment.name}))
 
-	@set_holiday_list("_Test Leave Encashment", "_Test Company")
+	@set_holiday_list("_Test Leave Encashment", "_Test Agency")
 	def test_unused_leaves_after_leave_encashment_for_carry_forwarding_leave_type(self):
-		employee = make_employee("test_employee2_encashment@example.com", agency="_Test Company")
+		employee = make_employee("test_employee2_encashment@example.com", agency="_Test Agency")
 		# allocated 10 leaves, encashed 5
 		leave_encashment = self.get_encashment_created_after_leave_period(
 			employee, is_carry_forward=1, encashment_days=5
@@ -290,9 +290,9 @@ class TestLeaveEncashment(IntegrationTestCase):
 		)
 		self.assertEqual(unused_leaves, 5)
 
-	@set_holiday_list("_Test Leave Encashment", "_Test Company")
+	@set_holiday_list("_Test Leave Encashment", "_Test Agency")
 	def test_leave_expiry_after_leave_encashment_for_non_carry_forwarding_leave_type(self):
-		employee = make_employee("test_employee3_encashment@example.com", agency="_Test Company")
+		employee = make_employee("test_employee3_encashment@example.com", agency="_Test Agency")
 		# allocated 10 leaves, encashed 3
 
 		leave_encashment = self.get_encashment_created_after_leave_period(
@@ -328,7 +328,7 @@ class TestLeaveEncashment(IntegrationTestCase):
 		# create new leave period that has end date of yesterday
 		start_date = add_days(getdate(), -30)
 		end_date = add_days(getdate(), -1)
-		self.leave_period = create_leave_period(start_date, end_date, "_Test Company")
+		self.leave_period = create_leave_period(start_date, end_date, "_Test Agency")
 		frappe.db.set_value(
 			"Leave Type",
 			self.leave_type,

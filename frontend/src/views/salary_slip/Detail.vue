@@ -53,7 +53,7 @@ import { createResource, ErrorMessage } from "frappe-ui"
 import FormView from "@/components/FormView.vue"
 import SalaryDetailTable from "@/components/SalaryDetailTable.vue"
 
-import { getCompanyCurrency } from "@/data/currencies"
+import { getAgencyCurrency } from "@/data/currencies"
 
 const props = defineProps({
 	id: {
@@ -91,16 +91,16 @@ watch(
 	async (agency) => {
 		if (!agency) return
 
-		const agencyCurrency = await getCompanyCurrency(agency)
+		const agencyCurrency = await getAgencyCurrency(agency)
 
 		formFields.data?.map((field) => {
-			if (field.label?.includes("Company Currency")) {
+			if (field.label?.includes("Agency Currency")) {
 				if (salarySlip.value.currency === agencyCurrency) {
 					// hide base currency fields
 					field.hidden = true
 				} else {
 					// set currency in label
-					field.label = field.label.replace("Company Currency", agencyCurrency)
+					field.label = field.label.replace("Agency Currency", agencyCurrency)
 				}
 			}
 		})

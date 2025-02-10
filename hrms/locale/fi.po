@@ -456,7 +456,7 @@ msgid "Account {0} does not belong to agency: {1}"
 msgstr ""
 
 #: hr/doctype/expense_claim_type/expense_claim_type.py:29
-msgid "Account {0} does not match with Company {1}"
+msgid "Account {0} does not match with Agency {1}"
 msgstr ""
 
 #. Label of a Card Break in the Salary Payout Workspace
@@ -1438,7 +1438,7 @@ msgstr ""
 #. Label of a Check field in DocType 'Leave Block List'
 #: hr/doctype/leave_block_list/leave_block_list.json
 msgctxt "Leave Block List"
-msgid "Applies to Company"
+msgid "Applies to Agency"
 msgstr "koskee yritystä"
 
 #: templates/generators/job_opening.html:21
@@ -2691,325 +2691,325 @@ msgstr ""
 #: payroll/report/salary_register/salary_register.js:39
 #: payroll/report/salary_register/salary_register.py:156
 #: public/js/salary_slip_deductions_report_filters.js:7
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Additional Salary'
 #: payroll/doctype/additional_salary/additional_salary.json
 msgctxt "Additional Salary"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Appointment Letter'
 #: hr/doctype/appointment_letter/appointment_letter.json
 msgctxt "Appointment Letter"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Appraisal'
 #: hr/doctype/appraisal/appraisal.json
 msgctxt "Appraisal"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Appraisal Cycle'
 #: hr/doctype/appraisal_cycle/appraisal_cycle.json
 msgctxt "Appraisal Cycle"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Attendance'
 #: hr/doctype/attendance/attendance.json
 msgctxt "Attendance"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Attendance Request'
 #: hr/doctype/attendance_request/attendance_request.json
 msgctxt "Attendance Request"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link in the HR Workspace
 #: hr/workspace/hr/hr.json
-msgctxt "Company"
-msgid "Company"
+msgctxt "Agency"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Employee Advance'
 #: hr/doctype/employee_advance/employee_advance.json
 msgctxt "Employee Advance"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Employee Attendance Tool'
 #: hr/doctype/employee_attendance_tool/employee_attendance_tool.json
 msgctxt "Employee Attendance Tool"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Employee Benefit Application'
 #: payroll/doctype/employee_benefit_application/employee_benefit_application.json
 msgctxt "Employee Benefit Application"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Employee Benefit Claim'
 #: payroll/doctype/employee_benefit_claim/employee_benefit_claim.json
 msgctxt "Employee Benefit Claim"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Employee Incentive'
 #: payroll/doctype/employee_incentive/employee_incentive.json
 msgctxt "Employee Incentive"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Employee Onboarding'
 #: hr/doctype/employee_onboarding/employee_onboarding.json
 msgctxt "Employee Onboarding"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Employee Onboarding Template'
 #: hr/doctype/employee_onboarding_template/employee_onboarding_template.json
 msgctxt "Employee Onboarding Template"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Employee Other Income'
 #: payroll/doctype/employee_other_income/employee_other_income.json
 msgctxt "Employee Other Income"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Employee Performance Feedback'
 #: hr/doctype/employee_performance_feedback/employee_performance_feedback.json
 msgctxt "Employee Performance Feedback"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Employee Promotion'
 #: hr/doctype/employee_promotion/employee_promotion.json
 msgctxt "Employee Promotion"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Employee Separation'
 #: hr/doctype/employee_separation/employee_separation.json
 msgctxt "Employee Separation"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Employee Separation Template'
 #: hr/doctype/employee_separation_template/employee_separation_template.json
 msgctxt "Employee Separation Template"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Employee Tax Exemption Declaration'
 #: payroll/doctype/employee_tax_exemption_declaration/employee_tax_exemption_declaration.json
 msgctxt "Employee Tax Exemption Declaration"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Employee Tax Exemption Proof Submission'
 #: payroll/doctype/employee_tax_exemption_proof_submission/employee_tax_exemption_proof_submission.json
 msgctxt "Employee Tax Exemption Proof Submission"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Employee Transfer'
 #: hr/doctype/employee_transfer/employee_transfer.json
 msgctxt "Employee Transfer"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Exit Interview'
 #: hr/doctype/exit_interview/exit_interview.json
 msgctxt "Exit Interview"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Expense Claim'
 #: hr/doctype/expense_claim/expense_claim.json
 msgctxt "Expense Claim"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Expense Claim Account'
 #: hr/doctype/expense_claim_account/expense_claim_account.json
 msgctxt "Expense Claim Account"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Full and Final Statement'
 #: hr/doctype/full_and_final_statement/full_and_final_statement.json
 msgctxt "Full and Final Statement"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Goal'
 #: hr/doctype/goal/goal.json
 msgctxt "Goal"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Gratuity'
 #: payroll/doctype/gratuity/gratuity.json
 msgctxt "Gratuity"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Income Tax Slab'
 #: payroll/doctype/income_tax_slab/income_tax_slab.json
 msgctxt "Income Tax Slab"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Job Offer'
 #: hr/doctype/job_offer/job_offer.json
 msgctxt "Job Offer"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Job Opening'
 #: hr/doctype/job_opening/job_opening.json
 msgctxt "Job Opening"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Job Requisition'
 #: hr/doctype/job_requisition/job_requisition.json
 msgctxt "Job Requisition"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Leave Allocation'
 #: hr/doctype/leave_allocation/leave_allocation.json
 msgctxt "Leave Allocation"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Leave Application'
 #: hr/doctype/leave_application/leave_application.json
 msgctxt "Leave Application"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Leave Block List'
 #: hr/doctype/leave_block_list/leave_block_list.json
 msgctxt "Leave Block List"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Leave Control Panel'
 #: hr/doctype/leave_control_panel/leave_control_panel.json
 msgctxt "Leave Control Panel"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Leave Encashment'
 #: hr/doctype/leave_encashment/leave_encashment.json
 msgctxt "Leave Encashment"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Leave Ledger Entry'
 #: hr/doctype/leave_ledger_entry/leave_ledger_entry.json
 msgctxt "Leave Ledger Entry"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Leave Period'
 #: hr/doctype/leave_period/leave_period.json
 msgctxt "Leave Period"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Leave Policy Assignment'
 #: hr/doctype/leave_policy_assignment/leave_policy_assignment.json
 msgctxt "Leave Policy Assignment"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Payroll Entry'
 #: payroll/doctype/payroll_entry/payroll_entry.json
 msgctxt "Payroll Entry"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Payroll Period'
 #: payroll/doctype/payroll_period/payroll_period.json
 msgctxt "Payroll Period"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Retention Bonus'
 #: payroll/doctype/retention_bonus/retention_bonus.json
 msgctxt "Retention Bonus"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Salary Component Account'
 #: payroll/doctype/salary_component_account/salary_component_account.json
 msgctxt "Salary Component Account"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Salary Slip'
 #: payroll/doctype/salary_slip/salary_slip.json
 msgctxt "Salary Slip"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Salary Structure'
 #: payroll/doctype/salary_structure/salary_structure.json
 msgctxt "Salary Structure"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Salary Structure Assignment'
 #: payroll/doctype/salary_structure_assignment/salary_structure_assignment.json
 msgctxt "Salary Structure Assignment"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Shift Assignment'
 #: hr/doctype/shift_assignment/shift_assignment.json
 msgctxt "Shift Assignment"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Shift Request'
 #: hr/doctype/shift_request/shift_request.json
 msgctxt "Shift Request"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Staffing Plan'
 #: hr/doctype/staffing_plan/staffing_plan.json
 msgctxt "Staffing Plan"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Training Event'
 #: hr/doctype/training_event/training_event.json
 msgctxt "Training Event"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Training Program'
 #: hr/doctype/training_program/training_program.json
 msgctxt "Training Program"
-msgid "Company"
+msgid "Agency"
 msgstr ""
 
 #. Label of a Section Break field in DocType 'Job Opening'
 #: hr/doctype/job_opening/job_opening.json
 msgctxt "Job Opening"
-msgid "Company Details"
+msgid "Agency Details"
 msgstr ""
 
 #. Name of a DocType
@@ -7983,7 +7983,7 @@ msgstr "bruttomaksu"
 #. Label of a Currency field in DocType 'Salary Slip'
 #: payroll/doctype/salary_slip/salary_slip.json
 msgctxt "Salary Slip"
-msgid "Gross Pay (Company Currency)"
+msgid "Gross Pay (Agency Currency)"
 msgstr ""
 
 #. Label of a Currency field in DocType 'Salary Slip'
@@ -7995,7 +7995,7 @@ msgstr ""
 #. Label of a Currency field in DocType 'Salary Slip'
 #: payroll/doctype/salary_slip/salary_slip.json
 msgctxt "Salary Slip"
-msgid "Gross Year To Date(Company Currency)"
+msgid "Gross Year To Date(Agency Currency)"
 msgstr ""
 
 #: hr/report/daily_work_summary_replies/daily_work_summary_replies.js:9
@@ -8434,7 +8434,7 @@ msgstr ""
 #. Label of a Currency field in DocType 'Salary Slip'
 #: payroll/doctype/salary_slip/salary_slip.json
 msgctxt "Salary Slip"
-msgid "Hour Rate (Company Currency)"
+msgid "Hour Rate (Agency Currency)"
 msgstr ""
 
 #. Label of a Float field in DocType 'Training Result Employee'
@@ -10703,7 +10703,7 @@ msgstr ""
 #. Label of a Currency field in DocType 'Salary Slip'
 #: payroll/doctype/salary_slip/salary_slip.json
 msgctxt "Salary Slip"
-msgid "Month To Date(Company Currency)"
+msgid "Month To Date(Agency Currency)"
 msgstr ""
 
 #. Option for a Select field in DocType 'HR Settings'
@@ -10844,7 +10844,7 @@ msgstr "Nettomaksu"
 #. Label of a Currency field in DocType 'Salary Slip'
 #: payroll/doctype/salary_slip/salary_slip.json
 msgctxt "Salary Slip"
-msgid "Net Pay (Company Currency)"
+msgid "Net Pay (Agency Currency)"
 msgstr ""
 
 #. Label of a Tab Break field in DocType 'Salary Slip'
@@ -10878,7 +10878,7 @@ msgstr ""
 #. Label of a Link field in DocType 'Employee Transfer'
 #: hr/doctype/employee_transfer/employee_transfer.json
 msgctxt "Employee Transfer"
-msgid "New Company"
+msgid "New Agency"
 msgstr ""
 
 #. Label of a Link field in DocType 'Employee Transfer'
@@ -10987,7 +10987,7 @@ msgid "No employees found"
 msgstr ""
 
 #: payroll/doctype/payroll_entry/payroll_entry.py:172
-msgid "No employees found for the mentioned criteria:<br>Company: {0}<br> Currency: {1}<br>Payroll Payable Account: {2}"
+msgid "No employees found for the mentioned criteria:<br>Agency: {0}<br> Currency: {1}<br>Payroll Payable Account: {2}"
 msgstr ""
 
 #: hr/doctype/appraisal_cycle/appraisal_cycle.py:67
@@ -12024,7 +12024,7 @@ msgid "Please Enable Auto Attendance and complete the setup first."
 msgstr ""
 
 #: payroll/doctype/retention_bonus/retention_bonus.js:8
-msgid "Please Select Company First"
+msgid "Please Select Agency First"
 msgstr ""
 
 #: payroll/doctype/employee_benefit_application/employee_benefit_application.py:94
@@ -12060,7 +12060,7 @@ msgid "Please enter the designation"
 msgstr "Anna nimitys"
 
 #: hr/doctype/staffing_plan/staffing_plan.py:224
-msgid "Please select Company and Designation"
+msgid "Please select Agency and Designation"
 msgstr "Valitse Yritys ja nimike"
 
 #: payroll/doctype/employee_tax_exemption_proof_submission/employee_tax_exemption_proof_submission.js:22
@@ -12073,7 +12073,7 @@ msgid "Please select Employee first."
 msgstr "Valitse ensin Työntekijä."
 
 #: hr/utils.py:696
-msgid "Please select a Company"
+msgid "Please select a Agency"
 msgstr ""
 
 #: public/js/hierarchy_chart/hierarchy_chart_mobile.js:229
@@ -12130,11 +12130,11 @@ msgid "Please select {0}"
 msgstr ""
 
 #: payroll/doctype/salary_structure/salary_structure.py:271
-msgid "Please set \"Default Payroll Payable Account\" in Company Defaults"
+msgid "Please set \"Default Payroll Payable Account\" in Agency Defaults"
 msgstr ""
 
 #: regional/india/utils.py:18
-msgid "Please set Basic and HRA component in Company {0}"
+msgid "Please set Basic and HRA component in Agency {0}"
 msgstr ""
 
 #: hr/doctype/leave_encashment/leave_encashment.py:49
@@ -12151,7 +12151,7 @@ msgstr ""
 
 #: hr/doctype/employee_advance/employee_advance.py:172
 #: hr/doctype/employee_advance/employee_advance.py:276
-msgid "Please set a Default Cash Account in Company defaults"
+msgid "Please set a Default Cash Account in Agency defaults"
 msgstr ""
 
 #: payroll/doctype/payroll_entry/payroll_entry.py:297
@@ -12171,7 +12171,7 @@ msgid "Please set the Appraisal Template for all the {0} or select the template 
 msgstr ""
 
 #: hr/doctype/expense_claim/expense_claim.js:41
-msgid "Please set the Company"
+msgid "Please set the Agency"
 msgstr "Aseta Yhtiö"
 
 #: payroll/doctype/salary_slip/salary_slip.py:251
@@ -13224,7 +13224,7 @@ msgstr ""
 #. Label of a Currency field in DocType 'Salary Slip'
 #: payroll/doctype/salary_slip/salary_slip.json
 msgctxt "Salary Slip"
-msgid "Rounded Total (Company Currency)"
+msgid "Rounded Total (Agency Currency)"
 msgstr ""
 
 #. Label of a Select field in DocType 'Leave Type'
@@ -13638,7 +13638,7 @@ msgid "Sales Invoice"
 msgstr ""
 
 #: hr/doctype/expense_claim_type/expense_claim_type.py:22
-msgid "Same Company is entered more than once"
+msgid "Same Agency is entered more than once"
 msgstr ""
 
 #: hr/report/unpaid_expense_claim/unpaid_expense_claim.py:21
@@ -13709,7 +13709,7 @@ msgstr ""
 
 #: public/js/hierarchy_chart/hierarchy_chart_desktop.js:78
 #: public/js/hierarchy_chart/hierarchy_chart_mobile.js:69
-msgid "Select Company"
+msgid "Select Agency"
 msgstr ""
 
 #. Label of a Section Break field in DocType 'Employee Attendance Tool'
@@ -15473,7 +15473,7 @@ msgid "Today is {0}'s birthday 🎉"
 msgstr ""
 
 #: controllers/employee_reminders.py:258
-msgid "Today {0} at our Company! 🎉"
+msgid "Today {0} at our Agency! 🎉"
 msgstr ""
 
 #: hr/report/daily_work_summary_replies/daily_work_summary_replies.py:29
@@ -15576,7 +15576,7 @@ msgstr "Vähennys yhteensä"
 #. Label of a Currency field in DocType 'Salary Slip'
 #: payroll/doctype/salary_slip/salary_slip.json
 msgctxt "Salary Slip"
-msgid "Total Deduction (Company Currency)"
+msgid "Total Deduction (Agency Currency)"
 msgstr ""
 
 #: hr/report/monthly_attendance_sheet/monthly_attendance_sheet.py:133
@@ -15763,7 +15763,7 @@ msgstr "Sanat yhteensä"
 #. Label of a Data field in DocType 'Salary Slip'
 #: payroll/doctype/salary_slip/salary_slip.json
 msgctxt "Salary Slip"
-msgid "Total in words (Company Currency)"
+msgid "Total in words (Agency Currency)"
 msgstr ""
 
 #: hr/doctype/leave_allocation/leave_allocation.py:248
@@ -16731,7 +16731,7 @@ msgstr ""
 #. Label of a Currency field in DocType 'Salary Slip'
 #: payroll/doctype/salary_slip/salary_slip.json
 msgctxt "Salary Slip"
-msgid "Year To Date(Company Currency)"
+msgid "Year To Date(Agency Currency)"
 msgstr ""
 
 #. Option for a Select field in DocType 'Leave Type'

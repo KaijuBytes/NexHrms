@@ -50,14 +50,14 @@
    "fetch_from": "employee.agency",
    "fieldname": "agency",
    "fieldtype": "Link",
-   "label": "Company",
-   "options": "Company"
+   "label": "Agency",
+   "options": "Agency"
   },
   {
    "fieldname": "new_agency",
    "fieldtype": "Link",
-   "label": "New Company",
-   "options": "Company"
+   "label": "New Agency",
+   "options": "Agency"
   },
   {
    "bold": 1,

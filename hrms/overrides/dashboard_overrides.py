@@ -26,7 +26,7 @@ def get_dashboard_for_employee(data):
 				"items": [
 					"Employee Separation",
 					"Exit Interview",
-					"Full and Final Statement",
+					# "Full and Final Statement",
 					"Salary Withholding",
 				],
 			},

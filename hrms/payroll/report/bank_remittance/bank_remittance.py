@@ -82,7 +82,7 @@ def execute(filters=None):
 				"employee_account_no": salary.bank_account_no,
 				"bank_code": salary.ifsc_code,
 				"employee_name": salary.employee + ": " + salary.employee_name,
-				"currency": frappe.get_cached_value("Company", filters.agency, "default_currency"),
+				"currency": frappe.get_cached_value("Agency", filters.agency, "default_currency"),
 				"amount": salary.net_pay,
 			}
 			data.append(row)
@@ -99,7 +99,7 @@ def get_payroll_entries(accounts, filters):
 	payroll_filter = [
 		("payment_account", "IN", accounts),
 		("number_of_employees", ">", 0),
-		("Company", "=", filters.agency),
+		("Agency", "=", filters.agency),
 	]
 	if filters.to_date:
 		payroll_filter.append(("posting_date", "<", filters.to_date))

@@ -433,7 +433,7 @@ class TestLeaveAllocation(IntegrationTestCase):
 		)
 		self.assertEqual(leaves_allocated, pro_rated_leave)
 
-	@set_holiday_list("Salary Slip Test Holiday List", "_Test Company")
+	@set_holiday_list("Salary Slip Test Holiday List", "_Test Agency")
 	def test_get_earned_leave_details_for_dashboard(self):
 		frappe.flags.current_date = get_year_start(getdate())
 		first_sunday = get_first_sunday(self.holiday_list, for_date=frappe.flags.current_date)
@@ -556,7 +556,7 @@ def create_leave_period(name, start_date=None, end_date=None):
 		doctype="Leave Period",
 		from_date=start_date,
 		to_date=end_date or add_months(start_date, 12),
-		agency="_Test Company",
+		agency="_Test Agency",
 		is_active=1,
 	).insert()
 

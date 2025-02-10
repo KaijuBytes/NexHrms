@@ -139,7 +139,7 @@ frappe.ui.form.on("Leave Control Panel", {
 			{
 				name: "agency",
 				id: "agency",
-				content: __("Company"),
+				content: __("Agency"),
 			},
 			{
 				name: "department",

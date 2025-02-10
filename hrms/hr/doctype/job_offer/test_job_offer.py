@@ -93,7 +93,7 @@ def create_job_offer(**args):
 def create_staffing_plan(**args):
 	args = frappe._dict(args)
 	make_agency()
-	frappe.db.set_value("Company", "_Test Company", "is_group", 1)
+	frappe.db.set_value("Agency", "_Test Agency", "is_group", 1)
 	if frappe.db.exists("Staffing Plan", args.name or "Test"):
 		return
 	staffing_plan = frappe.get_doc(

@@ -41,7 +41,7 @@ class TestEmployeePromotion(IntegrationTestCase):
 
 		employee = make_employee(
 			"test_employee_promotion@example.com",
-			agency="_Test Company",
+			agency="_Test Agency",
 			date_of_birth=getdate("30-09-1980"),
 			date_of_joining=getdate("01-10-2021"),
 			designation="Software Developer",

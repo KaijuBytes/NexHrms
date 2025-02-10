@@ -57,7 +57,7 @@ def make_job_opening(source_name, target_doc=None):
 	def set_missing_values(source, target):
 		target.job_title = source.designation
 		target.status = "Open"
-		target.currency = frappe.db.get_value("Company", source.agency, "default_currency")
+		target.currency = frappe.db.get_value("Agency", source.agency, "default_currency")
 		target.lower_range = source.expected_compensation
 		target.description = source.description
 

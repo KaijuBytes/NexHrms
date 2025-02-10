@@ -28,7 +28,7 @@ class TestShiftType(IntegrationTestCase):
 	def test_mark_attendance(self):
 		from hrms.hr.doctype.employee_checkin.test_employee_checkin import make_checkin
 
-		employee = make_employee("test_employee_checkin@example.com", agency="_Test Company")
+		employee = make_employee("test_employee_checkin@example.com", agency="_Test Agency")
 
 		shift_type = setup_shift_type()
 		date = getdate()
@@ -53,7 +53,7 @@ class TestShiftType(IntegrationTestCase):
 		"""Tests whether attendance is marked correctly if shift configuration is changed midway"""
 		from hrms.hr.doctype.employee_checkin.test_employee_checkin import make_checkin
 
-		employee = make_employee("test_employee_checkin@example.com", agency="_Test Company")
+		employee = make_employee("test_employee_checkin@example.com", agency="_Test Agency")
 
 		shift_type = setup_shift_type(shift_type="Test Shift Start")
 		date = getdate()
@@ -81,7 +81,7 @@ class TestShiftType(IntegrationTestCase):
 	def test_attendance_date_for_different_start_and_actual_start_date(self):
 		from hrms.hr.doctype.employee_checkin.test_employee_checkin import make_checkin
 
-		employee = make_employee("test_employee_checkin@example.com", agency="_Test Company")
+		employee = make_employee("test_employee_checkin@example.com", agency="_Test Agency")
 		shift_type = setup_shift_type(shift_type="Midnight Shift", start_time="00:30:00", end_time="10:00:00")
 
 		date = getdate()
@@ -111,7 +111,7 @@ class TestShiftType(IntegrationTestCase):
 	def test_entry_and_exit_grace(self):
 		from hrms.hr.doctype.employee_checkin.test_employee_checkin import make_checkin
 
-		employee = make_employee("test_employee_checkin@example.com", agency="_Test Company")
+		employee = make_employee("test_employee_checkin@example.com", agency="_Test Agency")
 
 		# doesn't mark late entry until 60 mins after shift start i.e. till 9
 		# doesn't mark late entry until 60 mins before shift end i.e. 11
@@ -147,7 +147,7 @@ class TestShiftType(IntegrationTestCase):
 	def test_working_hours_threshold_for_half_day(self):
 		from hrms.hr.doctype.employee_checkin.test_employee_checkin import make_checkin
 
-		employee = make_employee("test_employee_checkin@example.com", agency="_Test Company")
+		employee = make_employee("test_employee_checkin@example.com", agency="_Test Agency")
 		shift_type = setup_shift_type(shift_type="Half Day Test", working_hours_threshold_for_half_day=2)
 		date = getdate()
 		make_shift_assignment(shift_type.name, employee, date)
@@ -171,7 +171,7 @@ class TestShiftType(IntegrationTestCase):
 	def test_working_hours_threshold_for_absent(self):
 		from hrms.hr.doctype.employee_checkin.test_employee_checkin import make_checkin
 
-		employee = make_employee("test_employee_checkin@example.com", agency="_Test Company")
+		employee = make_employee("test_employee_checkin@example.com", agency="_Test Agency")
 		shift_type = setup_shift_type(shift_type="Absent Test", working_hours_threshold_for_absent=2)
 		date = getdate()
 		make_shift_assignment(shift_type.name, employee, date)
@@ -196,7 +196,7 @@ class TestShiftType(IntegrationTestCase):
 		# considers half day over absent
 		from hrms.hr.doctype.employee_checkin.test_employee_checkin import make_checkin
 
-		employee = make_employee("test_employee_checkin@example.com", agency="_Test Company")
+		employee = make_employee("test_employee_checkin@example.com", agency="_Test Agency")
 		shift_type = setup_shift_type(
 			shift_type="Half Day + Absent Test",
 			working_hours_threshold_for_half_day=2,
@@ -225,7 +225,7 @@ class TestShiftType(IntegrationTestCase):
 		# considers absent over half day
 		from hrms.hr.doctype.employee_checkin.test_employee_checkin import make_checkin
 
-		employee = make_employee("test_employee_checkin@example.com", agency="_Test Company")
+		employee = make_employee("test_employee_checkin@example.com", agency="_Test Agency")
 		shift_type = setup_shift_type(
 			shift_type="Half Day + Absent Test",
 			working_hours_threshold_for_half_day=2,
@@ -247,7 +247,7 @@ class TestShiftType(IntegrationTestCase):
 		attendance = frappe.db.get_value("Attendance", {"shift": shift_type.name}, "status")
 		self.assertEqual(attendance, "Absent")
 
-	@set_holiday_list("Salary Slip Test Holiday List", "_Test Company")
+	@set_holiday_list("Salary Slip Test Holiday List", "_Test Agency")
 	def test_mark_auto_attendance_on_holiday_enabled(self):
 		from hrms.hr.doctype.employee_checkin.test_employee_checkin import make_checkin
 
@@ -260,7 +260,7 @@ class TestShiftType(IntegrationTestCase):
 		shift_type.save()
 
 		employee = make_employee(
-			"test_shift_with_holiday@example.com", default_shift=shift_type.name, agency="_Test Company"
+			"test_shift_with_holiday@example.com", default_shift=shift_type.name, agency="_Test Agency"
 		)
 
 		# make logs
@@ -276,7 +276,7 @@ class TestShiftType(IntegrationTestCase):
 		)
 		self.assertEqual(attendance, "Present")
 
-	@set_holiday_list("Salary Slip Test Holiday List", "_Test Company")
+	@set_holiday_list("Salary Slip Test Holiday List", "_Test Agency")
 	def test_mark_auto_attendance_on_holiday_disabled(self):
 		from hrms.hr.doctype.employee_checkin.test_employee_checkin import make_checkin
 
@@ -289,7 +289,7 @@ class TestShiftType(IntegrationTestCase):
 		shift_type.save()
 
 		employee = make_employee(
-			"test_shift_with_holiday@example.com", default_shift=shift_type.name, agency="_Test Company"
+			"test_shift_with_holiday@example.com", default_shift=shift_type.name, agency="_Test Agency"
 		)
 
 		# make logs
@@ -306,7 +306,7 @@ class TestShiftType(IntegrationTestCase):
 		self.assertIsNone(attendance)
 
 	def test_mark_absent_for_dates_with_no_attendance(self):
-		employee = make_employee("test_employee_checkin@example.com", agency="_Test Company")
+		employee = make_employee("test_employee_checkin@example.com", agency="_Test Agency")
 		today = getdate()
 		shift_type = setup_shift_type(
 			shift_type="Test Absent with no Attendance",
@@ -341,7 +341,7 @@ class TestShiftType(IntegrationTestCase):
 		self.assertIsNone(todays_attendance)
 
 	def test_mark_absent_for_dates_with_no_attendance_for_midnight_shift(self):
-		employee = make_employee("test_employee_checkin@example.com", agency="_Test Company")
+		employee = make_employee("test_employee_checkin@example.com", agency="_Test Agency")
 		today = getdate()
 		shift_type = setup_shift_type(
 			shift_type="Test Absent with no Attendance",
@@ -428,7 +428,7 @@ class TestShiftType(IntegrationTestCase):
 	def test_do_not_mark_absent_before_shift_actual_end_time(self):
 		from hrms.hr.doctype.employee_checkin.test_employee_checkin import make_checkin
 
-		employee = make_employee("test_employee_checkin@example.com", agency="_Test Company")
+		employee = make_employee("test_employee_checkin@example.com", agency="_Test Agency")
 		today = getdate()
 		yesterday = add_days(today, -1)
 
@@ -455,7 +455,7 @@ class TestShiftType(IntegrationTestCase):
 		"""
 		from hrms.hr.doctype.employee_checkin.test_employee_checkin import make_checkin
 
-		employee = make_employee("test_employee_checkin@example.com", agency="_Test Company")
+		employee = make_employee("test_employee_checkin@example.com", agency="_Test Agency")
 		curr_date = getdate()
 
 		# this shift's valid checkout period (+60 mins) will be till 00:30:00 today, so it goes beyond a day
@@ -491,9 +491,9 @@ class TestShiftType(IntegrationTestCase):
 		)
 		self.assertEqual(attendance, "Present")
 
-	@set_holiday_list("Salary Slip Test Holiday List", "_Test Company")
+	@set_holiday_list("Salary Slip Test Holiday List", "_Test Agency")
 	def test_skip_marking_absent_on_a_holiday(self):
-		employee = make_employee("test_employee_checkin@example.com", agency="_Test Company")
+		employee = make_employee("test_employee_checkin@example.com", agency="_Test Agency")
 		shift_type = setup_shift_type(shift_type="Test Absent with no Attendance")
 		shift_type.holiday_list = None
 		shift_type.save()
@@ -525,7 +525,7 @@ class TestShiftType(IntegrationTestCase):
 		default_shift = setup_shift_type()
 		employee = make_employee(
 			"test_employee_checkin_default@example.com",
-			agency="_Test Company",
+			agency="_Test Agency",
 			default_shift=default_shift.name,
 		)
 
@@ -557,7 +557,7 @@ class TestShiftType(IntegrationTestCase):
 		from hrms.hr.doctype.employee_checkin.test_employee_checkin import make_checkin
 
 		shift = setup_shift_type()
-		employee = make_employee("test_inactive_employee@example.com", agency="_Test Company")
+		employee = make_employee("test_inactive_employee@example.com", agency="_Test Agency")
 		date = getdate()
 		make_shift_assignment(shift.name, employee, date)
 
@@ -575,7 +575,7 @@ class TestShiftType(IntegrationTestCase):
 		relieving_date = add_days(date, -5)
 		employee = make_employee(
 			"test_employee_dates@example.com",
-			agency="_Test Company",
+			agency="_Test Agency",
 			date_of_joining=doj,
 			relieving_date=relieving_date,
 		)
@@ -608,7 +608,7 @@ class TestShiftType(IntegrationTestCase):
 		from hrms.hr.doctype.attendance.attendance import mark_attendance
 		from hrms.hr.doctype.employee_checkin.test_employee_checkin import make_checkin
 
-		employee = make_employee("test_employee_checkin@example.com", agency="_Test Company")
+		employee = make_employee("test_employee_checkin@example.com", agency="_Test Agency")
 
 		shift_type = setup_shift_type()
 		date = getdate()
@@ -640,7 +640,7 @@ class TestShiftType(IntegrationTestCase):
 		from hrms.hr.doctype.attendance.attendance import mark_attendance
 		from hrms.hr.doctype.employee_checkin.test_employee_checkin import make_checkin
 
-		employee = make_employee("test_employee_checkin@example.com", agency="_Test Company")
+		employee = make_employee("test_employee_checkin@example.com", agency="_Test Agency")
 		shift_1 = setup_shift_type(shift_type="Shift 1", start_time="08:00:00", end_time="10:00:00")
 		shift_2 = setup_shift_type(shift_type="Shift 2", start_time="09:30:00", end_time="11:00:00")
 
@@ -671,7 +671,7 @@ class TestShiftType(IntegrationTestCase):
 		shift_1 = setup_shift_type(shift_type="Deafult Shift", start_time="08:00:00", end_time="12:00:00")
 		shift_2 = setup_shift_type(shift_type="Not Default Shift", start_time="10:00:00", end_time="18:00:00")
 		employee = make_employee(
-			"test_employee_attendance@example.com", agency="_Test Company", default_shift=shift_1.name
+			"test_employee_attendance@example.com", agency="_Test Agency", default_shift=shift_1.name
 		)
 		shift_assigned_date = add_days(getdate(), +1)
 		make_shift_assignment(shift_2.name, employee, shift_assigned_date)
@@ -692,7 +692,7 @@ class TestShiftType(IntegrationTestCase):
 		# the important shift configuration is start time, it is used to sort logs chronologically
 		shift = setup_shift_type(shift_type="Test Shift", start_time="10:00:00", end_time="18:00:00")
 		employee = make_employee(
-			"test_employee4_attendance@example.com", agency="_Test Company", default_shift=shift.name
+			"test_employee4_attendance@example.com", agency="_Test Agency", default_shift=shift.name
 		)
 
 		from hrms.hr.doctype.employee_checkin.test_employee_checkin import make_checkin
@@ -772,7 +772,7 @@ def make_shift_assignment(
 		{
 			"doctype": "Shift Assignment",
 			"shift_type": shift_type,
-			"agency": "_Test Company",
+			"agency": "_Test Agency",
 			"employee": employee,
 			"start_date": start_date,
 			"end_date": end_date,

@@ -17,16 +17,16 @@ class TestJobOpening(IntegrationTestCase):
 		frappe.db.delete("Staffing Plan Detail")
 		frappe.db.delete("Job Opening")
 
-		make_agency("_Test Opening Company", "_TOC")
-		frappe.db.delete("Employee", {"agency": "_Test Opening Company"})
+		make_agency("_Test Opening Agency", "_TOC")
+		frappe.db.delete("Employee", {"agency": "_Test Opening Agency"})
 
 	def test_vacancies_fulfilled(self):
-		make_employee("test_job_opening@example.com", agency="_Test Opening Company", designation="Designer")
+		make_employee("test_job_opening@example.com", agency="_Test Opening Agency", designation="Designer")
 
 		staffing_plan = frappe.get_doc(
 			{
 				"doctype": "Staffing Plan",
-				"agency": "_Test Opening Company",
+				"agency": "_Test Opening Agency",
 				"name": "Test",
 				"from_date": getdate(),
 				"to_date": add_days(getdate(), 10),
@@ -86,7 +86,7 @@ def get_job_opening(**args):
 			"doctype": "Job Opening",
 			"job_title": "Designer",
 			"designation": "Designer",
-			"agency": "_Test Opening Company",
+			"agency": "_Test Opening Agency",
 			"status": "Open",
 		}
 	)

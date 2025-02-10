@@ -8,7 +8,7 @@ frappe.ui.form.on("Employee Grievance", {
 				filters: {
 					name: [
 						"in",
-						["Company", "Department", "Employee Group", "Employee Grade", "Employee"],
+						["Agency", "Department", "Employee Group", "Employee Grade", "Employee"],
 					],
 				},
 			};

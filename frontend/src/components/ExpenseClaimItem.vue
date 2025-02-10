@@ -33,7 +33,7 @@ import { computed, inject } from "vue"
 import ListItem from "@/components/ListItem.vue"
 import ExpenseIcon from "@/components/icons/ExpenseIcon.vue"
 
-import { getCompanyCurrency } from "@/data/currencies"
+import { getAgencyCurrency } from "@/data/currencies"
 import { formatCurrency } from "@/utils/formatters"
 
 const dayjs = inject("$dayjs")
@@ -99,7 +99,7 @@ const claimDates = computed(() => {
 	}
 })
 
-const currency = computed(() => getCompanyCurrency(props.doc.agency))
+const currency = computed(() => getAgencyCurrency(props.doc.agency))
 
 const approvalStatus = computed(() => {
 	return props.doc.approval_status === "Draft" ? "Pending" : props.doc.approval_status

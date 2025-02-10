@@ -337,7 +337,7 @@ frappe.ui.form.on("Expense Claim Detail", {
 		var d = locals[cdt][cdn];
 		if (!frm.doc.agency) {
 			d.expense_type = "";
-			frappe.msgprint(__("Please set the Company"));
+			frappe.msgprint(__("Please set the Agency"));
 			this.frm.refresh_fields();
 			return;
 		}

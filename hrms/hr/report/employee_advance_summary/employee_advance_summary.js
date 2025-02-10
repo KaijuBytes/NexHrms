@@ -26,9 +26,9 @@ frappe.query_reports["Employee Advance Summary"] = {
 		},
 		{
 			fieldname: "agency",
-			label: __("Company"),
+			label: __("Agency"),
 			fieldtype: "Link",
-			options: "Company",
+			options: "Agency",
 		},
 		{
 			fieldname: "status",
