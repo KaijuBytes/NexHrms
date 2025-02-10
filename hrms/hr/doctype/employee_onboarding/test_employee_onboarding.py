@@ -11,12 +11,12 @@ from hrms.hr.doctype.employee_onboarding.employee_onboarding import (
 )
 from hrms.hr.doctype.job_offer.test_job_offer import create_job_offer
 from hrms.payroll.doctype.salary_slip.test_salary_slip import make_holiday_list
-from hrms.tests.test_utils import create_company
+from hrms.tests.test_utils import create_agency
 
 
 class TestEmployeeOnboarding(IntegrationTestCase):
 	def setUp(self):
-		create_company()
+		create_agency()
 		if frappe.db.exists("Employee Onboarding", {"employee_name": "Test Researcher"}):
 			frappe.db.sql("delete from `tabEmployee Onboarding` where employee_name=%s", "Test Researcher")
 
@@ -128,7 +128,7 @@ def create_employee_onboarding():
 	onboarding.job_applicant = applicant.name
 	onboarding.job_offer = job_offer.name
 	onboarding.date_of_joining = onboarding.boarding_begins_on = getdate()
-	onboarding.company = "_Test Company"
+	onboarding.agency = "_Test Company"
 	onboarding.holiday_list = holiday_list.name
 	onboarding.designation = "Researcher"
 	onboarding.append(

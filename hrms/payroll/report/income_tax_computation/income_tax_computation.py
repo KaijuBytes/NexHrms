@@ -70,7 +70,7 @@ class IncomeTaxComputationReport:
 			frappe.throw(_("No employees found with selected filters and active salary structure"))
 
 	def get_employee_filters(self):
-		filters = {"company": self.filters.company}
+		filters = {"agency": self.filters.agency}
 		or_filters = {
 			"status": "Active",
 			"relieving_date": ["between", [self.payroll_period_start_date, self.payroll_period_end_date]],
@@ -143,7 +143,7 @@ class IncomeTaxComputationReport:
 				ss.end_date = ss_end_date
 				ss.salary_structure = last_ss.salary_structure
 				ss.payroll_frequency = last_ss.payroll_frequency
-				ss.company = self.filters.company
+				ss.agency = self.filters.agency
 				try:
 					ss.process_salary_structure(for_preview=1)
 					self.future_salary_slips.setdefault(employee, []).append(ss.as_dict())
@@ -382,7 +382,7 @@ class IncomeTaxComputationReport:
 		standard_exemptions_per_slab = dict(
 			frappe.get_all(
 				"Income Tax Slab",
-				filters={"company": self.filters.company, "docstatus": 1, "disabled": 0},
+				filters={"agency": self.filters.agency, "docstatus": 1, "disabled": 0},
 				fields=["name", "standard_tax_exemption_amount"],
 				as_list=1,
 			)

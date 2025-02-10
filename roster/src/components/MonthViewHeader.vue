@@ -33,7 +33,7 @@ import { Dayjs } from "dayjs";
 import { raiseToast } from "../utils";
 
 export type FilterField =
-	| "company"
+	| "agency"
 	| "department"
 	| "branch"
 	| "designation"
@@ -55,7 +55,7 @@ const filters: {
 		model?: { value: string } | null;
 	};
 } = reactive({
-	company: { options: [], model: null },
+	agency: { options: [], model: null },
 	department: { options: [], model: null },
 	branch: { options: [], model: null },
 	designation: { options: [], model: null },
@@ -64,9 +64,9 @@ const filters: {
 });
 
 watch(
-	() => filters.company.model,
+	() => filters.agency.model,
 	(val) => {
-		if (val?.value) getFilterOptions("department", { company: val.value });
+		if (val?.value) getFilterOptions("department", { agency: val.value });
 		else {
 			filters.department.model = null;
 			filters.department.options = [];
@@ -76,7 +76,7 @@ watch(
 
 watch(filters, (val) => {
 	const newFilters = {
-		company: val.company.model?.value || "",
+		agency: val.agency.model?.value || "",
 		department: val.department.model?.value || "",
 		branch: val.branch.model?.value || "",
 		designation: val.designation.model?.value || "",
@@ -95,16 +95,16 @@ const toTitleCase = (str: string) =>
 // RESOURCES
 
 const defaultCompany = createResource({
-	url: "hrms.api.roster.get_default_company",
+	url: "hrms.api.roster.get_default_agency",
 	auto: true,
 	onSuccess: () => {
-		["company", "branch", "designation", "shift_type", "shift_location"].forEach((field) =>
+		["agency", "branch", "designation", "shift_type", "shift_location"].forEach((field) =>
 			getFilterOptions(field as FilterField),
 		);
 	},
 });
 
-const getFilterOptions = (field: FilterField, listFilters: { company?: string } = {}) => {
+const getFilterOptions = (field: FilterField, listFilters: { agency?: string } = {}) => {
 	createListResource({
 		doctype: toTitleCase(field),
 		fields: ["name"],
@@ -112,7 +112,7 @@ const getFilterOptions = (field: FilterField, listFilters: { company?: string } 
 		pageLength: 100,
 		auto: true,
 		onSuccess: (data: { name: string }[]) => {
-			const value = field === "company" ? defaultCompany.data : "";
+			const value = field === "agency" ? defaultCompany.data : "";
 			filters[field].model = { value };
 			filters[field].options = data.map((item) => item.name);
 		},

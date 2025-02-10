@@ -27,7 +27,7 @@ class JobOffer(Document):
 			)
 
 	def validate_vacancies(self):
-		staffing_plan = get_staffing_plan_detail(self.designation, self.company, self.offer_date)
+		staffing_plan = get_staffing_plan_detail(self.designation, self.agency, self.offer_date)
 		check_vacancies = frappe.get_single("HR Settings").check_vacancies
 		if staffing_plan and check_vacancies:
 			job_offers = self.get_job_offer(staffing_plan.from_date, staffing_plan.to_date)
@@ -48,7 +48,7 @@ class JobOffer(Document):
 			filters={
 				"offer_date": ["between", (from_date, to_date)],
 				"designation": self.designation,
-				"company": self.company,
+				"agency": self.agency,
 				"docstatus": 1,
 			},
 			fields=["name"],
@@ -60,7 +60,7 @@ def update_job_applicant(status, job_applicant):
 		frappe.set_value("Job Applicant", job_applicant, "status", status)
 
 
-def get_staffing_plan_detail(designation, company, offer_date):
+def get_staffing_plan_detail(designation, agency, offer_date):
 	detail = frappe.db.sql(
 		"""
 		SELECT DISTINCT spd.parent,
@@ -73,11 +73,11 @@ def get_staffing_plan_detail(designation, company, offer_date):
 		WHERE
 			sp.docstatus=1
 			AND spd.designation=%s
-			AND sp.company=%s
+			AND sp.agency=%s
 			AND spd.parent = sp.name
 			AND %s between sp.from_date and sp.to_date
 	""",
-		(designation, company, offer_date),
+		(designation, agency, offer_date),
 		as_dict=1,
 	)
 
@@ -107,10 +107,10 @@ def make_employee(source_name, target_doc=None):
 
 
 @frappe.whitelist()
-def get_offer_acceptance_rate(company=None, department=None):
+def get_offer_acceptance_rate(agency=None, department=None):
 	filters = {"docstatus": 1}
-	if company:
-		filters["company"] = company
+	if agency:
+		filters["agency"] = agency
 	if department:
 		filters["department"] = department
 

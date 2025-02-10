@@ -3,7 +3,7 @@ frappe.provide("hrms.salary_slip_deductions_report_filters");
 hrms.salary_slip_deductions_report_filters = {
 	filters: [
 		{
-			fieldname: "company",
+			fieldname: "agency",
 			label: __("Company"),
 			fieldtype: "Link",
 			options: "Company",

@@ -6,17 +6,17 @@ frappe.ui.form.on("Job Opening", {
 		frm.set_query("department", function () {
 			return {
 				filters: {
-					company: frm.doc.company,
+					agency: frm.doc.agency,
 				},
 			};
 		});
 	},
 	designation: function (frm) {
-		if (frm.doc.designation && frm.doc.company) {
+		if (frm.doc.designation && frm.doc.agency) {
 			frappe.call({
 				method: "hrms.hr.doctype.staffing_plan.staffing_plan.get_active_staffing_plan_details",
 				args: {
-					company: frm.doc.company,
+					agency: frm.doc.agency,
 					designation: frm.doc.designation,
 					date: frappe.datetime.now_date(), // ToDo - Date in Job Opening?
 				},
@@ -39,7 +39,7 @@ frappe.ui.form.on("Job Opening", {
 			frm.set_value("planned_vacancies", 0);
 		}
 	},
-	company: function (frm) {
+	agency: function (frm) {
 		frm.set_value("designation", "");
 	},
 });

@@ -12,7 +12,7 @@
   "employee_name",
   "column_break_4",
   "posting_date",
-  "company",
+  "agency",
   "department",
   "currency_section",
   "currency",
@@ -135,8 +135,8 @@
    "read_only": 1
   },
   {
-   "fetch_from": "employee.company",
-   "fieldname": "company",
+   "fetch_from": "employee.agency",
+   "fieldname": "agency",
    "fieldtype": "Link",
    "label": "Company",
    "options": "Company",
@@ -157,7 +157,7 @@
    "fieldtype": "Column Break"
   },
   {
-   "fetch_from": "company.default_employee_advance_account",
+   "fetch_from": "agency.default_employee_advance_account",
    "fieldname": "advance_account",
    "fieldtype": "Link",
    "ignore_user_permissions": 1,

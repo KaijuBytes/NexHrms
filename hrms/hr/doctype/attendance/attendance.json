@@ -17,7 +17,7 @@
   "leave_application",
   "column_break0",
   "attendance_date",
-  "company",
+  "agency",
   "department",
   "attendance_request",
   "details_section",
@@ -126,11 +126,11 @@
    "search_index": 1
   },
   {
-   "fetch_from": "employee.company",
-   "fieldname": "company",
+   "fetch_from": "employee.agency",
+   "fieldname": "agency",
    "fieldtype": "Link",
    "label": "Company",
-   "oldfieldname": "company",
+   "oldfieldname": "agency",
    "oldfieldtype": "Link",
    "options": "Company",
    "read_only": 1,

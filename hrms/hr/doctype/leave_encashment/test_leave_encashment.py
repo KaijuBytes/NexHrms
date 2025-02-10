@@ -54,7 +54,7 @@ class TestLeaveEncashment(IntegrationTestCase):
 		leave_policy.submit()
 
 		# create employee, salary structure and assignment
-		self.employee = make_employee("test_employee_encashment@example.com", company="_Test Company")
+		self.employee = make_employee("test_employee_encashment@example.com", agency="_Test Company")
 
 		self.leave_period = create_leave_period(year_start, year_end, "_Test Company")
 
@@ -264,7 +264,7 @@ class TestLeaveEncashment(IntegrationTestCase):
 
 	@set_holiday_list("_Test Leave Encashment", "_Test Company")
 	def test_unused_leaves_after_leave_encashment_for_carry_forwarding_leave_type(self):
-		employee = make_employee("test_employee2_encashment@example.com", company="_Test Company")
+		employee = make_employee("test_employee2_encashment@example.com", agency="_Test Company")
 		# allocated 10 leaves, encashed 5
 		leave_encashment = self.get_encashment_created_after_leave_period(
 			employee, is_carry_forward=1, encashment_days=5
@@ -292,7 +292,7 @@ class TestLeaveEncashment(IntegrationTestCase):
 
 	@set_holiday_list("_Test Leave Encashment", "_Test Company")
 	def test_leave_expiry_after_leave_encashment_for_non_carry_forwarding_leave_type(self):
-		employee = make_employee("test_employee3_encashment@example.com", company="_Test Company")
+		employee = make_employee("test_employee3_encashment@example.com", agency="_Test Company")
 		# allocated 10 leaves, encashed 3
 
 		leave_encashment = self.get_encashment_created_after_leave_period(

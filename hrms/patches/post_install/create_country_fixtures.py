@@ -1,6 +1,6 @@
 import frappe
 
-from hrms.overrides.company import make_salary_components, run_regional_setup
+from hrms.overrides.agency import make_salary_components, run_regional_setup
 
 
 def execute():

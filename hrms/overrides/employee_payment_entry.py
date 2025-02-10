@@ -5,70 +5,70 @@ import frappe
 from frappe.utils import flt, nowdate
 
 import nex
-from nex.accounts.doctype.payment_entry.payment_entry import (
-	PaymentEntry,
-	get_bank_cash_account,
-	get_reference_details,
-)
-from nex.accounts.utils import get_account_currency
+# from nex.accounts.doctype.payment_entry.payment_entry import (
+# 	PaymentEntry,
+# 	get_bank_cash_account,
+# 	get_reference_details,
+# )
+# from nex.accounts.utils import get_account_currency
 from nex.setup.utils import get_exchange_rate
 
 from hrms.hr.doctype.expense_claim.expense_claim import get_outstanding_amount_for_claim
 
 
-class EmployeePaymentEntry(PaymentEntry):
-	def get_valid_reference_doctypes(self):
-		if self.party_type == "Customer":
-			return ("Sales Order", "Sales Invoice", "Journal Entry", "Dunning", "Payment Entry")
-		elif self.party_type == "Supplier":
-			return ("Purchase Order", "Purchase Invoice", "Journal Entry", "Payment Entry")
-		elif self.party_type == "Shareholder":
-			return ("Journal Entry",)
-		elif self.party_type == "Employee":
-			return ("Expense Claim", "Journal Entry", "Employee Advance", "Gratuity")
+# class EmployeePaymentEntry(PaymentEntry):
+# 	def get_valid_reference_doctypes(self):
+# 		if self.party_type == "Customer":
+# 			return ("Sales Order", "Sales Invoice", "Journal Entry", "Dunning", "Payment Entry")
+# 		elif self.party_type == "Supplier":
+# 			return ("Purchase Order", "Purchase Invoice", "Journal Entry", "Payment Entry")
+# 		elif self.party_type == "Shareholder":
+# 			return ("Journal Entry",)
+# 		elif self.party_type == "Employee":
+# 			return ("Expense Claim", "Journal Entry", "Employee Advance", "Gratuity")
 
-	def set_missing_ref_details(
-		self,
-		force: bool = False,
-		update_ref_details_only_for: list | None = None,
-		reference_exchange_details: dict | None = None,
-	) -> None:
-		for d in self.get("references"):
-			if d.allocated_amount:
-				if update_ref_details_only_for and (
-					(d.reference_doctype, d.reference_name) not in update_ref_details_only_for
-				):
-					continue
+# 	def set_missing_ref_details(
+# 		self,
+# 		force: bool = False,
+# 		update_ref_details_only_for: list | None = None,
+# 		reference_exchange_details: dict | None = None,
+# 	) -> None:
+# 		for d in self.get("references"):
+# 			if d.allocated_amount:
+# 				if update_ref_details_only_for and (
+# 					(d.reference_doctype, d.reference_name) not in update_ref_details_only_for
+# 				):
+# 					continue
 
-				ref_details = get_payment_reference_details(
-					d.reference_doctype,
-					d.reference_name,
-					self.party_account_currency,
-					self.party_type,
-					self.party,
-				)
+# 				ref_details = get_payment_reference_details(
+# 					d.reference_doctype,
+# 					d.reference_name,
+# 					self.party_account_currency,
+# 					self.party_type,
+# 					self.party,
+# 				)
 
-				# Only update exchange rate when the reference is Journal Entry
-				if (
-					reference_exchange_details
-					and d.reference_doctype == reference_exchange_details.reference_doctype
-					and d.reference_name == reference_exchange_details.reference_name
-				):
-					ref_details.update({"exchange_rate": reference_exchange_details.exchange_rate})
+# 				# Only update exchange rate when the reference is Journal Entry
+# 				if (
+# 					reference_exchange_details
+# 					and d.reference_doctype == reference_exchange_details.reference_doctype
+# 					and d.reference_name == reference_exchange_details.reference_name
+# 				):
+# 					ref_details.update({"exchange_rate": reference_exchange_details.exchange_rate})
 
-				for field, value in ref_details.items():
-					if d.exchange_gain_loss:
-						# for cases where gain/loss is booked into invoice
-						# exchange_gain_loss is calculated from invoice & populated
-						# and row.exchange_rate is already set to payment entry's exchange rate
-						# refer -> `update_reference_in_payment_entry()` in utils.py
-						continue
+# 				for field, value in ref_details.items():
+# 					if d.exchange_gain_loss:
+# 						# for cases where gain/loss is booked into invoice
+# 						# exchange_gain_loss is calculated from invoice & populated
+# 						# and row.exchange_rate is already set to payment entry's exchange rate
+# 						# refer -> `update_reference_in_payment_entry()` in utils.py
+# 						continue
 
-					if field == "exchange_rate" or not d.get(field) or force:
-						if self.get("_action") in ("submit", "cancel"):
-							d.db_set(field, value)
-						else:
-							d.set(field, value)
+# 					if field == "exchange_rate" or not d.get(field) or force:
+# 						if self.get("_action") in ("submit", "cancel"):
+# 							d.db_set(field, value)
+# 						else:
+# 							d.set(field, value)
 
 
 @frappe.whitelist()
@@ -77,22 +77,22 @@ def get_payment_entry_for_employee(dt, dn, party_amount=None, bank_account=None,
 	doc = frappe.get_doc(dt, dn)
 
 	party_account = get_party_account(doc)
-	party_account_currency = get_account_currency(party_account)
+	# party_account_currency = get_account_currency(party_account)
 	payment_type = "Pay"
 	grand_total, outstanding_amount = get_grand_total_and_outstanding_amount(
-		doc, party_amount, party_account_currency
+		# doc, party_amount, party_account_currency
 	)
 
 	# bank or cash
-	bank = get_bank_cash_account(doc, bank_account)
+	# bank = get_bank_cash_account(doc, bank_account)
 
-	paid_amount, received_amount = get_paid_amount_and_received_amount(
-		doc, party_account_currency, bank, outstanding_amount, payment_type, bank_amount
-	)
+	# paid_amount, received_amount = get_paid_amount_and_received_amount(
+	# 	doc, party_account_currency, bank, outstanding_amount, payment_type, bank_amount
+	# )
 
 	pe = frappe.new_doc("Payment Entry")
 	pe.payment_type = payment_type
-	pe.company = doc.company
+	pe.agency = doc.agency
 	pe.cost_center = doc.get("cost_center")
 	pe.posting_date = nowdate()
 	pe.mode_of_payment = doc.get("mode_of_payment")
@@ -101,12 +101,12 @@ def get_payment_entry_for_employee(dt, dn, party_amount=None, bank_account=None,
 	pe.contact_person = doc.get("contact_person")
 	pe.contact_email = doc.get("contact_email")
 	pe.letter_head = doc.get("letter_head")
-	pe.paid_from = bank.account
+	# pe.paid_from = bank.account
 	pe.paid_to = party_account
-	pe.paid_from_account_currency = bank.account_currency
-	pe.paid_to_account_currency = party_account_currency
-	pe.paid_amount = paid_amount
-	pe.received_amount = received_amount
+	# pe.paid_from_account_currency = bank.account_currency
+	# pe.paid_to_account_currency = party_account_currency
+	# pe.paid_amount = paid_amount
+	# pe.received_amount = received_amount
 
 	pe.append(
 		"references",
@@ -168,7 +168,7 @@ def get_grand_total_and_outstanding_amount(doc, party_amount, party_account_curr
 		outstanding_amount = flt(doc.amount) - flt(doc.paid_amount)
 
 	else:
-		if party_account_currency == doc.company_currency:
+		if party_account_currency == doc.agency_currency:
 			grand_total = flt(doc.get("base_rounded_total") or doc.base_grand_total)
 		else:
 			grand_total = flt(doc.get("rounded_total") or doc.grand_total)
@@ -228,10 +228,10 @@ def get_reference_details_for_employee(reference_doctype, reference_name, party_
 	total_amount = outstanding_amount = exchange_rate = None
 
 	ref_doc = frappe.get_doc(reference_doctype, reference_name)
-	company_currency = ref_doc.get("company_currency") or nex.get_company_currency(ref_doc.company)
+	agency_currency = ref_doc.get("agency_currency") or nex.get_agency_currency(ref_doc.agency)
 
 	total_amount, exchange_rate = get_total_amount_and_exchange_rate(
-		ref_doc, party_account_currency, company_currency
+		ref_doc, party_account_currency, agency_currency
 	)
 
 	if reference_doctype == "Expense Claim":
@@ -255,7 +255,7 @@ def get_reference_details_for_employee(reference_doctype, reference_name, party_
 	)
 
 
-def get_total_amount_and_exchange_rate(ref_doc, party_account_currency, company_currency):
+def get_total_amount_and_exchange_rate(ref_doc, party_account_currency, agency_currency):
 	total_amount = exchange_rate = None
 
 	if ref_doc.doctype == "Expense Claim":
@@ -265,14 +265,14 @@ def get_total_amount_and_exchange_rate(ref_doc, party_account_currency, company_
 		exchange_rate = ref_doc.get("exchange_rate")
 		if party_account_currency != ref_doc.currency:
 			total_amount = flt(total_amount) * flt(exchange_rate)
-		if party_account_currency == company_currency:
+		if party_account_currency == agency_currency:
 			exchange_rate = 1
 
 	elif ref_doc.doctype == "Gratuity":
 		total_amount = ref_doc.amount
 
 	if not total_amount:
-		if party_account_currency == company_currency:
+		if party_account_currency == agency_currency:
 			total_amount = ref_doc.base_grand_total
 			exchange_rate = 1
 		else:
@@ -282,7 +282,7 @@ def get_total_amount_and_exchange_rate(ref_doc, party_account_currency, company_
 		# Get the exchange rate from the original ref doc
 		# or get it based on the posting date of the ref doc.
 		exchange_rate = ref_doc.get("conversion_rate") or get_exchange_rate(
-			party_account_currency, company_currency, ref_doc.posting_date
+			party_account_currency, agency_currency, ref_doc.posting_date
 		)
 
 	return total_amount, exchange_rate

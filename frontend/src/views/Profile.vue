@@ -176,7 +176,7 @@ const profileLinks = [
 		icon: "file",
 		title: __("Company Information"),
 		fields: [
-			"company",
+			"agency",
 			"department",
 			"designation",
 			"branch",
@@ -191,7 +191,7 @@ const profileLinks = [
 		fields: [
 			"cell_number",
 			"personal_email",
-			"company_email",
+			"agency_email",
 			"preferred_email",
 		],
 	},

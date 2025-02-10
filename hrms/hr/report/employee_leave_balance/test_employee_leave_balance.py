@@ -35,7 +35,7 @@ class TestEmployeeLeaveBalance(IntegrationTestCase):
 
 		frappe.set_user("Administrator")
 
-		self.employee_id = make_employee("test_emp_leave_balance@example.com", company="_Test Company")
+		self.employee_id = make_employee("test_emp_leave_balance@example.com", agency="_Test Company")
 
 		self.date = getdate()
 		self.year_start = getdate(get_year_start(self.date))
@@ -208,7 +208,7 @@ class TestEmployeeLeaveBalance(IntegrationTestCase):
 	@set_holiday_list("_Test Emp Balance Holiday List", "_Test Company")
 	def test_employee_status_filter(self):
 		frappe.get_doc(test_records[0]).insert()
-		inactive_emp = make_employee("test_emp_status@example.com", company="_Test Company")
+		inactive_emp = make_employee("test_emp_status@example.com", agency="_Test Company")
 
 		allocation = make_allocation_record(
 			employee=inactive_emp,

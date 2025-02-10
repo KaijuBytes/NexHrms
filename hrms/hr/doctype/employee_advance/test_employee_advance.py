@@ -26,7 +26,7 @@ from hrms.payroll.doctype.salary_structure.test_salary_structure import make_sal
 class TestEmployeeAdvance(IntegrationTestCase):
 	def setUp(self):
 		frappe.db.delete("Employee Advance")
-		self.update_company_in_fiscal_year()
+		self.update_agency_in_fiscal_year()
 
 	def test_paid_amount_and_status(self):
 		employee_name = make_employee("_T@employee.advance", "_Test Company")
@@ -126,7 +126,7 @@ class TestEmployeeAdvance(IntegrationTestCase):
 
 		entry = make_return_entry(
 			employee=advance.employee,
-			company=advance.company,
+			agency=advance.agency,
 			employee_advance_name=advance.name,
 			return_amount=flt(advance.paid_amount - advance.claimed_amount),
 			advance_account=advance.advance_account,
@@ -171,7 +171,7 @@ class TestEmployeeAdvance(IntegrationTestCase):
 			"Test Additional Salary for Advance Return",
 			"Monthly",
 			employee=employee_name,
-			company="_Test Company",
+			agency="_Test Company",
 		)
 
 		# additional salary for 700 first
@@ -244,7 +244,7 @@ class TestEmployeeAdvance(IntegrationTestCase):
 
 		entry = make_return_entry(
 			employee=advance.employee,
-			company=advance.company,
+			agency=advance.agency,
 			employee_advance_name=advance.name,
 			return_amount=advance.paid_amount - advance.claimed_amount,
 			advance_account=advance.advance_account,
@@ -295,13 +295,13 @@ class TestEmployeeAdvance(IntegrationTestCase):
 		self.assertEqual(advance_payment.unallocated_amount, 1000)
 		self.assertEqual(advance_payment.references, [])
 
-	def update_company_in_fiscal_year(self):
+	def update_agency_in_fiscal_year(self):
 		fy_entries = frappe.get_all("Fiscal Year")
 		for fy_entry in fy_entries:
 			fiscal_year = frappe.get_doc("Fiscal Year", fy_entry.name)
-			company_list = [fy_c.company for fy_c in fiscal_year.companies if fy_c.company]
-			if "_Test Company" not in company_list:
-				fiscal_year.append("companies", {"company": "_Test Company"})
+			agency_list = [fy_c.agency for fy_c in fiscal_year.companies if fy_c.agency]
+			if "_Test Company" not in agency_list:
+				fiscal_year.append("companies", {"agency": "_Test Company"})
 				fiscal_year.save()
 
 
@@ -329,9 +329,9 @@ def make_payment_entry(advance, amount):
 def make_employee_advance(employee_name, args=None):
 	doc = frappe.new_doc("Employee Advance")
 	doc.employee = employee_name
-	doc.company = "_Test Company"
+	doc.agency = "_Test Company"
 	doc.purpose = "For site visit"
-	doc.currency = nex.get_company_currency("_Test company")
+	doc.currency = nex.get_agency_currency("_Test agency")
 	doc.exchange_rate = 1
 	doc.advance_amount = 1000
 	doc.posting_date = nowdate()

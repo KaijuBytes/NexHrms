@@ -3,7 +3,7 @@
 
 frappe.ui.form.on("Employee Separation", {
 	setup: function (frm) {
-		frm.add_fetch("employee_separation_template", "company", "company");
+		frm.add_fetch("employee_separation_template", "agency", "agency");
 		frm.add_fetch("employee_separation_template", "department", "department");
 		frm.add_fetch("employee_separation_template", "designation", "designation");
 		frm.add_fetch("employee_separation_template", "employee_grade", "employee_grade");

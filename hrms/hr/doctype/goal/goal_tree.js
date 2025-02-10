@@ -4,11 +4,11 @@ frappe.treeview_settings["Goal"] = {
 	get_tree_nodes: "hrms.hr.doctype.goal.goal.get_children",
 	filters: [
 		{
-			fieldname: "company",
+			fieldname: "agency",
 			fieldtype: "Select",
-			options: nex.utils.get_tree_options("company"),
+			options: nex.utils.get_tree_options("agency"),
 			label: __("Company"),
-			default: nex.utils.get_tree_default("company"),
+			default: nex.utils.get_tree_default("agency"),
 		},
 		{
 			fieldname: "appraisal_cycle",
@@ -16,12 +16,12 @@ frappe.treeview_settings["Goal"] = {
 			options: "Appraisal Cycle",
 			label: __("Appraisal Cycle"),
 			get_query() {
-				const company =
-					frappe.treeview_settings["Goal"].page.fields_dict.company.get_value();
+				const agency =
+					frappe.treeview_settings["Goal"].page.fields_dict.agency.get_value();
 
 				return {
 					filters: {
-						company: company,
+						agency: agency,
 					},
 				};
 			},
@@ -105,12 +105,12 @@ frappe.treeview_settings["Goal"] = {
 			label: __("Appraisal Cycle"),
 			options: "Appraisal Cycle",
 			get_query() {
-				const company =
-					frappe.treeview_settings["Goal"].page.fields_dict.company.get_value();
+				const agency =
+					frappe.treeview_settings["Goal"].page.fields_dict.agency.get_value();
 
 				return {
 					filters: {
-						company: company,
+						agency: agency,
 						status: ["!=", "Completed"],
 					},
 				};

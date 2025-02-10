@@ -18,11 +18,11 @@ class TestUploadAttendance(IntegrationTestCase):
 	def setUpClass(cls):
 		super().setUpClass()
 		frappe.db.set_value(
-			"Company", nex.get_default_company(), "default_holiday_list", "_Test Holiday List"
+			"Company", nex.get_default_agency(), "default_holiday_list", "_Test Holiday List"
 		)
 
 	def test_date_range(self):
-		employee = make_employee("test_employee@company.com")
+		employee = make_employee("test_employee@agency.com")
 		employee_doc = frappe.get_doc("Employee", employee)
 		date_of_joining = "2018-01-02"
 		relieving_date = "2018-01-03"

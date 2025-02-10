@@ -6,7 +6,7 @@ frappe.ui.form.on("Employee", {
 		frm.set_query("payroll_cost_center", function () {
 			return {
 				filters: {
-					company: frm.doc.company,
+					agency: frm.doc.agency,
 					is_group: 0,
 				},
 			};

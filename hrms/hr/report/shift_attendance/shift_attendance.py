@@ -102,7 +102,7 @@ def get_columns():
 		},
 		{
 			"label": _("Company"),
-			"fieldname": "company",
+			"fieldname": "agency",
 			"fieldtype": "Link",
 			"options": "Company",
 			"width": 150,
@@ -233,7 +233,7 @@ def get_query(filters):
 			attendance.late_entry,
 			attendance.early_exit,
 			attendance.department,
-			attendance.company,
+			attendance.agency,
 			checkin.shift_start,
 			checkin.shift_end,
 			checkin.shift_actual_start,

@@ -4,7 +4,7 @@ frappe.dashboards.chart_sources["Hiring vs Attrition Count"] = {
 	method: "hrms.hr.dashboard_chart_source.hiring_vs_attrition_count.hiring_vs_attrition_count.get_data",
 	filters: [
 		{
-			fieldname: "company",
+			fieldname: "agency",
 			label: __("Company"),
 			fieldtype: "Link",
 			options: "Company",

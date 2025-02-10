@@ -37,7 +37,7 @@ class TestAttendance(IntegrationTestCase):
 		frappe.db.delete("Attendance")
 
 	def test_duplicate_attendance(self):
-		employee = make_employee("test_duplicate_attendance@example.com", company="_Test Company")
+		employee = make_employee("test_duplicate_attendance@example.com", agency="_Test Company")
 		date = nowdate()
 
 		mark_attendance(employee, date, "Present")
@@ -47,7 +47,7 @@ class TestAttendance(IntegrationTestCase):
 				"employee": employee,
 				"attendance_date": date,
 				"status": "Absent",
-				"company": "_Test Company",
+				"agency": "_Test Company",
 			}
 		)
 
@@ -56,7 +56,7 @@ class TestAttendance(IntegrationTestCase):
 	def test_duplicate_attendance_with_shift(self):
 		from hrms.hr.doctype.shift_type.test_shift_type import setup_shift_type
 
-		employee = make_employee("test_duplicate_attendance@example.com", company="_Test Company")
+		employee = make_employee("test_duplicate_attendance@example.com", agency="_Test Company")
 		date = nowdate()
 
 		shift_1 = setup_shift_type(shift_type="Shift 1", start_time="08:00:00", end_time="10:00:00")
@@ -69,7 +69,7 @@ class TestAttendance(IntegrationTestCase):
 				"employee": employee,
 				"attendance_date": date,
 				"status": "Absent",
-				"company": "_Test Company",
+				"agency": "_Test Company",
 				"shift": shift_1.name,
 			}
 		)
@@ -83,7 +83,7 @@ class TestAttendance(IntegrationTestCase):
 				"employee": employee,
 				"attendance_date": date,
 				"status": "Absent",
-				"company": "_Test Company",
+				"agency": "_Test Company",
 			}
 		)
 
@@ -92,7 +92,7 @@ class TestAttendance(IntegrationTestCase):
 	def test_overlapping_shift_attendance_validation(self):
 		from hrms.hr.doctype.shift_type.test_shift_type import setup_shift_type
 
-		employee = make_employee("test_overlap_attendance@example.com", company="_Test Company")
+		employee = make_employee("test_overlap_attendance@example.com", agency="_Test Company")
 		date = nowdate()
 
 		shift_1 = setup_shift_type(shift_type="Shift 1", start_time="08:00:00", end_time="10:00:00")
@@ -107,7 +107,7 @@ class TestAttendance(IntegrationTestCase):
 				"employee": employee,
 				"attendance_date": date,
 				"status": "Absent",
-				"company": "_Test Company",
+				"agency": "_Test Company",
 				"shift": shift_2.name,
 			}
 		)
@@ -118,7 +118,7 @@ class TestAttendance(IntegrationTestCase):
 		# allows attendance with 2 different non-overlapping shifts
 		from hrms.hr.doctype.shift_type.test_shift_type import setup_shift_type
 
-		employee = make_employee("test_duplicate_attendance@example.com", company="_Test Company")
+		employee = make_employee("test_duplicate_attendance@example.com", agency="_Test Company")
 		date = nowdate()
 
 		shift_1 = setup_shift_type(shift_type="Shift 1", start_time="08:00:00", end_time="10:00:00")
@@ -131,7 +131,7 @@ class TestAttendance(IntegrationTestCase):
 				"employee": employee,
 				"attendance_date": date,
 				"status": "Absent",
-				"company": "_Test Company",
+				"agency": "_Test Company",
 				"shift": shift_2.name,
 			}
 		).insert()

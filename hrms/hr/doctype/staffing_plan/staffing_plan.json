@@ -6,7 +6,7 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "company",
+  "agency",
   "department",
   "column_break_3",
   "from_date",
@@ -20,7 +20,7 @@
  ],
  "fields": [
   {
-   "fieldname": "company",
+   "fieldname": "agency",
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Company",
@@ -70,7 +70,7 @@
    "fieldname": "total_estimated_budget",
    "fieldtype": "Currency",
    "label": "Total Estimated Budget",
-   "options": "Company:company:default_currency",
+   "options": "Company:agency:default_currency",
    "read_only": 1
   },
   {

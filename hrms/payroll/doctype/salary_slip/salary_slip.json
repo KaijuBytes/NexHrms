@@ -10,7 +10,7 @@
   "section_break_6",
   "employee",
   "employee_name",
-  "company",
+  "agency",
   "department",
   "designation",
   "branch",
@@ -190,8 +190,8 @@
    "search_index": 1
   },
   {
-   "fetch_from": "employee.company",
-   "fieldname": "company",
+   "fetch_from": "employee.agency",
+   "fieldname": "agency",
    "fieldtype": "Link",
    "in_list_view": 1,
    "in_standard_filter": 1,
@@ -435,14 +435,14 @@
    "fieldname": "base_hour_rate",
    "fieldtype": "Currency",
    "label": "Hour Rate (Company Currency)",
-   "options": "Company:company:default_currency",
+   "options": "Company:agency:default_currency",
    "print_hide_if_no_value": 1
   },
   {
    "fieldname": "base_gross_pay",
    "fieldtype": "Currency",
    "label": "Gross Pay (Company Currency)",
-   "options": "Company:company:default_currency",
+   "options": "Company:agency:default_currency",
    "read_only": 1
   },
   {
@@ -458,14 +458,14 @@
    "fieldname": "base_total_deduction",
    "fieldtype": "Currency",
    "label": "Total Deduction (Company Currency)",
-   "options": "Company:company:default_currency",
+   "options": "Company:agency:default_currency",
    "read_only": 1
   },
   {
    "fieldname": "base_net_pay",
    "fieldtype": "Currency",
    "label": "Net Pay (Company Currency)",
-   "options": "Company:company:default_currency",
+   "options": "Company:agency:default_currency",
    "read_only": 1
   },
   {
@@ -473,7 +473,7 @@
    "fieldname": "base_rounded_total",
    "fieldtype": "Currency",
    "label": "Rounded Total (Company Currency)",
-   "options": "Company:company:default_currency",
+   "options": "Company:agency:default_currency",
    "read_only": 1
   },
   {
@@ -507,14 +507,14 @@
    "fieldname": "base_year_to_date",
    "fieldtype": "Currency",
    "label": "Year To Date(Company Currency)",
-   "options": "Company:company:default_currency",
+   "options": "Company:agency:default_currency",
    "read_only": 1
   },
   {
    "fieldname": "base_month_to_date",
    "fieldtype": "Currency",
    "label": "Month To Date(Company Currency)",
-   "options": "Company:company:default_currency",
+   "options": "Company:agency:default_currency",
    "read_only": 1
   },
   {
@@ -540,7 +540,7 @@
    "fieldname": "base_gross_year_to_date",
    "fieldtype": "Currency",
    "label": "Gross Year To Date(Company Currency)",
-   "options": "Company:company:default_currency",
+   "options": "Company:agency:default_currency",
    "read_only": 1
   },
   {

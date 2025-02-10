@@ -32,8 +32,8 @@ def get_data(
 	if not to_date:
 		to_date = getdate()
 
-	hiring = get_records(from_date, to_date, "date_of_joining", filters.get("company"))
-	attrition = get_records(from_date, to_date, "relieving_date", filters.get("company"))
+	hiring = get_records(from_date, to_date, "date_of_joining", filters.get("agency"))
+	attrition = get_records(from_date, to_date, "relieving_date", filters.get("agency"))
 
 	hiring_data = get_result(hiring, filters.get("time_interval"), from_date, to_date, "Count")
 	attrition_data = get_result(attrition, filters.get("time_interval"), from_date, to_date, "Count")
@@ -47,9 +47,9 @@ def get_data(
 	}
 
 
-def get_records(from_date: str, to_date: str, datefield: str, company: str) -> tuple[tuple[str, float, int]]:
+def get_records(from_date: str, to_date: str, datefield: str, agency: str) -> tuple[tuple[str, float, int]]:
 	filters = [
-		["Employee", "company", "=", company],
+		["Employee", "agency", "=", agency],
 		["Employee", datefield, ">=", from_date, False],
 		["Employee", datefield, "<=", to_date, False],
 	]

@@ -25,12 +25,12 @@ frappe.ui.form.on("Leave Control Panel", {
 		);
 	},
 
-	company: function (frm) {
-		if (frm.doc.company) {
+	agency: function (frm) {
+		if (frm.doc.agency) {
 			frm.set_query("department", function () {
 				return {
 					filters: {
-						company: frm.doc.company,
+						agency: frm.doc.agency,
 					},
 				};
 			});
@@ -106,7 +106,7 @@ frappe.ui.form.on("Leave Control Panel", {
 				leave_type: null,
 				no_of_days: 0,
 				leave_policy: null,
-				company: frappe.defaults.get_default("company"),
+				agency: frappe.defaults.get_default("agency"),
 			});
 		});
 	},
@@ -137,8 +137,8 @@ frappe.ui.form.on("Leave Control Panel", {
 				content: __("Name"),
 			},
 			{
-				name: "company",
-				id: "company",
+				name: "agency",
+				id: "agency",
 				content: __("Company"),
 			},
 			{

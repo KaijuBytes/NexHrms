@@ -21,7 +21,7 @@ frappe.ui.form.on("Employee Attendance Tool", {
 		frm.trigger("load_employees");
 	},
 
-	company(frm) {
+	agency(frm) {
 		frm.trigger("load_employees");
 	},
 
@@ -46,7 +46,7 @@ frappe.ui.form.on("Employee Attendance Tool", {
 					date: frm.doc.date,
 					department: frm.doc.department,
 					branch: frm.doc.branch,
-					company: frm.doc.company,
+					agency: frm.doc.agency,
 				},
 			})
 			.then((r) => {

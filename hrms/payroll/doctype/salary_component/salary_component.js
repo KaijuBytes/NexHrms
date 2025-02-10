@@ -8,7 +8,7 @@ frappe.ui.form.on("Salary Component", {
 			return {
 				filters: {
 					is_group: 0,
-					company: d.company,
+					agency: d.agency,
 				},
 			};
 		});

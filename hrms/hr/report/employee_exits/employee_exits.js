@@ -17,7 +17,7 @@ frappe.query_reports["Employee Exits"] = {
 			default: frappe.datetime.nowdate(),
 		},
 		{
-			fieldname: "company",
+			fieldname: "agency",
 			label: __("Company"),
 			fieldtype: "Link",
 			options: "Company",

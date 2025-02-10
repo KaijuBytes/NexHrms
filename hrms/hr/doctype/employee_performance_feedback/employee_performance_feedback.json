@@ -12,7 +12,7 @@
   "employee_name",
   "department",
   "designation",
-  "company",
+  "agency",
   "column_break_3",
   "reviewer",
   "reviewer_name",
@@ -171,8 +171,8 @@
    "read_only": 1
   },
   {
-   "fetch_from": "employee.company",
-   "fieldname": "company",
+   "fetch_from": "employee.agency",
+   "fieldname": "agency",
    "fieldtype": "Link",
    "label": "Company",
    "options": "Company",

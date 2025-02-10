@@ -7,14 +7,14 @@ def execute():
 	frappe.db.sql(
 		"""
 		UPDATE `tabLeave Ledger Entry` as lle
-		SET company = (select company from `tabEmployee` where employee = lle.employee)
-		WHERE company IS NULL
+		SET agency = (select agency from `tabEmployee` where employee = lle.employee)
+		WHERE agency IS NULL
 		"""
 	)
 	frappe.db.sql(
 		"""
 		UPDATE `tabLeave Allocation` as la
-		SET company = (select company from `tabEmployee` where employee = la.employee)
-		WHERE company IS NULL
+		SET agency = (select agency from `tabEmployee` where employee = la.employee)
+		WHERE agency IS NULL
 		"""
 	)

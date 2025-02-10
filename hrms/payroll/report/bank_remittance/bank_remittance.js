@@ -5,7 +5,7 @@
 frappe.query_reports["Bank Remittance"] = {
 	filters: [
 		{
-			fieldname: "company",
+			fieldname: "agency",
 			label: __("Company"),
 			fieldtype: "Link",
 			options: "Company",

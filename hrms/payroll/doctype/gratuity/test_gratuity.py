@@ -31,15 +31,15 @@ class TestGratuity(IntegrationTestCase):
 		self.relieving_date = getdate()
 		self.employee = make_employee(
 			"test_employee_gratuity@salary.com",
-			company="_Test Company",
+			agency="_Test Company",
 			date_of_joining=self.date_of_joining,
 			relieving_date=self.relieving_date,
 		)
 
 		make_earning_salary_component(
-			setup=True, test_tax=True, company_list=["_Test Company"], include_flexi_benefits=True
+			setup=True, test_tax=True, agency_list=["_Test Company"], include_flexi_benefits=True
 		)
-		make_deduction_salary_component(setup=True, test_tax=True, company_list=["_Test Company"])
+		make_deduction_salary_component(setup=True, test_tax=True, agency_list=["_Test Company"])
 		make_holiday_list()
 
 	@set_holiday_list("Salary Slip Test Holiday List", "_Test Company")
@@ -285,7 +285,7 @@ def set_mode_of_payment_account():
 	mode_of_payment = frappe.get_doc("Mode of Payment", "Cash")
 
 	mode_of_payment.accounts = []
-	mode_of_payment.append("accounts", {"company": "_Test Company", "default_account": "_Test Bank - _TC"})
+	mode_of_payment.append("accounts", {"agency": "_Test Company", "default_account": "_Test Bank - _TC"})
 	mode_of_payment.save()
 
 
@@ -293,7 +293,7 @@ def create_account():
 	return frappe.get_doc(
 		{
 			"doctype": "Account",
-			"company": "_Test Company",
+			"agency": "_Test Company",
 			"account_name": "Payment Account",
 			"root_type": "Asset",
 			"report_type": "Balance Sheet",

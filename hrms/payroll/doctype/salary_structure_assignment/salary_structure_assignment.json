@@ -17,7 +17,7 @@
   "from_date",
   "income_tax_slab",
   "column_break_11",
-  "company",
+  "agency",
   "payroll_payable_account",
   "currency",
   "section_break_7",
@@ -91,8 +91,8 @@
    "reqd": 1
   },
   {
-   "fetch_from": "employee.company",
-   "fieldname": "company",
+   "fetch_from": "employee.agency",
+   "fieldname": "agency",
    "fieldtype": "Link",
    "label": "Company",
    "options": "Company",

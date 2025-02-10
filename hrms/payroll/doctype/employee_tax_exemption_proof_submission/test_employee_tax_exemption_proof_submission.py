@@ -21,9 +21,9 @@ class TestEmployeeTaxExemptionProofSubmission(IntegrationTestCase):
 		frappe.db.delete("Employee Tax Exemption Proof Submission")
 		frappe.db.delete("Salary Structure Assignment")
 
-		make_employee("employee@proofsubmission.com", company="_Test Company")
+		make_employee("employee@proofsubmission.com", agency="_Test Company")
 		create_payroll_period(
-			company="_Test Company",
+			agency="_Test Company",
 			name=PAYROLL_PERIOD_NAME,
 			start_date=PAYROLL_PERIOD_START,
 			end_date=PAYROLL_PERIOD_END,
@@ -101,7 +101,7 @@ class TestEmployeeTaxExemptionProofSubmission(IntegrationTestCase):
 			{
 				"doctype": "Employee Tax Exemption Proof Submission",
 				"employee": employee,
-				"company": "_Test Company",
+				"agency": "_Test Company",
 				"payroll_period": PAYROLL_PERIOD_NAME,
 				"currency": "INR",
 				"house_rent_payment_amount": 600000,

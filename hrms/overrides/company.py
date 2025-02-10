@@ -6,10 +6,10 @@ import json
 import frappe
 from frappe import _
 
-from nex.accounts.doctype.account.account import get_account_currency
+# from nex.accounts.doctype.account.account import get_account_currency
 
 
-def make_company_fixtures(doc, method=None):
+def make_agency_fixtures(doc, method=None):
 	if not frappe.flags.country_change:
 		return
 
@@ -17,7 +17,7 @@ def make_company_fixtures(doc, method=None):
 	make_salary_components(doc.country)
 
 
-def delete_company_fixtures():
+def delete_agency_fixtures():
 	countries = frappe.get_all(
 		"Company",
 		distinct="True",
@@ -103,14 +103,14 @@ def set_default_hr_accounts(doc, method=None):
 
 	if not doc.default_payroll_payable_account:
 		payroll_payable_account = frappe.db.get_value(
-			"Account", {"account_name": _("Payroll Payable"), "company": doc.name, "is_group": 0}
+			"Account", {"account_name": _("Payroll Payable"), "agency": doc.name, "is_group": 0}
 		)
 
 		doc.db_set("default_payroll_payable_account", payroll_payable_account)
 
 	if not doc.default_employee_advance_account:
 		employe_advance_account = frappe.db.get_value(
-			"Account", {"account_name": _("Employee Advances"), "company": doc.name, "is_group": 0}
+			"Account", {"account_name": _("Employee Advances"), "agency": doc.name, "is_group": 0}
 		)
 
 		doc.db_set("default_employee_advance_account", employe_advance_account)
@@ -118,54 +118,54 @@ def set_default_hr_accounts(doc, method=None):
 
 def validate_default_accounts(doc, method=None):
 	if doc.default_payroll_payable_account:
-		for_company = frappe.db.get_value("Account", doc.default_payroll_payable_account, "company")
-		if for_company != doc.name:
+		for_agency = frappe.db.get_value("Account", doc.default_payroll_payable_account, "agency")
+		if for_agency != doc.name:
 			frappe.throw(
-				_("Account {0} does not belong to company: {1}").format(
+				_("Account {0} does not belong to agency: {1}").format(
 					doc.default_payroll_payable_account, doc.name
 				)
 			)
 
-		if get_account_currency(doc.default_payroll_payable_account) != doc.default_currency:
-			frappe.throw(
-				_(
-					"The currency of {0} should be same as the company's default currency. Please select another account."
-				).format(frappe.bold(_("Default Payroll Payable Account")))
-			)
+		# if get_account_currency(doc.default_payroll_payable_account) != doc.default_currency:
+		# 	frappe.throw(
+		# 		_(
+		# 			"The currency of {0} should be same as the agency's default currency. Please select another account."
+		# 		).format(frappe.bold(_("Default Payroll Payable Account")))
+		# 	)
 
 
 def handle_linked_docs(doc, method=None):
-	delete_docs_with_company_field(doc)
-	clear_company_field_for_single_doctypes(doc)
+	delete_docs_with_agency_field(doc)
+	clear_agency_field_for_single_doctypes(doc)
 
 
-def delete_docs_with_company_field(doc, method=None):
+def delete_docs_with_agency_field(doc, method=None):
 	"""
-	Deletes records from linked doctypes where the 'company' field matches the company's name
+	Deletes records from linked doctypes where the 'agency' field matches the agency's name
 	"""
-	company_data_to_be_ignored = frappe.get_hooks("company_data_to_be_ignored") or []
-	for doctype in company_data_to_be_ignored:
-		records_to_delete = frappe.get_all(doctype, filters={"company": doc.name}, pluck="name")
+	agency_data_to_be_ignored = frappe.get_hooks("agency_data_to_be_ignored") or []
+	for doctype in agency_data_to_be_ignored:
+		records_to_delete = frappe.get_all(doctype, filters={"agency": doc.name}, pluck="name")
 		if records_to_delete:
 			frappe.db.delete(doctype, {"name": ["in", records_to_delete]})
 
 
-def clear_company_field_for_single_doctypes(doc):
+def clear_agency_field_for_single_doctypes(doc):
 	"""
-	Clears the 'company' value in Single doctypes where applicable
+	Clears the 'agency' value in Single doctypes where applicable
 	"""
-	single_docs = get_single_doctypes_with_company_field()
+	single_docs = get_single_doctypes_with_agency_field()
 	singles = frappe.qb.DocType("Singles")
 	(
 		frappe.qb.update(singles)
 		.set(singles.value, "")
 		.where(singles.doctype.isin(single_docs))
-		.where(singles.field == "company")
+		.where(singles.field == "agency")
 		.where(singles.value == doc.name)
 	).run()
 
 
-def get_single_doctypes_with_company_field():
+def get_single_doctypes_with_agency_field():
 	DocType = frappe.qb.DocType("DocType")
 	DocField = frappe.qb.DocType("DocField")
 

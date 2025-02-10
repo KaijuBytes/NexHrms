@@ -9,7 +9,7 @@ from nex.setup.doctype.designation.test_designation import create_designation
 
 from hrms.hr.doctype.job_applicant.job_applicant import get_applicant_to_hire_percentage
 from hrms.hr.doctype.job_offer.job_offer import get_offer_acceptance_rate
-from hrms.hr.doctype.staffing_plan.test_staffing_plan import make_company
+from hrms.hr.doctype.staffing_plan.test_staffing_plan import make_agency
 from hrms.tests.test_utils import create_job_applicant
 
 
@@ -92,7 +92,7 @@ def create_job_offer(**args):
 
 def create_staffing_plan(**args):
 	args = frappe._dict(args)
-	make_company()
+	make_agency()
 	frappe.db.set_value("Company", "_Test Company", "is_group", 1)
 	if frappe.db.exists("Staffing Plan", args.name or "Test"):
 		return

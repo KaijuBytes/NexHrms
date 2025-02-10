@@ -34,7 +34,7 @@ class TestEmployeeLeaveBalance(IntegrationTestCase):
 
 		frappe.set_user("Administrator")
 
-		self.employee_id = make_employee("test_emp_leave_balance@example.com", company="_Test Company")
+		self.employee_id = make_employee("test_emp_leave_balance@example.com", agency="_Test Company")
 
 		self.date = getdate()
 		self.year_start = getdate(get_year_start(self.date))
@@ -85,7 +85,7 @@ class TestEmployeeLeaveBalance(IntegrationTestCase):
 		filters = frappe._dict(
 			{
 				"date": add_days(leave_application2.to_date, 1),
-				"company": "_Test Company",
+				"agency": "_Test Company",
 				"employee": self.employee_id,
 			}
 		)
@@ -129,7 +129,7 @@ class TestEmployeeLeaveBalance(IntegrationTestCase):
 		# Leave balance should show actual balance, and not "consumption balance as per remaining days", near alloc end date
 		# eg: 3 days left for alloc to end, leave balance should still be 26 and not 3
 		filters = frappe._dict(
-			{"date": add_days(self.year_end, -3), "company": "_Test Company", "employee": self.employee_id}
+			{"date": add_days(self.year_end, -3), "agency": "_Test Company", "employee": self.employee_id}
 		)
 		report = execute(filters)
 
@@ -148,7 +148,7 @@ class TestEmployeeLeaveBalance(IntegrationTestCase):
 	def test_employee_status_filter(self):
 		frappe.get_doc(test_records[0]).insert()
 
-		inactive_emp = make_employee("test_emp_status@example.com", company="_Test Company")
+		inactive_emp = make_employee("test_emp_status@example.com", agency="_Test Company")
 		allocation = make_allocation_record(
 			employee=inactive_emp, from_date=self.year_start, to_date=self.year_end
 		)
@@ -159,7 +159,7 @@ class TestEmployeeLeaveBalance(IntegrationTestCase):
 		filters = frappe._dict(
 			{
 				"date": allocation.from_date,
-				"company": "_Test Company",
+				"agency": "_Test Company",
 				"employee": inactive_emp,
 				"employee_status": "Active",
 			}
@@ -170,7 +170,7 @@ class TestEmployeeLeaveBalance(IntegrationTestCase):
 		filters = frappe._dict(
 			{
 				"date": allocation.from_date,
-				"company": "_Test Company",
+				"agency": "_Test Company",
 				"employee": inactive_emp,
 				"employee_status": "Inactive",
 			}

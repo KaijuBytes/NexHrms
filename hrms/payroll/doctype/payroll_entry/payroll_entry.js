@@ -3,7 +3,7 @@
 
 var in_progress = false;
 
-frappe.provide("nex.accounts.dimensions");
+// frappe.provide("nex.accounts.dimensions");
 
 frappe.ui.form.on("Payroll Entry", {
 	onload: function (frm) {
@@ -14,7 +14,7 @@ frappe.ui.form.on("Payroll Entry", {
 		}
 		frm.toggle_reqd(["payroll_frequency"], !frm.doc.salary_slip_based_on_timesheet);
 
-		nex.accounts.dimensions.setup_dimension_filters(frm, frm.doctype);
+		// nex.accounts.dimensions.setup_dimension_filters(frm, frm.doctype);
 		frm.events.department_filters(frm);
 		frm.events.payroll_payable_account_filters(frm);
 
@@ -33,7 +33,7 @@ frappe.ui.form.on("Payroll Entry", {
 		frm.set_query("department", function () {
 			return {
 				filters: {
-					company: frm.doc.company,
+					agency: frm.doc.agency,
 				},
 			};
 		});
@@ -43,7 +43,7 @@ frappe.ui.form.on("Payroll Entry", {
 		frm.set_query("payroll_payable_account", function () {
 			return {
 				filters: {
-					company: frm.doc.company,
+					agency: frm.doc.agency,
 					root_type: "Liability",
 					is_group: 0,
 				},
@@ -172,7 +172,7 @@ frappe.ui.form.on("Payroll Entry", {
 	},
 
 	setup: function (frm) {
-		frm.add_fetch("company", "cost_center", "cost_center");
+		frm.add_fetch("agency", "cost_center", "cost_center");
 
 		frm.set_query("payment_account", function () {
 			var account_types = ["Bank", "Cash"];
@@ -180,14 +180,14 @@ frappe.ui.form.on("Payroll Entry", {
 				filters: {
 					account_type: ["in", account_types],
 					is_group: 0,
-					company: frm.doc.company,
+					agency: frm.doc.agency,
 				},
 			};
 		});
 
 		frm.set_query("employee", "employees", () => {
 			let error_fields = [];
-			let mandatory_fields = ["company", "payroll_frequency", "start_date", "end_date"];
+			let mandatory_fields = ["agency", "payroll_frequency", "start_date", "end_date"];
 
 			let message = __("Mandatory fields required in {0}", [__(frm.doc.doctype)]);
 
@@ -217,7 +217,7 @@ frappe.ui.form.on("Payroll Entry", {
 		let filters = {};
 
 		let fields = [
-			"company",
+			"agency",
 			"start_date",
 			"end_date",
 			"payroll_frequency",
@@ -251,19 +251,19 @@ frappe.ui.form.on("Payroll Entry", {
 		});
 	},
 
-	company: function (frm) {
-		frm.events.clear_employee_table(frm);
-		nex.accounts.dimensions.update_dimension(frm, frm.doctype);
-		frm.trigger("set_payable_account_and_currency");
-	},
+	// agency: function (frm) {
+	// 	frm.events.clear_employee_table(frm);
+	// 	// nex.accounts.dimensions.update_dimension(frm, frm.doctype);
+	// 	frm.trigger("set_payable_account_and_currency");
+	// },
 
 	set_payable_account_and_currency: function (frm) {
-		frappe.db.get_value("Company", { name: frm.doc.company }, "default_currency", (r) => {
+		frappe.db.get_value("Company", { name: frm.doc.agency }, "default_currency", (r) => {
 			frm.set_value("currency", r.default_currency);
 		});
 		frappe.db.get_value(
 			"Company",
-			{ name: frm.doc.company },
+			{ name: frm.doc.agency },
 			"default_payroll_payable_account",
 			(r) => {
 				frm.set_value("payroll_payable_account", r.default_payroll_payable_account);
@@ -272,19 +272,19 @@ frappe.ui.form.on("Payroll Entry", {
 	},
 
 	currency: function (frm) {
-		var company_currency;
-		if (!frm.doc.company) {
-			company_currency = nex.get_currency(frappe.defaults.get_default("Company"));
+		var agency_currency;
+		if (!frm.doc.agency) {
+			agency_currency = nex.get_currency(frappe.defaults.get_default("Company"));
 		} else {
-			company_currency = nex.get_currency(frm.doc.company);
+			agency_currency = nex.get_currency(frm.doc.agency);
 		}
 		if (frm.doc.currency) {
-			if (company_currency != frm.doc.currency) {
+			if (agency_currency != frm.doc.currency) {
 				frappe.call({
 					method: "nex.setup.utils.get_exchange_rate",
 					args: {
 						from_currency: frm.doc.currency,
-						to_currency: company_currency,
+						to_currency: agency_currency,
 					},
 					callback: function (r) {
 						frm.set_value("exchange_rate", flt(r.message));
@@ -292,7 +292,7 @@ frappe.ui.form.on("Payroll Entry", {
 						frm.set_df_property(
 							"exchange_rate",
 							"description",
-							"1 " + frm.doc.currency + " = [?] " + company_currency,
+							"1 " + frm.doc.currency + " = [?] " + agency_currency,
 						);
 					},
 				});

@@ -7,7 +7,7 @@
  "engine": "InnoDB",
  "field_order": [
   "title",
-  "company",
+  "agency",
   "department",
   "column_break_7",
   "designation",
@@ -25,7 +25,7 @@
    "translatable": 1
   },
   {
-   "fieldname": "company",
+   "fieldname": "agency",
    "fieldtype": "Link",
    "label": "Company",
    "options": "Company"

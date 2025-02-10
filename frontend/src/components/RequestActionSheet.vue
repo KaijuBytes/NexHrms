@@ -240,8 +240,8 @@ function hasPermission(action) {
 const currency = computed(() => {
 	let docCurrency = document?.doc?.currency
 
-	if (!docCurrency && document?.doc?.company) {
-		docCurrency = getCompanyCurrency(document?.doc?.company)
+	if (!docCurrency && document?.doc?.agency) {
+		docCurrency = getCompanyCurrency(document?.doc?.agency)
 	}
 	return docCurrency
 })

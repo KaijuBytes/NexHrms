@@ -58,8 +58,8 @@ class TestPayrollEntry(FrappeTestCase):
 		]:
 			frappe.db.delete(dt)
 
-		make_earning_salary_component(setup=True, company_list=["_Test Company"])
-		make_deduction_salary_component(setup=True, test_tax=False, company_list=["_Test Company"])
+		make_earning_salary_component(setup=True, agency_list=["_Test Company"])
+		make_deduction_salary_component(setup=True, test_tax=False, agency_list=["_Test Company"])
 
 		frappe.db.set_value("Company", "_Test Company", "default_holiday_list", "_Test Holiday List")
 		frappe.db.set_single_value("Payroll Settings", "email_salary_slip_to_employee", 0)
@@ -69,7 +69,7 @@ class TestPayrollEntry(FrappeTestCase):
 		if not default_account or default_account != "_Test Payroll Payable - _TC":
 			create_account(
 				account_name="_Test Payroll Payable",
-				company="_Test Company",
+				agency="_Test Company",
 				parent_account="Current Liabilities - _TC",
 				account_type="Payable",
 			)
@@ -78,36 +78,36 @@ class TestPayrollEntry(FrappeTestCase):
 			)
 
 	def test_payroll_entry(self):
-		company = frappe.get_doc("Company", "_Test Company")
-		employee = frappe.db.get_value("Employee", {"company": "_Test Company"})
-		setup_salary_structure(employee, company)
+		agency = frappe.get_doc("Company", "_Test Company")
+		employee = frappe.db.get_value("Employee", {"agency": "_Test Company"})
+		setup_salary_structure(employee, agency)
 
 		dates = get_start_end_dates("Monthly", nowdate())
 		make_payroll_entry(
 			start_date=dates.start_date,
 			end_date=dates.end_date,
-			payable_account=company.default_payroll_payable_account,
-			currency=company.default_currency,
-			company=company.name,
+			payable_account=agency.default_payroll_payable_account,
+			currency=agency.default_currency,
+			agency=agency.name,
 		)
 
 	def test_multi_currency_payroll_entry(self):
-		company = frappe.get_doc("Company", "_Test Company")
+		agency = frappe.get_doc("Company", "_Test Company")
 		create_department("Accounts")
 		employee = make_employee(
-			"test_muti_currency_employee@payroll.com", company=company.name, department="Accounts - _TC"
+			"test_muti_currency_employee@payroll.com", agency=agency.name, department="Accounts - _TC"
 		)
 		salary_structure = "_Test Multi Currency Salary Structure"
-		setup_salary_structure(employee, company, "USD", salary_structure)
+		setup_salary_structure(employee, agency, "USD", salary_structure)
 
 		dates = get_start_end_dates("Monthly", nowdate())
 		payroll_entry = make_payroll_entry(
 			start_date=dates.start_date,
 			end_date=dates.end_date,
-			payable_account=company.default_payroll_payable_account,
+			payable_account=agency.default_payroll_payable_account,
 			currency="USD",
 			exchange_rate=70,
-			company=company.name,
+			agency=agency.name,
 			cost_center="Main - _TC",
 		)
 		payroll_entry.make_bank_entry()
@@ -146,9 +146,9 @@ class TestPayrollEntry(FrappeTestCase):
 			"test_emp1@example.com",
 			payroll_cost_center="_Test Cost Center - _TC",
 			department=department,
-			company="_Test Company",
+			agency="_Test Company",
 		)
-		employee2 = make_employee("test_emp2@example.com", department=department, company="_Test Company")
+		employee2 = make_employee("test_emp2@example.com", department=department, agency="_Test Company")
 
 		create_assignments_with_cost_centers(employee1, employee2)
 
@@ -159,7 +159,7 @@ class TestPayrollEntry(FrappeTestCase):
 			payable_account="_Test Payroll Payable - _TC",
 			currency="INR",
 			department=department,
-			company="_Test Company",
+			agency="_Test Company",
 			payment_account="Cash - _TC",
 			cost_center="Main - _TC",
 		)
@@ -189,12 +189,12 @@ class TestPayrollEntry(FrappeTestCase):
 		COMPANY = "_Test Company"
 		COST_CENTERS = {"_Test Cost Center - _TC": 60, "_Test Cost Center 2 - _TC": 40}
 		department = create_department("Cost Center Test")
-		employee = make_employee("test_emp1@example.com", department=department, company=COMPANY)
+		employee = make_employee("test_emp1@example.com", department=department, agency=COMPANY)
 		salary_structure = make_salary_structure(
 			"_Test Salary Structure 2",
 			"Monthly",
 			employee,
-			company=COMPANY,
+			agency=COMPANY,
 		)
 
 		# update cost centers in salary structure assignment for employee
@@ -225,7 +225,7 @@ class TestPayrollEntry(FrappeTestCase):
 			payable_account="_Test Payroll Payable - _TC",
 			currency="INR",
 			department=department,
-			company="_Test Company",
+			agency="_Test Company",
 			payment_account="Cash - _TC",
 			cost_center="Main - _TC",
 		)
@@ -262,7 +262,7 @@ class TestPayrollEntry(FrappeTestCase):
 
 		dates = get_start_end_dates("Monthly", nowdate())
 		make_payroll_entry(
-			company="_Test Company",
+			agency="_Test Company",
 			start_date=dates.start_date,
 			payable_account=payroll_payable_account,
 			currency=currency,
@@ -306,7 +306,7 @@ class TestPayrollEntry(FrappeTestCase):
 
 		dates = get_start_end_dates("Monthly", nowdate())
 		make_payroll_entry(
-			company="_Test Company",
+			agency="_Test Company",
 			start_date=dates.start_date,
 			payable_account=payroll_payable_account,
 			currency=currency,
@@ -322,10 +322,10 @@ class TestPayrollEntry(FrappeTestCase):
 		self.assertEqual(cstr(party), "")
 
 	def test_salary_slip_operation_queueing(self):
-		company = "_Test Company"
-		company_doc = frappe.get_doc("Company", company)
-		employee = make_employee("test_employee@payroll.com", company=company)
-		setup_salary_structure(employee, company_doc)
+		agency = "_Test Company"
+		agency_doc = frappe.get_doc("Company", agency)
+		employee = make_employee("test_employee@payroll.com", agency=agency)
+		setup_salary_structure(employee, agency_doc)
 
 		# enqueue salary slip creation via payroll entry
 		# Payroll Entry status should change to Queued
@@ -333,9 +333,9 @@ class TestPayrollEntry(FrappeTestCase):
 		payroll_entry = get_payroll_entry(
 			start_date=dates.start_date,
 			end_date=dates.end_date,
-			payable_account=company_doc.default_payroll_payable_account,
-			currency=company_doc.default_currency,
-			company=company_doc.name,
+			payable_account=agency_doc.default_payroll_payable_account,
+			currency=agency_doc.default_currency,
+			agency=agency_doc.name,
 			cost_center="Main - _TC",
 		)
 		frappe.flags.enqueue_payroll_entry = True
@@ -346,16 +346,16 @@ class TestPayrollEntry(FrappeTestCase):
 		frappe.flags.enqueue_payroll_entry = False
 
 	def test_salary_slip_operation_failure(self):
-		company = "_Test Company"
-		company_doc = frappe.get_doc("Company", company)
-		employee = make_employee("test_employee@payroll.com", company=company)
+		agency = "_Test Company"
+		agency_doc = frappe.get_doc("Company", agency)
+		employee = make_employee("test_employee@payroll.com", agency=agency)
 
 		salary_structure = make_salary_structure(
 			"_Test Salary Structure",
 			"Monthly",
 			employee,
-			company=company,
-			currency=company_doc.default_currency,
+			agency=agency,
+			currency=agency_doc.default_currency,
 		)
 
 		# reset account in component to test submission failure
@@ -369,9 +369,9 @@ class TestPayrollEntry(FrappeTestCase):
 		payroll_entry = get_payroll_entry(
 			start_date=dates.start_date,
 			end_date=dates.end_date,
-			payable_account=company_doc.default_payroll_payable_account,
-			currency=company_doc.default_currency,
-			company=company_doc.name,
+			payable_account=agency_doc.default_payroll_payable_account,
+			currency=agency_doc.default_currency,
+			agency=agency_doc.name,
 			cost_center="Main - _TC",
 		)
 
@@ -392,7 +392,7 @@ class TestPayrollEntry(FrappeTestCase):
 
 		# set accounts
 		for data in frappe.get_all("Salary Component", pluck="name"):
-			set_salary_component_account(data, company_list=[company])
+			set_salary_component_account(data, agency_list=[agency])
 
 		# Payroll Entry successful, status should change to Submitted
 		payroll_entry.submit_salary_slips()
@@ -402,17 +402,17 @@ class TestPayrollEntry(FrappeTestCase):
 		self.assertEqual(payroll_entry.error_message, "")
 
 	def test_payroll_entry_cancellation(self):
-		company_doc = frappe.get_doc("Company", "_Test Company")
-		employee = make_employee("test_employee@payroll.com", company=company_doc.name)
+		agency_doc = frappe.get_doc("Company", "_Test Company")
+		employee = make_employee("test_employee@payroll.com", agency=agency_doc.name)
 
-		setup_salary_structure(employee, company_doc)
+		setup_salary_structure(employee, agency_doc)
 		dates = get_start_end_dates("Monthly", nowdate())
 		payroll_entry = make_payroll_entry(
 			start_date=dates.start_date,
 			end_date=dates.end_date,
-			payable_account=company_doc.default_payroll_payable_account,
-			currency=company_doc.default_currency,
-			company=company_doc.name,
+			payable_account=agency_doc.default_payroll_payable_account,
+			currency=agency_doc.default_currency,
+			agency=agency_doc.name,
 			cost_center="Main - _TC",
 			payment_account="Cash - _TC",
 		)
@@ -439,17 +439,17 @@ class TestPayrollEntry(FrappeTestCase):
 		self.assertEqual(len(journal_entries), 2)
 
 	def test_payroll_entry_status(self):
-		company_doc = frappe.get_doc("Company", "_Test Company")
-		employee = make_employee("test_employee@payroll.com", company=company_doc.name)
+		agency_doc = frappe.get_doc("Company", "_Test Company")
+		employee = make_employee("test_employee@payroll.com", agency=agency_doc.name)
 
-		setup_salary_structure(employee, company_doc)
+		setup_salary_structure(employee, agency_doc)
 		dates = get_start_end_dates("Monthly", nowdate())
 		payroll_entry = get_payroll_entry(
 			start_date=dates.start_date,
 			end_date=dates.end_date,
-			payable_account=company_doc.default_payroll_payable_account,
-			currency=company_doc.default_currency,
-			company=company_doc.name,
+			payable_account=agency_doc.default_payroll_payable_account,
+			currency=agency_doc.default_currency,
+			agency=agency_doc.name,
 			cost_center="Main - _TC",
 		)
 		payroll_entry.submit()
@@ -459,17 +459,17 @@ class TestPayrollEntry(FrappeTestCase):
 		self.assertEqual(payroll_entry.status, "Cancelled")
 
 	def test_payroll_entry_cancellation_against_cancelled_journal_entry(self):
-		company_doc = frappe.get_doc("Company", "_Test Company")
-		employee = make_employee("test_pe_cancellation@payroll.com", company=company_doc.name)
+		agency_doc = frappe.get_doc("Company", "_Test Company")
+		employee = make_employee("test_pe_cancellation@payroll.com", agency=agency_doc.name)
 
-		setup_salary_structure(employee, company_doc)
+		setup_salary_structure(employee, agency_doc)
 		dates = get_start_end_dates("Monthly", nowdate())
 		payroll_entry = make_payroll_entry(
 			start_date=dates.start_date,
 			end_date=dates.end_date,
-			payable_account=company_doc.default_payroll_payable_account,
-			currency=company_doc.default_currency,
-			company=company_doc.name,
+			payable_account=agency_doc.default_payroll_payable_account,
+			currency=agency_doc.default_currency,
+			agency=agency_doc.name,
 			cost_center="Main - _TC",
 			payment_account="Cash - _TC",
 		)
@@ -495,20 +495,20 @@ class TestPayrollEntry(FrappeTestCase):
 
 	@change_settings("Payroll Settings", {"process_payroll_accounting_entry_based_on_employee": 1})
 	def test_payroll_accrual_journal_entry_with_employee_tagging(self):
-		company_doc = frappe.get_doc("Company", "_Test Company")
+		agency_doc = frappe.get_doc("Company", "_Test Company")
 		employee = make_employee(
-			"test_payroll_accrual_journal_entry_with_employee_tagging@payroll.com", company=company_doc.name
+			"test_payroll_accrual_journal_entry_with_employee_tagging@payroll.com", agency=agency_doc.name
 		)
 
-		setup_salary_structure(employee, company_doc)
+		setup_salary_structure(employee, agency_doc)
 
 		dates = get_start_end_dates("Monthly", nowdate())
 		payroll_entry = make_payroll_entry(
 			start_date=dates.start_date,
 			end_date=dates.end_date,
-			payable_account=company_doc.default_payroll_payable_account,
-			currency=company_doc.default_currency,
-			company=company_doc.name,
+			payable_account=agency_doc.default_payroll_payable_account,
+			currency=agency_doc.default_currency,
+			agency=agency_doc.name,
 			cost_center="Main - _TC",
 		)
 
@@ -520,27 +520,27 @@ class TestPayrollEntry(FrappeTestCase):
 		if payroll_je:
 			payroll_je_doc = frappe.get_doc("Journal Entry", payroll_je)
 			for account in payroll_je_doc.accounts:
-				if account.account == company_doc.default_payroll_payable_account:
+				if account.account == agency_doc.default_payroll_payable_account:
 					self.assertEqual(account.party_type, "Employee")
 					self.assertEqual(account.party, employee)
 
 	@change_settings("Payroll Settings", {"process_payroll_accounting_entry_based_on_employee": 0})
 	def test_payroll_accrual_journal_entry_without_employee_tagging(self):
-		company_doc = frappe.get_doc("Company", "_Test Company")
+		agency_doc = frappe.get_doc("Company", "_Test Company")
 		employee = make_employee(
 			"test_payroll_accrual_journal_entry_without_employee_tagging@payroll.com",
-			company=company_doc.name,
+			agency=agency_doc.name,
 		)
 
-		setup_salary_structure(employee, company_doc)
+		setup_salary_structure(employee, agency_doc)
 
 		dates = get_start_end_dates("Monthly", nowdate())
 		payroll_entry = make_payroll_entry(
 			start_date=dates.start_date,
 			end_date=dates.end_date,
-			payable_account=company_doc.default_payroll_payable_account,
-			currency=company_doc.default_currency,
-			company=company_doc.name,
+			payable_account=agency_doc.default_payroll_payable_account,
+			currency=agency_doc.default_currency,
+			agency=agency_doc.name,
 			cost_center="Main - _TC",
 		)
 
@@ -552,15 +552,15 @@ class TestPayrollEntry(FrappeTestCase):
 		if payroll_je:
 			payroll_je_doc = frappe.get_doc("Journal Entry", payroll_je)
 			for account in payroll_je_doc.accounts:
-				if account.account == company_doc.default_payroll_payable_account:
+				if account.account == agency_doc.default_payroll_payable_account:
 					self.assertEqual(account.party_type, None)
 					self.assertEqual(account.party, None)
 
 	def test_advance_deduction_in_accrual_journal_entry(self):
-		company_doc = frappe.get_doc("Company", "_Test Company")
-		employee = make_employee("test_employee@payroll.com", company=company_doc.name)
+		agency_doc = frappe.get_doc("Company", "_Test Company")
+		employee = make_employee("test_employee@payroll.com", agency=agency_doc.name)
 
-		setup_salary_structure(employee, company_doc)
+		setup_salary_structure(employee, agency_doc)
 
 		# create employee advance
 		advance = make_employee_advance(employee, {"repay_unclaimed_amount_from_salary": 1})
@@ -572,7 +572,7 @@ class TestPayrollEntry(FrappeTestCase):
 		component = create_salary_component("Advance Salary - Deduction", **{"type": "Deduction"})
 		component.append(
 			"accounts",
-			{"company": company_doc.name, "account": "Employee Advances - _TC"},
+			{"agency": agency_doc.name, "account": "Employee Advances - _TC"},
 		)
 		component.save()
 
@@ -587,9 +587,9 @@ class TestPayrollEntry(FrappeTestCase):
 		make_payroll_entry(
 			start_date=dates.start_date,
 			end_date=dates.end_date,
-			payable_account=company_doc.default_payroll_payable_account,
-			currency=company_doc.default_currency,
-			company=company_doc.name,
+			payable_account=agency_doc.default_payroll_payable_account,
+			currency=agency_doc.default_currency,
+			agency=agency_doc.name,
 			cost_center="Main - _TC",
 		)
 
@@ -620,9 +620,9 @@ class TestPayrollEntry(FrappeTestCase):
 			"test_emp1@example.com",
 			payroll_cost_center="_Test Cost Center - _TC",
 			department=department,
-			company="_Test Company",
+			agency="_Test Company",
 		)
-		employee2 = make_employee("test_emp2@example.com", department=department, company="_Test Company")
+		employee2 = make_employee("test_emp2@example.com", department=department, agency="_Test Company")
 
 		create_assignments_with_cost_centers(employee1, employee2)
 
@@ -633,7 +633,7 @@ class TestPayrollEntry(FrappeTestCase):
 			payable_account="_Test Payroll Payable - _TC",
 			currency="INR",
 			department=department,
-			company="_Test Company",
+			agency="_Test Company",
 			payment_account="Cash - _TC",
 			cost_center="Main - _TC",
 		)
@@ -681,17 +681,17 @@ class TestPayrollEntry(FrappeTestCase):
 		self.assertEqual(debit_entries, expected_entries)
 
 	def test_validate_attendance(self):
-		company = frappe.get_doc("Company", "_Test Company")
-		employee = frappe.db.get_value("Employee", {"company": "_Test Company"})
-		setup_salary_structure(employee, company)
+		agency = frappe.get_doc("Company", "_Test Company")
+		employee = frappe.db.get_value("Employee", {"agency": "_Test Company"})
+		setup_salary_structure(employee, agency)
 
 		dates = get_start_end_dates("Monthly", nowdate())
 		payroll_entry = get_payroll_entry(
 			start_date=dates.start_date,
 			end_date=dates.end_date,
-			payable_account=company.default_payroll_payable_account,
-			currency=company.default_currency,
-			company=company.name,
+			payable_account=agency.default_payroll_payable_account,
+			currency=agency.default_currency,
+			agency=agency.name,
 		)
 
 		# case 1: validate unmarked attendance
@@ -747,7 +747,7 @@ class TestPayrollEntry(FrappeTestCase):
 
 		dates = get_start_end_dates("Monthly", nowdate())
 		payroll_entry = make_payroll_entry(
-			company="_Test Company",
+			agency="_Test Company",
 			start_date=dates.start_date,
 			payable_account=payroll_payable_account,
 			currency=currency,
@@ -791,7 +791,7 @@ def get_payroll_entry(**args):
 	args = frappe._dict(args)
 
 	payroll_entry: PayrollEntry = frappe.new_doc("Payroll Entry")
-	payroll_entry.company = args.company or nex.get_default_company()
+	payroll_entry.agency = args.agency or nex.get_default_agency()
 	payroll_entry.start_date = args.start_date or "2016-11-01"
 	payroll_entry.end_date = args.end_date or "2016-11-30"
 	payroll_entry.payment_account = get_payment_account()
@@ -831,15 +831,15 @@ def make_payroll_entry(**args):
 def get_payment_account():
 	return frappe.get_value(
 		"Account",
-		{"account_type": "Cash", "company": nex.get_default_company(), "is_group": 0},
+		{"account_type": "Cash", "agency": nex.get_default_agency(), "is_group": 0},
 		"name",
 	)
 
 
-def setup_salary_structure(employee, company_doc, currency=None, salary_structure=None):
+def setup_salary_structure(employee, agency_doc, currency=None, salary_structure=None):
 	for data in frappe.get_all("Salary Component", pluck="name"):
 		if not frappe.db.get_value(
-			"Salary Component Account", {"parent": data, "company": company_doc.name}, "name"
+			"Salary Component Account", {"parent": data, "agency": agency_doc.name}, "name"
 		):
 			set_salary_component_account(data)
 
@@ -847,15 +847,15 @@ def setup_salary_structure(employee, company_doc, currency=None, salary_structur
 		salary_structure or "_Test Salary Structure",
 		"Monthly",
 		employee,
-		company=company_doc.name,
-		currency=(currency or company_doc.default_currency),
+		agency=agency_doc.name,
+		currency=(currency or agency_doc.default_currency),
 	)
 
 
 def create_assignments_with_cost_centers(employee1, employee2):
-	company = frappe.get_doc("Company", "_Test Company")
-	setup_salary_structure(employee1, company)
-	ss = setup_salary_structure(employee2, company, salary_structure="_Test Salary Structure 2")
+	agency = frappe.get_doc("Company", "_Test Company")
+	setup_salary_structure(employee1, agency)
+	ss = setup_salary_structure(employee2, agency, salary_structure="_Test Salary Structure 2")
 
 	# update cost centers in salary structure assignment for employee2
 	ssa = frappe.db.get_value(
@@ -875,25 +875,25 @@ def setup_lending():
 	from lending.loan_management.doctype.loan.test_loan import (
 		create_loan_accounts,
 		create_loan_product,
-		set_loan_settings_in_company,
+		set_loan_settings_in_agency,
 	)
 
-	company = "_Test Company"
+	agency = "_Test Company"
 	branch = "Test Employee Branch"
 
 	if not frappe.db.exists("Branch", branch):
 		frappe.get_doc({"doctype": "Branch", "branch": branch}).insert()
 
-	set_loan_settings_in_company(company)
-	applicant = make_employee("test_employee@loan.com", company="_Test Company", branch=branch)
-	company_doc = frappe.get_doc("Company", company)
+	set_loan_settings_in_agency(agency)
+	applicant = make_employee("test_employee@loan.com", agency="_Test Company", branch=branch)
+	agency_doc = frappe.get_doc("Company", agency)
 
 	make_salary_structure(
 		"Test Salary Structure for Loan",
 		"Monthly",
 		employee=applicant,
-		company="_Test Company",
-		currency=company_doc.default_currency,
+		agency="_Test Company",
+		currency=agency_doc.default_currency,
 	)
 
 	if not frappe.db.exists("Loan Product", "Car Loan"):
@@ -915,8 +915,8 @@ def setup_lending():
 	return (
 		applicant,
 		branch,
-		company_doc.default_currency,
-		company_doc.default_payroll_payable_account,
+		agency_doc.default_currency,
+		agency_doc.default_payroll_payable_account,
 	)
 
 

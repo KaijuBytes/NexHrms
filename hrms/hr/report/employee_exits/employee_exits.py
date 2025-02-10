@@ -137,8 +137,8 @@ def get_conditions(filters, query, employee, interview, fnf):
 	elif filters.get("to_date"):
 		query = query.where(employee.relieving_date <= filters.get("to_date"))
 
-	if filters.get("company"):
-		query = query.where(employee.company == filters.get("company"))
+	if filters.get("agency"):
+		query = query.where(employee.agency == filters.get("agency"))
 
 	if filters.get("department"):
 		query = query.where(employee.department == filters.get("department"))

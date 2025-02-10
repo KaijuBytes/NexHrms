@@ -5,7 +5,7 @@
 frappe.query_reports["Employee Analytics"] = {
 	filters: [
 		{
-			fieldname: "company",
+			fieldname: "agency",
 			label: __("Company"),
 			fieldtype: "Link",
 			options: "Company",

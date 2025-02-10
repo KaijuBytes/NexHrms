@@ -81,10 +81,10 @@ const tabs = [
 // object to store form data
 const expenseClaim = ref({
 	employee: employee.data.name,
-	company: employee.data.company,
+	agency: employee.data.agency,
 })
 
-const currency = computed(() => getCompanyCurrency(expenseClaim.value.company))
+const currency = computed(() => getCompanyCurrency(expenseClaim.value.agency))
 
 // get form fields
 const formFields = createResource({
@@ -100,7 +100,7 @@ const formFields = createResource({
 	},
 	onSuccess(_data) {
 		expenseApproverDetails.reload()
-		companyDetails.reload()
+		agencyDetails.reload()
 	},
 })
 formFields.reload()
@@ -148,9 +148,9 @@ const expenseApproverDetails = createResource({
 	},
 })
 
-const companyDetails = createResource({
-	url: "hrms.api.get_company_cost_center_and_expense_account",
-	params: { company: expenseClaim.value.company },
+const agencyDetails = createResource({
+	url: "hrms.api.get_agency_cost_center_and_expense_account",
+	params: { agency: expenseClaim.value.agency },
 	onSuccess(data) {
 		expenseClaim.value.cost_center = data?.cost_center
 		expenseClaim.value.payable_account =
@@ -209,7 +209,7 @@ function getFilteredFields(fields) {
 		"employee",
 		"employee_name",
 		"department",
-		"company",
+		"agency",
 		"remark",
 		"is_paid",
 		"mode_of_payment",
@@ -227,17 +227,17 @@ function applyFilters(field) {
 		field.linkFilters = {
 			report_type: "Balance Sheet",
 			account_type: "Payable",
-			company: expenseClaim.value.company,
+			agency: expenseClaim.value.agency,
 			is_group: 0,
 		}
 	} else if (field.fieldname === "cost_center") {
 		field.linkFilters = {
-			company: expenseClaim.value.company,
+			agency: expenseClaim.value.agency,
 			is_group: 0,
 		}
 	} else if (field.fieldname === "project") {
 		field.linkFilters = {
-			company: expenseClaim.value.company,
+			agency: expenseClaim.value.agency,
 		}
 	}
 

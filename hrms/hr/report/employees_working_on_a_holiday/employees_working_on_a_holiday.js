@@ -30,7 +30,7 @@ frappe.query_reports["Employees working on a holiday"] = {
 			options: "Department",
 		},
 		{
-			fieldname: "company",
+			fieldname: "agency",
 			label: __("Company"),
 			fieldtype: "Link",
 			options: "Company",

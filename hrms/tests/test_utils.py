@@ -17,15 +17,15 @@ def before_tests():
 			{
 				"currency": "INR",
 				"full_name": "Test User",
-				"company_name": "_Test Company",
+				"agency_name": "_Test Company",
 				"timezone": "Asia/Kolkata",
-				"company_abbr": "_TC",
+				"agency_abbr": "_TC",
 				"industry": "Manufacturing",
 				"country": "India",
 				"fy_start_date": f"{year}-01-01",
 				"fy_end_date": f"{year}-12-31",
 				"language": "english",
-				"company_tagline": "Testing",
+				"agency_tagline": "Testing",
 				"email": "test@nex.com",
 				"password": "test",
 				"chart_of_accounts": "Standard",
@@ -88,30 +88,30 @@ def add_date_to_holiday_list(date: str, holiday_list: str) -> None:
 	holiday_list.save()
 
 
-def create_company(name: str = "_Test Company", is_group: 0 | 1 = 0, parent_company: str | None = None):
+def create_agency(name: str = "_Test Company", is_group: 0 | 1 = 0, parent_agency: str | None = None):
 	if frappe.db.exists("Company", name):
 		return frappe.get_doc("Company", name)
 
 	return frappe.get_doc(
 		{
 			"doctype": "Company",
-			"company_name": name,
+			"agency_name": name,
 			"default_currency": "INR",
 			"country": "India",
 			"is_group": is_group,
-			"parent_company": parent_company,
+			"parent_agency": parent_agency,
 		}
 	).insert()
 
 
-def create_department(name: str, company: str = "_Test Company") -> str:
-	docname = get_abbreviated_name(name, company)
+def create_department(name: str, agency: str = "_Test Company") -> str:
+	docname = get_abbreviated_name(name, agency)
 
 	if frappe.db.exists("Department", docname):
 		return docname
 
 	department = frappe.new_doc("Department")
-	department.update({"doctype": "Department", "department_name": name, "company": "_Test Company"})
+	department.update({"doctype": "Department", "department_name": name, "agency": "_Test Company"})
 	department.insert()
 	return department.name
 

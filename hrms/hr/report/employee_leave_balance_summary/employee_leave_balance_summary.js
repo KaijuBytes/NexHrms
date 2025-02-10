@@ -12,7 +12,7 @@ frappe.query_reports["Employee Leave Balance Summary"] = {
 			default: frappe.datetime.now_date(),
 		},
 		{
-			fieldname: "company",
+			fieldname: "agency",
 			label: __("Company"),
 			fieldtype: "Link",
 			options: "Company",

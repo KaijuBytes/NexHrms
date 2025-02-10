@@ -5,12 +5,12 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "company",
+  "agency",
   "default_account"
  ],
  "fields": [
   {
-   "fieldname": "company",
+   "fieldname": "agency",
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Company",

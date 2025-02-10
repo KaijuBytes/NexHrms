@@ -29,7 +29,7 @@ from frappe.utils import (
 from frappe.utils.background_jobs import enqueue
 
 import nex
-from nex.accounts.utils import get_fiscal_year
+# from nex.accounts.utils import get_fiscal_year
 from nex.setup.doctype.employee.employee import get_holiday_list_for_employee
 from nex.utilities.transaction_base import TransactionBase
 
@@ -59,7 +59,7 @@ from hrms.utils.holiday_list import get_holiday_dates_between
 HOLIDAYS_BETWEEN_DATES = "holidays_between_dates"
 LEAVE_TYPE_MAP = "leave_type_map"
 SALARY_COMPONENT_VALUES = "salary_component_values"
-TAX_COMPONENTS_BY_COMPANY = "tax_components_by_company"
+TAX_COMPONENTS_BY_COMPANY = "tax_components_by_agency"
 
 
 class SalarySlip(TransactionBase):
@@ -108,7 +108,7 @@ class SalarySlip(TransactionBase):
 	@property
 	def payroll_period(self):
 		if not hasattr(self, "__payroll_period"):
-			self.__payroll_period = get_payroll_period(self.start_date, self.end_date, self.company)
+			self.__payroll_period = get_payroll_period(self.start_date, self.end_date, self.agency)
 
 		return self.__payroll_period
 
@@ -180,11 +180,11 @@ class SalarySlip(TransactionBase):
 
 	def set_net_total_in_words(self):
 		doc_currency = self.currency
-		company_currency = nex.get_company_currency(self.company)
+		agency_currency = nex.get_agency_currency(self.agency)
 		total = self.net_pay if self.is_rounding_total_disabled() else self.rounded_total
 		base_total = self.base_net_pay if self.is_rounding_total_disabled() else self.base_rounded_total
 		self.total_in_words = money_in_words(total, doc_currency)
-		self.base_total_in_words = money_in_words(base_total, company_currency)
+		self.base_total_in_words = money_in_words(base_total, agency_currency)
 
 	def on_update(self):
 		self.publish_update()
@@ -1329,21 +1329,21 @@ class SalarySlip(TransactionBase):
 	def get_tax_components(self) -> list:
 		"""
 		Returns:
-		        list: A list of tax components specific to the company.
-		        If no tax components are defined for the company,
+		        list: A list of tax components specific to the agency.
+		        If no tax components are defined for the agency,
 		        it returns the default tax components.
 		"""
 		tax_components = frappe.cache().get_value(
-			TAX_COMPONENTS_BY_COMPANY, self._fetch_tax_components_by_company
+			TAX_COMPONENTS_BY_COMPANY, self._fetch_tax_components_by_agency
 		)
 
 		default_tax_components = tax_components.get("default", [])
-		return tax_components.get(self.company, default_tax_components)
+		return tax_components.get(self.agency, default_tax_components)
 
-	def _fetch_tax_components_by_company(self) -> dict:
+	def _fetch_tax_components_by_agency(self) -> dict:
 		"""
 		Returns:
-		    dict: A dictionary containing tax components grouped by company.
+		    dict: A dictionary containing tax components grouped by agency.
 
 		Raises:
 		    None
@@ -1359,13 +1359,13 @@ class SalarySlip(TransactionBase):
 			.on(sca.parent == sc.name)
 			.select(
 				sc.name,
-				sca.company,
+				sca.agency,
 			)
 			.where(sc.variable_based_on_taxable_salary == 1)
 		).run(as_dict=True)
 
 		for component in components:
-			key = component.company or "default"
+			key = component.agency or "default"
 			tax_components.setdefault(key, [])
 			tax_components[key].append(component.name)
 
@@ -1841,7 +1841,7 @@ class SalarySlip(TransactionBase):
 				filters={
 					"employee": self.employee,
 					"payroll_period": self.payroll_period.name,
-					"company": self.company,
+					"agency": self.agency,
 					"docstatus": 1,
 				},
 				fields="SUM(amount) as total_amount",
@@ -2058,11 +2058,11 @@ class SalarySlip(TransactionBase):
 		if self.payroll_period:
 			period_start_date = self.payroll_period.start_date
 			period_end_date = self.payroll_period.end_date
-		else:
+		# else:
 			# get dates based on fiscal year if no payroll period exists
-			fiscal_year = get_fiscal_year(date=self.start_date, company=self.company, as_dict=1)
-			period_start_date = fiscal_year.year_start_date
-			period_end_date = fiscal_year.year_end_date
+			# fiscal_year = get_fiscal_year(date=self.start_date, agency=self.agency, as_dict=1)
+			# period_start_date = fiscal_year.year_start_date
+			# period_end_date = fiscal_year.year_end_date
 
 		return period_start_date, period_end_date
 
@@ -2124,14 +2124,14 @@ def get_salary_component_data(component):
 	)
 
 
-def get_payroll_payable_account(company, payroll_entry):
+def get_payroll_payable_account(agency, payroll_entry):
 	if payroll_entry:
 		payroll_payable_account = frappe.db.get_value(
 			"Payroll Entry", payroll_entry, "payroll_payable_account", cache=True
 		)
 	else:
 		payroll_payable_account = frappe.db.get_value(
-			"Company", company, "default_payroll_payable_account", cache=True
+			"Company", agency, "default_payroll_payable_account", cache=True
 		)
 
 	return payroll_payable_account

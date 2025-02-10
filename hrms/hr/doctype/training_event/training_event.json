@@ -15,7 +15,7 @@
   "column_break_2",
   "type",
   "level",
-  "company",
+  "agency",
   "section_break_4",
   "trainer_name",
   "trainer_email",
@@ -89,7 +89,7 @@
    "options": "\nBeginner\nIntermediate\nAdvance"
   },
   {
-   "fieldname": "company",
+   "fieldname": "agency",
    "fieldtype": "Link",
    "label": "Company",
    "options": "Company"

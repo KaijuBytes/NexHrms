@@ -13,7 +13,7 @@
   "department",
   "status",
   "column_break_4",
-  "company",
+  "agency",
   "approver",
   "from_date",
   "to_date",
@@ -56,7 +56,7 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "company",
+   "fieldname": "agency",
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Company",

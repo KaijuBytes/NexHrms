@@ -75,7 +75,7 @@ const payrollPeriods = createListResource({
 	doctype: "Payroll Period",
 	fields: ["name", "start_date", "end_date"],
 	filters: {
-		company: employee.data?.company,
+		agency: employee.data?.agency,
 	},
 	orderBy: "start_date desc",
 	auto: true,

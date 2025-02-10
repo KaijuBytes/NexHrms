@@ -39,8 +39,8 @@ frappe.ui.form.on("Full and Final Statement", {
 					filters["docstatus"] = ["!=", 2];
 				}
 
-				if (frappe.meta.has_field(fnf_doc.reference_document_type, "company")) {
-					filters["company"] = frm.doc.company;
+				if (frappe.meta.has_field(fnf_doc.reference_document_type, "agency")) {
+					filters["agency"] = frm.doc.agency;
 				}
 
 				if (frappe.meta.has_field(fnf_doc.reference_document_type, "employee")) {
@@ -134,7 +134,7 @@ frappe.ui.form.on("Full and Final Outstanding Statement", {
 				args: {
 					ref_doctype: child.reference_document_type,
 					ref_document: child.reference_document,
-					company: frm.doc.company,
+					agency: frm.doc.agency,
 				},
 				callback: function (r) {
 					if (r.message) {

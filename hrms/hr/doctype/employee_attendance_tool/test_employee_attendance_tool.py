@@ -19,18 +19,18 @@ class TestEmployeeAttendanceTool(IntegrationTestCase):
 	def setUp(self):
 		frappe.db.delete("Attendance")
 
-		self.employee1 = make_employee("test_present@example.com", company="_Test Company")
-		self.employee2 = make_employee("test_absent@example.com", company="_Test Company")
-		self.employee3 = make_employee("test_unmarked@example.com", company="_Test Company")
+		self.employee1 = make_employee("test_present@example.com", agency="_Test Company")
+		self.employee2 = make_employee("test_absent@example.com", agency="_Test Company")
+		self.employee3 = make_employee("test_unmarked@example.com", agency="_Test Company")
 
-		self.employee4 = make_employee("test_filter@example.com", company="_Test Company 1")
+		self.employee4 = make_employee("test_filter@example.com", agency="_Test Company 1")
 
 	def test_get_employee_attendance(self):
 		date = getdate("28-02-2023")
 		mark_attendance(self.employee1, date, "Present")
 		mark_attendance(self.employee2, date, "Absent")
 
-		employees = get_employees(date, company="_Test Company")
+		employees = get_employees(date, agency="_Test Company")
 
 		marked_employees = employees["marked"]
 		unmarked_employees = [entry.employee for entry in employees["unmarked"]]
@@ -41,7 +41,7 @@ class TestEmployeeAttendanceTool(IntegrationTestCase):
 		self.assertEqual(marked_employees[1].get("employee"), self.employee1)
 		# unmarked
 		self.assertIn(self.employee3, unmarked_employees)
-		# employee from a different company
+		# employee from a different agency
 		self.assertNotIn(self.employee4, unmarked_employees)
 
 	def test_mark_employee_attendance(self):

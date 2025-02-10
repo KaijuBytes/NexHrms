@@ -16,7 +16,7 @@ frappe.ui.form.on("Gratuity", {
 				filters: {
 					root_type: "Expense",
 					is_group: 0,
-					company: frm.doc.company,
+					agency: frm.doc.agency,
 				},
 			};
 		});
@@ -26,7 +26,7 @@ frappe.ui.form.on("Gratuity", {
 				filters: {
 					root_type: "Liability",
 					is_group: 0,
-					company: frm.doc.company,
+					agency: frm.doc.agency,
 				},
 			};
 		});

@@ -17,7 +17,7 @@
   "closes_on",
   "closed_on",
   "section_break_nngy",
-  "company",
+  "agency",
   "department",
   "column_break_dxpv",
   "employment_type",
@@ -52,7 +52,7 @@
    "reqd": 1
   },
   {
-   "fieldname": "company",
+   "fieldname": "agency",
    "fieldtype": "Link",
    "label": "Company",
    "options": "Company",

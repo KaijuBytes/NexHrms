@@ -41,7 +41,7 @@ const formFields = createResource({
 	transform(data) {
 		if (props.id) return data
 		return data.filter(
-			(field) => !["employee", "employee_name", "status", "company"].includes(field.fieldname)
+			(field) => !["employee", "employee_name", "status", "agency"].includes(field.fieldname)
 		)
 	},
 })

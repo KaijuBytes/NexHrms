@@ -17,26 +17,26 @@ frappe.ui.form.on("Employee Incentive", {
 		if (frm.doc.employee) {
 			frappe.run_serially([
 				() => frm.trigger("get_employee_currency"),
-				() => frm.trigger("set_company"),
+				() => frm.trigger("set_agency"),
 			]);
 		} else {
-			frm.set_value("company", null);
+			frm.set_value("agency", null);
 		}
 	},
 
-	set_company: function (frm) {
+	set_agency: function (frm) {
 		frappe.call({
 			method: "frappe.client.get_value",
 			args: {
 				doctype: "Employee",
-				fieldname: "company",
+				fieldname: "agency",
 				filters: {
 					name: frm.doc.employee,
 				},
 			},
 			callback: function (data) {
 				if (data.message) {
-					frm.set_value("company", data.message.company);
+					frm.set_value("agency", data.message.agency);
 					frm.trigger("set_earning_component");
 				}
 			},
@@ -44,10 +44,10 @@ frappe.ui.form.on("Employee Incentive", {
 	},
 
 	set_earning_component: function (frm) {
-		if (!frm.doc.company) return;
+		if (!frm.doc.agency) return;
 		frm.set_query("salary_component", function () {
 			return {
-				filters: { type: "earning", company: frm.doc.company },
+				filters: { type: "earning", agency: frm.doc.agency },
 			};
 		});
 	},

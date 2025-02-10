@@ -55,5 +55,5 @@ const props = defineProps({
 })
 
 const dayjs = inject("$dayjs")
-const currency = computed(() => getCompanyCurrency(props.doc.company))
+const currency = computed(() => getCompanyCurrency(props.doc.agency))
 </script>

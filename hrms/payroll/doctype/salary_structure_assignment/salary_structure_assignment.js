@@ -6,13 +6,13 @@ frappe.ui.form.on("Salary Structure Assignment", {
 		frm.set_query("employee", function () {
 			return {
 				query: "nex.controllers.queries.employee_query",
-				filters: { company: frm.doc.company },
+				filters: { agency: frm.doc.agency },
 			};
 		});
 		frm.set_query("salary_structure", function () {
 			return {
 				filters: {
-					company: frm.doc.company,
+					agency: frm.doc.agency,
 					docstatus: 1,
 					is_active: "Yes",
 				},
@@ -22,7 +22,7 @@ frappe.ui.form.on("Salary Structure Assignment", {
 		frm.set_query("income_tax_slab", function () {
 			return {
 				filters: {
-					company: frm.doc.company,
+					agency: frm.doc.agency,
 					docstatus: 1,
 					disabled: 0,
 					currency: frm.doc.currency,
@@ -31,13 +31,13 @@ frappe.ui.form.on("Salary Structure Assignment", {
 		});
 
 		frm.set_query("payroll_payable_account", function () {
-			var company_currency = nex.get_currency(frm.doc.company);
+			var agency_currency = nex.get_currency(frm.doc.agency);
 			return {
 				filters: {
-					company: frm.doc.company,
+					agency: frm.doc.agency,
 					root_type: "Liability",
 					is_group: 0,
-					account_currency: ["in", [frm.doc.currency, company_currency]],
+					account_currency: ["in", [frm.doc.currency, agency_currency]],
 				},
 			};
 		});
@@ -45,7 +45,7 @@ frappe.ui.form.on("Salary Structure Assignment", {
 		frm.set_query("cost_center", "payroll_cost_centers", function () {
 			return {
 				filters: {
-					company: frm.doc.company,
+					agency: frm.doc.agency,
 					is_group: 0,
 				},
 			};
@@ -87,11 +87,11 @@ frappe.ui.form.on("Salary Structure Assignment", {
 		}
 	},
 
-	company: function (frm) {
-		if (frm.doc.company) {
+	agency: function (frm) {
+		if (frm.doc.agency) {
 			frappe.db.get_value(
 				"Company",
-				frm.doc.company,
+				frm.doc.agency,
 				"default_payroll_payable_account",
 				(r) => {
 					frm.set_value("payroll_payable_account", r.default_payroll_payable_account);

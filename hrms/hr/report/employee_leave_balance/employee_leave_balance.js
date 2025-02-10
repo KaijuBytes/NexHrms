@@ -17,7 +17,7 @@ frappe.query_reports["Employee Leave Balance"] = {
 		},
 		{
 			label: __("Company"),
-			fieldname: "company",
+			fieldname: "agency",
 			fieldtype: "Link",
 			options: "Company",
 			reqd: 1,
@@ -65,7 +65,7 @@ frappe.query_reports["Employee Leave Balance"] = {
 			args: {
 				from_date: today,
 				to_date: today,
-				company: frappe.defaults.get_user_default("Company"),
+				agency: frappe.defaults.get_user_default("Company"),
 			},
 			freeze: true,
 			callback: (data) => {

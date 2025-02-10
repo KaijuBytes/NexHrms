@@ -82,7 +82,7 @@ def execute(filters=None):
 				"employee_account_no": salary.bank_account_no,
 				"bank_code": salary.ifsc_code,
 				"employee_name": salary.employee + ": " + salary.employee_name,
-				"currency": frappe.get_cached_value("Company", filters.company, "default_currency"),
+				"currency": frappe.get_cached_value("Company", filters.agency, "default_currency"),
 				"amount": salary.net_pay,
 			}
 			data.append(row)
@@ -99,7 +99,7 @@ def get_payroll_entries(accounts, filters):
 	payroll_filter = [
 		("payment_account", "IN", accounts),
 		("number_of_employees", ">", 0),
-		("Company", "=", filters.company),
+		("Company", "=", filters.agency),
 	]
 	if filters.to_date:
 		payroll_filter.append(("posting_date", "<", filters.to_date))
@@ -110,7 +110,7 @@ def get_payroll_entries(accounts, filters):
 	entries = get_all("Payroll Entry", payroll_filter, ["name", "payment_account"])
 
 	payment_accounts = [d.payment_account for d in entries]
-	entries = set_company_account(payment_accounts, entries)
+	entries = set_agency_account(payment_accounts, entries)
 	return entries
 
 
@@ -135,10 +135,10 @@ def get_salary_slips(payroll_entries):
 	for entry in payroll_entries:
 		payroll_entry_map[entry.name] = entry
 
-	# appending company debit accounts
+	# appending agency debit accounts
 	for slip in salary_slips:
 		if slip.payroll_entry:
-			slip["debit_acc_no"] = payroll_entry_map[slip.payroll_entry]["company_account"]
+			slip["debit_acc_no"] = payroll_entry_map[slip.payroll_entry]["agency_account"]
 		else:
 			slip["debit_acc_no"] = None
 
@@ -157,18 +157,18 @@ def get_emp_bank_ifsc_code(salary_slips):
 	return salary_slips
 
 
-def set_company_account(payment_accounts, payroll_entries):
-	company_accounts = get_all(
+def set_agency_account(payment_accounts, payroll_entries):
+	agency_accounts = get_all(
 		"Bank Account", [("account", "in", payment_accounts)], ["account", "bank_account_no"]
 	)
-	company_accounts_map = {}
-	for acc in company_accounts:
-		company_accounts_map[acc.account] = acc
+	agency_accounts_map = {}
+	for acc in agency_accounts:
+		agency_accounts_map[acc.account] = acc
 
 	for entry in payroll_entries:
-		company_account = ""
-		if entry.payment_account in company_accounts_map:
-			company_account = company_accounts_map[entry.payment_account]["bank_account_no"]
-		entry["company_account"] = company_account
+		agency_account = ""
+		if entry.payment_account in agency_accounts_map:
+			agency_account = agency_accounts_map[entry.payment_account]["bank_account_no"]
+		entry["agency_account"] = agency_account
 
 	return payroll_entries

@@ -14,7 +14,7 @@
   "designation",
   "employee_image",
   "column_break0",
-  "company",
+  "agency",
   "status",
   "appraisal_cycle",
   "start_date",
@@ -106,10 +106,10 @@
    "read_only": 1
   },
   {
-   "fieldname": "company",
+   "fieldname": "agency",
    "fieldtype": "Link",
    "label": "Company",
-   "oldfieldname": "company",
+   "oldfieldname": "agency",
    "oldfieldtype": "Link",
    "options": "Company",
    "remember_last_selected_value": 1,

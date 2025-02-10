@@ -11,25 +11,25 @@ from hrms.payroll.doctype.bulk_salary_structure_assignment.bulk_salary_structure
 	BulkSalaryStructureAssignment,
 )
 from hrms.payroll.doctype.salary_structure.test_salary_structure import make_salary_structure
-from hrms.tests.test_utils import create_company, create_department, create_employee_grade
+from hrms.tests.test_utils import create_agency, create_department, create_employee_grade
 
 
 class TestBulkSalaryStructureAssignment(IntegrationTestCase):
 	def setUp(self):
-		create_company()
+		create_agency()
 		create_department("Accounts")
 		self.grade = create_employee_grade("Test Grade")
 
 		# employee grade with default base pay 50000
 		self.emp1 = make_employee(
-			"employee1@bssa.com", company="_Test Company", department="Accounts", grade="Test Grade"
+			"employee1@bssa.com", agency="_Test Company", department="Accounts", grade="Test Grade"
 		)
-		self.emp2 = make_employee("employee2@bssa.com", company="_Test Company", department="Accounts")
-		self.emp3 = make_employee("employee3@bssa.com", company="_Test Company", department="Accounts")
+		self.emp2 = make_employee("employee2@bssa.com", agency="_Test Company", department="Accounts")
+		self.emp3 = make_employee("employee3@bssa.com", agency="_Test Company", department="Accounts")
 		# no department
-		self.emp4 = make_employee("employee4@bssa.com", company="_Test Company")
+		self.emp4 = make_employee("employee4@bssa.com", agency="_Test Company")
 		# different domain in employee_name
-		self.emp5 = make_employee("employee5@test.com", company="_Test Company", department="Accounts")
+		self.emp5 = make_employee("employee5@test.com", agency="_Test Company", department="Accounts")
 
 	def tearDown(self):
 		frappe.db.rollback()
@@ -38,7 +38,7 @@ class TestBulkSalaryStructureAssignment(IntegrationTestCase):
 		today = getdate()
 
 		# create structure and assign to emp2
-		make_salary_structure("Salary Structure 1", "Monthly", self.emp2, today, company="_Test Company")
+		make_salary_structure("Salary Structure 1", "Monthly", self.emp2, today, agency="_Test Company")
 
 		args = {
 			"doctype": "Bulk Salary Structure Assignment",
@@ -65,13 +65,13 @@ class TestBulkSalaryStructureAssignment(IntegrationTestCase):
 
 	def test_bulk_assign_structure(self):
 		today = getdate()
-		salary_structure = make_salary_structure("Salary Structure 1", "Monthly", company="_Test Company")
+		salary_structure = make_salary_structure("Salary Structure 1", "Monthly", agency="_Test Company")
 
 		args = {
 			"doctype": "Bulk Salary Structure Assignment",
 			"salary_structure": salary_structure,
 			"from_date": today,
-			"company": "_Test Company",
+			"agency": "_Test Company",
 		}
 		bulk_assignment = BulkSalaryStructureAssignment(args)
 
@@ -84,12 +84,12 @@ class TestBulkSalaryStructureAssignment(IntegrationTestCase):
 		ssa1 = frappe.get_value(
 			"Salary Structure Assignment",
 			{"employee": self.emp1},
-			["salary_structure", "from_date", "company", "base", "variable"],
+			["salary_structure", "from_date", "agency", "base", "variable"],
 			as_dict=1,
 		)
 		self.assertEqual(ssa1.salary_structure, salary_structure.name)
 		self.assertEqual(ssa1.from_date, today)
-		self.assertEqual(ssa1.company, "_Test Company")
+		self.assertEqual(ssa1.agency, "_Test Company")
 		self.assertEqual(ssa1.base, 50000)
 		self.assertEqual(ssa1.variable, 2000)
 

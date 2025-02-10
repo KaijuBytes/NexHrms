@@ -9,7 +9,7 @@ from frappe.query_builder.functions import Sum
 from frappe.utils import flt, nowdate
 
 import nex
-from nex.accounts.doctype.journal_entry.journal_entry import get_default_bank_cash_account
+# from nex.accounts.doctype.journal_entry.journal_entry import get_default_bank_cash_account
 
 import hrms
 from hrms.hr.utils import validate_active_employee
@@ -176,70 +176,70 @@ class EmployeeAdvance(Document):
 			)
 		).run()[0][0] or 0.0
 
-	def check_linked_payment_entry(self):
-		from nex.accounts.utils import (
-			remove_ref_doc_link_from_pe,
-			update_accounting_ledgers_after_reference_removal,
-		)
+	# def check_linked_payment_entry(self):
+	# 	from nex.accounts.utils import (
+	# 		remove_ref_doc_link_from_pe,
+	# 		update_accounting_ledgers_after_reference_removal,
+	# 	)
 
-		if frappe.db.get_single_value("HR Settings", "unlink_payment_on_cancellation_of_employee_advance"):
-			remove_ref_doc_link_from_pe(self.doctype, self.name)
-			update_accounting_ledgers_after_reference_removal(self.doctype, self.name)
+	# 	if frappe.db.get_single_value("HR Settings", "unlink_payment_on_cancellation_of_employee_advance"):
+	# 		remove_ref_doc_link_from_pe(self.doctype, self.name)
+	# 		update_accounting_ledgers_after_reference_removal(self.doctype, self.name)
 
 
 @frappe.whitelist()
-def make_bank_entry(dt, dn):
-	doc = frappe.get_doc(dt, dn)
-	payment_account = get_default_bank_cash_account(
-		doc.company, account_type="Cash", mode_of_payment=doc.mode_of_payment
-	)
-	if not payment_account:
-		frappe.throw(_("Please set a Default Cash Account in Company defaults"))
+# def make_bank_entry(dt, dn):
+# 	doc = frappe.get_doc(dt, dn)
+# 	payment_account = get_default_bank_cash_account(
+# 		doc.agency, account_type="Cash", mode_of_payment=doc.mode_of_payment
+# 	)
+# 	if not payment_account:
+# 		frappe.throw(_("Please set a Default Cash Account in Company defaults"))
 
-	advance_account_currency = frappe.db.get_value("Account", doc.advance_account, "account_currency")
+# 	advance_account_currency = frappe.db.get_value("Account", doc.advance_account, "account_currency")
 
-	advance_amount, advance_exchange_rate = get_advance_amount_advance_exchange_rate(
-		advance_account_currency, doc
-	)
+# 	advance_amount, advance_exchange_rate = get_advance_amount_advance_exchange_rate(
+# 		advance_account_currency, doc
+# 	)
 
-	paying_amount, paying_exchange_rate = get_paying_amount_paying_exchange_rate(payment_account, doc)
+# 	paying_amount, paying_exchange_rate = get_paying_amount_paying_exchange_rate(payment_account, doc)
 
-	je = frappe.new_doc("Journal Entry")
-	je.posting_date = nowdate()
-	je.voucher_type = "Bank Entry"
-	je.company = doc.company
-	je.remark = "Payment against Employee Advance: " + dn + "\n" + doc.purpose
-	je.multi_currency = 1 if advance_account_currency != payment_account.account_currency else 0
+# 	je = frappe.new_doc("Journal Entry")
+# 	je.posting_date = nowdate()
+# 	je.voucher_type = "Bank Entry"
+# 	je.agency = doc.agency
+# 	je.remark = "Payment against Employee Advance: " + dn + "\n" + doc.purpose
+# 	je.multi_currency = 1 if advance_account_currency != payment_account.account_currency else 0
 
-	je.append(
-		"accounts",
-		{
-			"account": doc.advance_account,
-			"account_currency": advance_account_currency,
-			"exchange_rate": flt(advance_exchange_rate),
-			"debit_in_account_currency": flt(advance_amount),
-			"reference_type": "Employee Advance",
-			"reference_name": doc.name,
-			"party_type": "Employee",
-			"cost_center": nex.get_default_cost_center(doc.company),
-			"party": doc.employee,
-			"is_advance": "Yes",
-		},
-	)
+# 	je.append(
+# 		"accounts",
+# 		{
+# 			"account": doc.advance_account,
+# 			"account_currency": advance_account_currency,
+# 			"exchange_rate": flt(advance_exchange_rate),
+# 			"debit_in_account_currency": flt(advance_amount),
+# 			"reference_type": "Employee Advance",
+# 			"reference_name": doc.name,
+# 			"party_type": "Employee",
+# 			"cost_center": nex.get_default_cost_center(doc.agency),
+# 			"party": doc.employee,
+# 			"is_advance": "Yes",
+# 		},
+# 	)
 
-	je.append(
-		"accounts",
-		{
-			"account": payment_account.account,
-			"cost_center": nex.get_default_cost_center(doc.company),
-			"credit_in_account_currency": flt(paying_amount),
-			"account_currency": payment_account.account_currency,
-			"account_type": payment_account.account_type,
-			"exchange_rate": flt(paying_exchange_rate),
-		},
-	)
+# 	je.append(
+# 		"accounts",
+# 		{
+# 			"account": payment_account.account,
+# 			"cost_center": nex.get_default_cost_center(doc.agency),
+# 			"credit_in_account_currency": flt(paying_amount),
+# 			"account_currency": payment_account.account_currency,
+# 			"account_type": payment_account.account_type,
+# 			"exchange_rate": flt(paying_exchange_rate),
+# 		},
+# 	)
 
-	return je.as_dict()
+# 	return je.as_dict()
 
 
 def get_advance_amount_advance_exchange_rate(advance_account_currency, doc):
@@ -276,7 +276,7 @@ def create_return_through_additional_salary(doc):
 	additional_salary.currency = doc.currency
 	additional_salary.overwrite_salary_structure_amount = 0
 	additional_salary.amount = doc.paid_amount - doc.claimed_amount
-	additional_salary.company = doc.company
+	additional_salary.agency = doc.agency
 	additional_salary.ref_doctype = doc.doctype
 	additional_salary.ref_docname = doc.name
 
@@ -286,7 +286,7 @@ def create_return_through_additional_salary(doc):
 @frappe.whitelist()
 def make_return_entry(
 	employee,
-	company,
+	agency,
 	employee_advance_name,
 	return_amount,
 	advance_account,
@@ -294,20 +294,20 @@ def make_return_entry(
 	exchange_rate,
 	mode_of_payment=None,
 ):
-	bank_cash_account = get_default_bank_cash_account(
-		company, account_type="Cash", mode_of_payment=mode_of_payment
-	)
-	if not bank_cash_account:
-		frappe.throw(_("Please set a Default Cash Account in Company defaults"))
+	# bank_cash_account = get_default_bank_cash_account(
+	# 	agency, account_type="Cash", mode_of_payment=mode_of_payment
+	# )
+	# if not bank_cash_account:
+	# 	frappe.throw(_("Please set a Default Cash Account in Company defaults"))
 
 	advance_account_currency = frappe.db.get_value("Account", advance_account, "account_currency")
 
 	je = frappe.new_doc("Journal Entry")
 	je.posting_date = nowdate()
 	je.voucher_type = get_voucher_type(mode_of_payment)
-	je.company = company
+	je.agency = agency
 	je.remark = "Return against Employee Advance: " + employee_advance_name
-	je.multi_currency = 1 if advance_account_currency != bank_cash_account.account_currency else 0
+	# je.multi_currency = 1 if advance_account_currency != bank_cash_account.account_currency else 0
 
 	advance_account_amount = (
 		flt(return_amount)
@@ -327,27 +327,27 @@ def make_return_entry(
 			"party_type": "Employee",
 			"party": employee,
 			"is_advance": "Yes",
-			"cost_center": nex.get_default_cost_center(company),
+			"cost_center": nex.get_default_cost_center(agency),
 		},
 	)
 
-	bank_amount = (
-		flt(return_amount)
-		if bank_cash_account.account_currency == currency
-		else flt(return_amount) * flt(exchange_rate)
-	)
+	# bank_amount = (
+	# 	flt(return_amount)
+	# 	if bank_cash_account.account_currency == currency
+	# 	else flt(return_amount) * flt(exchange_rate)
+	# )
 
-	je.append(
-		"accounts",
-		{
-			"account": bank_cash_account.account,
-			"debit_in_account_currency": bank_amount,
-			"account_currency": bank_cash_account.account_currency,
-			"account_type": bank_cash_account.account_type,
-			"exchange_rate": flt(exchange_rate) if bank_cash_account.account_currency == currency else 1,
-			"cost_center": nex.get_default_cost_center(company),
-		},
-	)
+	# je.append(
+	# 	"accounts",
+	# 	{
+	# 		"account": bank_cash_account.account,
+	# 		"debit_in_account_currency": bank_amount,
+	# 		"account_currency": bank_cash_account.account_currency,
+	# 		"account_type": bank_cash_account.account_type,
+	# 		"exchange_rate": flt(exchange_rate) if bank_cash_account.account_currency == currency else 1,
+	# 		"cost_center": nex.get_default_cost_center(agency),
+	# 	},
+	# )
 
 	return je.as_dict()
 

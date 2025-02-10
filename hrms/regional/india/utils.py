@@ -10,13 +10,13 @@ from hrms.payroll.doctype.salary_structure.salary_structure import make_salary_s
 
 def calculate_annual_eligible_hra_exemption(doc):
 	basic_component, hra_component = frappe.db.get_value(
-		"Company", doc.company, ["basic_component", "hra_component"]
+		"Company", doc.agency, ["basic_component", "hra_component"]
 	)
 
 	if not (basic_component and hra_component):
 		frappe.throw(
 			_("Please set Basic and HRA component in Company {0}").format(
-				get_link_to_form("Company", doc.company)
+				get_link_to_form("Company", doc.agency)
 			)
 		)
 

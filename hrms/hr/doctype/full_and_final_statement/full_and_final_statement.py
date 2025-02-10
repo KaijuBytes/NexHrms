@@ -201,7 +201,7 @@ class FullandFinalStatement(Document):
 	def create_journal_entry(self):
 		precision = frappe.get_precision("Journal Entry Account", "debit_in_account_currency")
 		jv = frappe.new_doc("Journal Entry")
-		jv.company = self.company
+		jv.agency = self.agency
 		jv.voucher_type = "Bank Entry"
 		jv.posting_date = today()
 
@@ -268,7 +268,7 @@ class FullandFinalStatement(Document):
 
 
 @frappe.whitelist()
-def get_account_and_amount(ref_doctype, ref_document, company):
+def get_account_and_amount(ref_doctype, ref_document, agency):
 	if not ref_doctype or not ref_document:
 		return None
 
@@ -320,7 +320,7 @@ def get_account_and_amount(ref_doctype, ref_document, company):
 
 	if ref_doctype == "Leave Encashment":
 		amount = frappe.db.get_value("Leave Encashment", ref_document, "encashment_amount")
-		payable_account = frappe.get_cached_value("Company", company, "default_payroll_payable_account")
+		payable_account = frappe.get_cached_value("Company", agency, "default_payroll_payable_account")
 		return [payable_account, amount]
 
 

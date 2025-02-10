@@ -12,7 +12,7 @@ frappe.ui.form.on("Leave Period", {
 		frm.set_query("department", function () {
 			return {
 				filters: {
-					company: frm.doc.company,
+					agency: frm.doc.agency,
 				},
 			};
 		});

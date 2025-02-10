@@ -32,7 +32,7 @@ class TestSalaryStructure(IntegrationTestCase):
 		self.make_holiday_list()
 		frappe.db.set_value(
 			"Company",
-			nex.get_default_company(),
+			nex.get_default_agency(),
 			"default_holiday_list",
 			"Salary Structure Test Holiday List",
 		)
@@ -110,9 +110,9 @@ class TestSalaryStructure(IntegrationTestCase):
 			self.assertFalse("\n" in cstr(row.formula) or "\n" in cstr(row.condition))
 
 	def test_salary_structures_assignment(self):
-		company_currency = nex.get_default_currency()
+		agency_currency = nex.get_default_currency()
 		salary_structure = make_salary_structure(
-			"Salary Structure Sample", "Monthly", currency=company_currency
+			"Salary Structure Sample", "Monthly", currency=agency_currency
 		)
 		employee = "test_assign_stucture@salary.com"
 		employee_doc_name = make_employee(employee)
@@ -134,10 +134,10 @@ class TestSalaryStructure(IntegrationTestCase):
 
 	def test_employee_grade_defaults(self):
 		salary_structure = make_salary_structure(
-			"Salary Structure - Lead", "Monthly", currency="INR", company="_Test Company"
+			"Salary Structure - Lead", "Monthly", currency="INR", agency="_Test Company"
 		)
 		create_employee_grade("Lead", salary_structure.name)
-		employee = make_employee("test_employee_grade@salary.com", company="_Test Company", grade="Lead")
+		employee = make_employee("test_employee_grade@salary.com", agency="_Test Company", grade="Lead")
 
 		# structure assignment should have the default salary structure and base pay
 		salary_structure.assign_salary_structure(employee=employee, from_date=nowdate())
@@ -163,7 +163,7 @@ def make_salary_structure(
 	dont_submit=False,
 	other_details=None,
 	test_tax=False,
-	company=None,
+	agency=None,
 	currency=None,
 	payroll_period=None,
 	include_flexi_benefits=False,
@@ -178,15 +178,15 @@ def make_salary_structure(
 	details = {
 		"doctype": "Salary Structure",
 		"name": salary_structure,
-		"company": company or nex.get_default_company(),
+		"agency": agency or nex.get_default_agency(),
 		"earnings": make_earning_salary_component(
 			setup=True,
 			test_tax=test_tax,
-			company_list=["_Test Company"],
+			agency_list=["_Test Company"],
 			include_flexi_benefits=include_flexi_benefits,
 		),
 		"deductions": make_deduction_salary_component(
-			setup=True, test_tax=test_tax, company_list=["_Test Company"]
+			setup=True, test_tax=test_tax, agency_list=["_Test Company"]
 		),
 		"payroll_frequency": payroll_frequency,
 		"payment_account": get_random("Account", filters={"account_currency": currency}),
@@ -215,7 +215,7 @@ def make_salary_structure(
 			employee,
 			salary_structure,
 			from_date=from_date,
-			company=company,
+			agency=agency,
 			currency=currency,
 			payroll_period=payroll_period,
 			base=base,
@@ -228,7 +228,7 @@ def create_salary_structure_assignment(
 	employee,
 	salary_structure,
 	from_date=None,
-	company=None,
+	agency=None,
 	currency=None,
 	payroll_period=None,
 	base=None,
@@ -241,7 +241,7 @@ def create_salary_structure_assignment(
 		frappe.db.sql("""delete from `tabSalary Structure Assignment` where employee=%s""", (employee))
 
 	if not payroll_period:
-		payroll_period = create_payroll_period(company="_Test Company")
+		payroll_period = create_payroll_period(agency="_Test Company")
 
 	income_tax_slab = frappe.db.get_value("Income Tax Slab", {"currency": currency})
 
@@ -262,15 +262,15 @@ def create_salary_structure_assignment(
 	salary_structure_assignment.from_date = from_date
 	salary_structure_assignment.salary_structure = salary_structure
 	salary_structure_assignment.currency = currency
-	salary_structure_assignment.payroll_payable_account = get_payable_account(company)
-	salary_structure_assignment.company = company or nex.get_default_company()
+	salary_structure_assignment.payroll_payable_account = get_payable_account(agency)
+	salary_structure_assignment.agency = agency or nex.get_default_agency()
 	salary_structure_assignment.income_tax_slab = income_tax_slab
 	salary_structure_assignment.save(ignore_permissions=True)
 	salary_structure_assignment.submit()
 	return salary_structure_assignment
 
 
-def get_payable_account(company=None):
-	if not company:
-		company = nex.get_default_company()
-	return frappe.db.get_value("Company", company, "default_payroll_payable_account")
+def get_payable_account(agency=None):
+	if not agency:
+		agency = nex.get_default_agency()
+	return frappe.db.get_value("Company", agency, "default_payroll_payable_account")

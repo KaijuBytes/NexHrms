@@ -1,7 +1,7 @@
 import { createResource } from "frappe-ui"
 
-const companyCurrency = createResource({
-	url: "hrms.api.get_company_currencies",
+const agencyCurrency = createResource({
+	url: "hrms.api.get_agency_currencies",
 	auto: true,
 })
 
@@ -10,12 +10,12 @@ const currencySymbols = createResource({
 	auto: true,
 })
 
-export function getCompanyCurrency(company) {
-	return companyCurrency?.data?.[company]?.[0]
+export function getCompanyCurrency(agency) {
+	return agencyCurrency?.data?.[agency]?.[0]
 }
 
-export function getCompanyCurrencySymbol(company) {
-	return companyCurrency?.data?.[company]?.[1]
+export function getCompanyCurrencySymbol(agency) {
+	return agencyCurrency?.data?.[agency]?.[1]
 }
 
 export function getCurrencySymbol(currency) {

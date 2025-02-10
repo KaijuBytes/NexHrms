@@ -13,7 +13,7 @@ frappe.ui.form.on("Expense Claim Type", {
 				filters: {
 					is_group: 0,
 					root_type: frm.doc.deferred_expense_account ? "Asset" : "Expense",
-					company: d.company,
+					agency: d.agency,
 				},
 			};
 		};

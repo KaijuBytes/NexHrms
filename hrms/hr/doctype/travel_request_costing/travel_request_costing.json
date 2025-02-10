@@ -30,21 +30,21 @@
    "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "Sponsored Amount",
-   "options": "Company:company:default_currency"
+   "options": "Company:agency:default_currency"
   },
   {
    "fieldname": "funded_amount",
    "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "Funded Amount",
-   "options": "Company:company:default_currency"
+   "options": "Company:agency:default_currency"
   },
   {
    "fieldname": "total_amount",
    "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "Total Amount",
-   "options": "Company:company:default_currency"
+   "options": "Company:agency:default_currency"
   },
   {
    "fieldname": "section_break_4",

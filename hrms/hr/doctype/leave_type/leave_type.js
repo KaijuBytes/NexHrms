@@ -21,7 +21,7 @@ frappe.tour["Leave Type"] = [
 		fieldname: "is_optional_leave",
 		title: "Is Optional Leave",
 		description: __(
-			"Optional Leaves are holidays that Employees can choose to avail from a list of holidays published by the company.",
+			"Optional Leaves are holidays that Employees can choose to avail from a list of holidays published by the agency.",
 		),
 	},
 	{
@@ -45,7 +45,7 @@ frappe.tour["Leave Type"] = [
 		fieldname: "is_earned_leave",
 		title: "Is Earned Leaves",
 		description: __(
-			"Earned Leaves are leaves earned by an Employee after working with the company for a certain amount of time. Enabling this will allocate leaves on pro-rata basis by automatically updating Leave Allocation for leaves of this type at intervals set by 'Earned Leave Frequency.",
+			"Earned Leaves are leaves earned by an Employee after working with the agency for a certain amount of time. Enabling this will allocate leaves on pro-rata basis by automatically updating Leave Allocation for leaves of this type at intervals set by 'Earned Leave Frequency.",
 		),
 	},
 ];

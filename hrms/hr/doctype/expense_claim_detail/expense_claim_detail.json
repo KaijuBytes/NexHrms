@@ -76,7 +76,7 @@
    "label": "Amount",
    "oldfieldname": "claim_amount",
    "oldfieldtype": "Currency",
-   "options": "Company:company:default_currency",
+   "options": "Company:agency:default_currency",
    "print_width": "150px",
    "reqd": 1,
    "width": "150px"
@@ -92,7 +92,7 @@
    "label": "Sanctioned Amount",
    "oldfieldname": "sanctioned_amount",
    "oldfieldtype": "Currency",
-   "options": "Company:company:default_currency",
+   "options": "Company:agency:default_currency",
    "print_width": "150px",
    "width": "150px"
   },

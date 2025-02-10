@@ -68,7 +68,7 @@ class TestShiftAssignment(IntegrationTestCase):
 		self.assertRaises(OverlappingShiftError, assignment.save)
 
 	def test_overlapping_for_a_fixed_period_shift_and_ongoing_shift(self):
-		employee = make_employee("test_shift_assignment@example.com", company="_Test Company")
+		employee = make_employee("test_shift_assignment@example.com", agency="_Test Company")
 
 		# shift setup for 8-12
 		shift_type = setup_shift_type(shift_type="Shift 1", start_time="08:00:00", end_time="12:00:00")
@@ -85,7 +85,7 @@ class TestShiftAssignment(IntegrationTestCase):
 		self.assertRaises(OverlappingShiftError, assignment.save)
 
 	def test_overlap_for_shifts_on_same_day_with_overlapping_timeslots(self):
-		employee = make_employee("test_shift_assignment@example.com", company="_Test Company")
+		employee = make_employee("test_shift_assignment@example.com", agency="_Test Company")
 		date = getdate()
 
 		# shift setup for 8-12
@@ -107,7 +107,7 @@ class TestShiftAssignment(IntegrationTestCase):
 		self.assertRaises(OverlappingShiftError, assignment.save)
 
 	def test_overlap_for_midnight_shifts(self):
-		employee = make_employee("test_shift_assignment@example.com", company="_Test Company")
+		employee = make_employee("test_shift_assignment@example.com", agency="_Test Company")
 		date = getdate()
 
 		overlapping_shifts = [
@@ -146,9 +146,9 @@ class TestShiftAssignment(IntegrationTestCase):
 		self.assertRaises(OverlappingShiftError, assignment.save)
 
 	def test_calendar(self):
-		employee1 = make_employee("test_shift_assignment1@example.com", company="_Test Company")
-		employee2 = make_employee("test_shift_assignment2@example.com", company="_Test Company")
-		employee3 = make_employee("test_shift_assignment3@example.com", company="_Test Company")
+		employee1 = make_employee("test_shift_assignment1@example.com", agency="_Test Company")
+		employee2 = make_employee("test_shift_assignment2@example.com", agency="_Test Company")
+		employee3 = make_employee("test_shift_assignment3@example.com", agency="_Test Company")
 
 		shift_type = setup_shift_type(shift_type="Shift 1", start_time="08:00:00", end_time="12:00:00")
 		date = getdate()
@@ -174,7 +174,7 @@ class TestShiftAssignment(IntegrationTestCase):
 			self.assertIn(shift["name"], [shift1.name, shift2.name, shift3.name, shift4.name])
 
 	def test_calendar_for_night_shift(self):
-		employee1 = make_employee("test_shift_assignment1@example.com", company="_Test Company")
+		employee1 = make_employee("test_shift_assignment1@example.com", agency="_Test Company")
 
 		shift_type = setup_shift_type(shift_type="Shift 1", start_time="08:00:00", end_time="02:00:00")
 		date = getdate()
@@ -186,7 +186,7 @@ class TestShiftAssignment(IntegrationTestCase):
 
 	def test_consecutive_day_and_night_shifts(self):
 		# defaults
-		employee = make_employee("test_default_shift_assignment@example.com", company="_Test Company")
+		employee = make_employee("test_default_shift_assignment@example.com", agency="_Test Company")
 		today = getdate()
 		yesterday = add_days(today, -1)
 
@@ -216,7 +216,7 @@ class TestShiftAssignment(IntegrationTestCase):
 
 	def test_shift_details_on_consecutive_days_with_overlapping_timings(self):
 		# defaults
-		employee = make_employee("test_shift_assignment@example.com", company="_Test Company")
+		employee = make_employee("test_shift_assignment@example.com", agency="_Test Company")
 		today = getdate()
 		yesterday = add_days(today, -1)
 

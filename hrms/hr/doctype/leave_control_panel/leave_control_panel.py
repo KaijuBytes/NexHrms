@@ -6,7 +6,7 @@ import frappe
 from frappe.model.document import Document
 from frappe.utils import cint, flt, get_link_to_form
 
-from nex import get_default_company
+from nex import get_default_agency
 
 from hrms.hr.utils import validate_bulk_tool_fields
 
@@ -127,7 +127,7 @@ class LeaveControlPanel(Document):
 			if all_employees := frappe.get_list(
 				"Employee",
 				filters=self.get_filters() + advanced_filters,
-				fields=["name", "employee", "employee_name", "company", "department", "date_of_joining"],
+				fields=["name", "employee", "employee_name", "agency", "department", "date_of_joining"],
 			):
 				return self.get_employees_without_allocations(all_employees, from_date, to_date)
 
@@ -177,7 +177,7 @@ class LeaveControlPanel(Document):
 			"Leave Period",
 			{
 				"is_active": 1,
-				"company": self.company or get_default_company(),
+				"agency": self.agency or get_default_agency(),
 			},
 			"name",
 			order_by="from_date desc",
@@ -185,7 +185,7 @@ class LeaveControlPanel(Document):
 
 	def get_filters(self):
 		filter_fields = [
-			"company",
+			"agency",
 			"employment_type",
 			"branch",
 			"department",

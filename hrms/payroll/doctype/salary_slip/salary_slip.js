@@ -72,10 +72,10 @@ frappe.ui.form.on("Salary Slip", {
 		});
 	},
 
-	company: function (frm) {
-		var company = locals[":Company"][frm.doc.company];
-		if (!frm.doc.letter_head && company.default_letter_head) {
-			frm.set_value("letter_head", company.default_letter_head);
+	agency: function (frm) {
+		var agency = locals[":Company"][frm.doc.agency];
+		if (!frm.doc.letter_head && agency.default_letter_head) {
+			frm.set_value("letter_head", agency.default_letter_head);
 		}
 	},
 
@@ -99,18 +99,18 @@ frappe.ui.form.on("Salary Slip", {
 	},
 
 	set_exchange_rate: function (frm) {
-		const company_currency = nex.get_currency(frm.doc.company);
+		const agency_currency = nex.get_currency(frm.doc.agency);
 
 		if (frm.doc.docstatus === 0) {
 			if (frm.doc.currency) {
 				var from_currency = frm.doc.currency;
-				if (from_currency != company_currency) {
+				if (from_currency != agency_currency) {
 					frm.events.hide_loan_section(frm);
 					frappe.call({
 						method: "nex.setup.utils.get_exchange_rate",
 						args: {
 							from_currency: from_currency,
-							to_currency: company_currency,
+							to_currency: agency_currency,
 						},
 						callback: function (r) {
 							if (r.message) {
@@ -119,7 +119,7 @@ frappe.ui.form.on("Salary Slip", {
 								frm.set_df_property(
 									"exchange_rate",
 									"description",
-									"1 " + frm.doc.currency + " = [?] " + company_currency,
+									"1 " + frm.doc.currency + " = [?] " + agency_currency,
 								);
 							}
 						},
@@ -142,7 +142,7 @@ frappe.ui.form.on("Salary Slip", {
 	},
 
 	change_form_labels: function (frm) {
-		const company_currency = nex.get_currency(frm.doc.company);
+		const agency_currency = nex.get_currency(frm.doc.agency);
 
 		frm.set_currency_labels(
 			[
@@ -156,7 +156,7 @@ frappe.ui.form.on("Salary Slip", {
 				"base_month_to_date",
 				"base_gross_year_to_date",
 			],
-			company_currency,
+			agency_currency,
 		);
 
 		frm.set_currency_labels(
@@ -188,7 +188,7 @@ frappe.ui.form.on("Salary Slip", {
 				"base_month_to_date",
 				"base_gross_year_to_date",
 			],
-			frm.doc.currency != company_currency,
+			frm.doc.currency != agency_currency,
 		);
 	},
 

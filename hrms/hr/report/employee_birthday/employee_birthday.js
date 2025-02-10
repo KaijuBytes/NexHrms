@@ -24,7 +24,7 @@ frappe.query_reports["Employee Birthday"] = {
 			][frappe.datetime.str_to_obj(frappe.datetime.get_today()).getMonth()],
 		},
 		{
-			fieldname: "company",
+			fieldname: "agency",
 			label: __("Company"),
 			fieldtype: "Link",
 			options: "Company",

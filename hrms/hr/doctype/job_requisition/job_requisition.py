@@ -57,7 +57,7 @@ def make_job_opening(source_name, target_doc=None):
 	def set_missing_values(source, target):
 		target.job_title = source.designation
 		target.status = "Open"
-		target.currency = frappe.db.get_value("Company", source.company, "default_currency")
+		target.currency = frappe.db.get_value("Company", source.agency, "default_currency")
 		target.lower_range = source.expected_compensation
 		target.description = source.description
 
@@ -81,10 +81,10 @@ def make_job_opening(source_name, target_doc=None):
 
 
 @frappe.whitelist()
-def get_avg_time_to_fill(company=None, department=None, designation=None):
+def get_avg_time_to_fill(agency=None, department=None, designation=None):
 	filters = {"status": "Filled"}
-	if company:
-		filters["company"] = company
+	if agency:
+		filters["agency"] = agency
 	if department:
 		filters["department"] = department
 	if designation:

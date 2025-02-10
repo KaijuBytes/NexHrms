@@ -10,7 +10,7 @@ from nex.setup.doctype.employee.test_employee import make_employee
 
 class TestEmployeeTransfer(IntegrationTestCase):
 	def setUp(self):
-		create_company()
+		create_agency()
 
 	def tearDown(self):
 		frappe.db.rollback()
@@ -67,7 +67,7 @@ class TestEmployeeTransfer(IntegrationTestCase):
 	def test_employee_history(self):
 		employee = make_employee(
 			"employee4@transfers.com",
-			company="Test Company",
+			agency="Test Company",
 			date_of_birth=getdate("30-09-1980"),
 			date_of_joining=getdate("01-10-2021"),
 			department="Accounts - TC",
@@ -109,12 +109,12 @@ class TestEmployeeTransfer(IntegrationTestCase):
 		self.assertEqual(value, 12500.0)
 
 
-def create_company():
+def create_agency():
 	if not frappe.db.exists("Company", "Test Company"):
 		frappe.get_doc(
 			{
 				"doctype": "Company",
-				"company_name": "Test Company",
+				"agency_name": "Test Company",
 				"default_currency": "INR",
 				"country": "India",
 			}

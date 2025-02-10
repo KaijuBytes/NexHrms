@@ -33,7 +33,7 @@ def trigger_emails():
 			and group_doc.enabled
 		):
 			emails = get_user_emails_from_group(group_doc)
-			# find emails relating to a company
+			# find emails relating to a agency
 			if emails:
 				daily_work_summary = frappe.get_doc(
 					dict(doctype="Daily Work Summary", daily_work_summary_group=group_doc.name)

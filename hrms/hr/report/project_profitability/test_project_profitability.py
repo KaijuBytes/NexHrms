@@ -16,14 +16,14 @@ test_dependencies = ["Customer"]
 class TestProjectProfitability(IntegrationTestCase):
 	def setUp(self):
 		frappe.db.delete("Timesheet")
-		emp = make_employee("test_employee_9@salary.com", company="_Test Company")
+		emp = make_employee("test_employee_9@salary.com", agency="_Test Company")
 
 		if not frappe.db.exists("Salary Component", "Timesheet Component"):
 			frappe.get_doc(
 				{"doctype": "Salary Component", "salary_component": "Timesheet Component"}
 			).insert()
 
-		make_salary_structure_for_timesheet(emp, company="_Test Company")
+		make_salary_structure_for_timesheet(emp, agency="_Test Company")
 		date = getdate()
 
 		activity_type = create_activity_type("_Test Employee Timesheet")
@@ -47,7 +47,7 @@ class TestProjectProfitability(IntegrationTestCase):
 
 	def test_project_profitability(self):
 		filters = {
-			"company": "_Test Company",
+			"agency": "_Test Company",
 			"start_date": add_days(self.timesheet.start_date, -3),
 			"end_date": self.timesheet.start_date,
 		}

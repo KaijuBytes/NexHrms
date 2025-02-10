@@ -129,7 +129,7 @@ class EmployeeHoursReport:
 	def generate_filtered_time_logs(self):
 		additional_filters = ""
 
-		filter_fields = ["employee", "project", "company"]
+		filter_fields = ["employee", "project", "agency"]
 
 		for field in filter_fields:
 			if self.filters.get(field):

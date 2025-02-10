@@ -56,7 +56,7 @@ def get_data(filters):
 
 	data = []
 
-	employee_filters = {"company": filters.company}
+	employee_filters = {"agency": filters.agency}
 	if filters.department:
 		employee_filters["department"] = filters.department
 

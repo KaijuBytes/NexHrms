@@ -31,7 +31,7 @@ def execute():
 	for item in doctype_list:
 		frappe.reload_doc(item["module"], "doctype", item["doctype"])
 
-	# update company in employee advance based on employee company
+	# update agency in employee advance based on employee agency
 	for dt in [
 		"Employee Incentive",
 		"Leave Encashment",
@@ -41,8 +41,8 @@ def execute():
 		frappe.db.sql(
 			f"""
 			update `tab{dt}`
-			set company = (select company from tabEmployee where name=`tab{dt}`.employee)
-			where company IS NULL
+			set agency = (select agency from tabEmployee where name=`tab{dt}`.employee)
+			where agency IS NULL
 		"""
 		)
 
@@ -54,8 +54,8 @@ def execute():
 		"Company", fields=["name", "default_currency", "default_payroll_payable_account"]
 	)
 	for d in all_companies:
-		company = d.name
-		company_currency = d.default_currency
+		agency = d.name
+		agency_currency = d.default_currency
 		default_payroll_payable_account = d.default_payroll_payable_account
 
 		if not default_payroll_payable_account:
@@ -63,13 +63,13 @@ def execute():
 				"Account",
 				{
 					"account_name": _("Payroll Payable"),
-					"company": company,
-					"account_currency": company_currency,
+					"agency": agency,
+					"account_currency": agency_currency,
 					"is_group": 0,
 				},
 			)
 
-		# update currency in following doctypes based on company currency
+		# update currency in following doctypes based on agency currency
 		doctypes_for_currency = [
 			"Employee Advance",
 			"Leave Encashment",
@@ -86,8 +86,8 @@ def execute():
 
 		for dt in doctypes_for_currency:
 			frappe.db.sql(
-				f"""update `tab{dt}` set currency = %s where company=%s and currency IS NULL""",
-				(company_currency, company),
+				f"""update `tab{dt}` set currency = %s where agency=%s and currency IS NULL""",
+				(agency_currency, agency),
 			)
 
 		# update fields in payroll entry
@@ -97,10 +97,10 @@ def execute():
 			set currency = %s,
 				exchange_rate = 1,
 				payroll_payable_account=%s
-			where company=%s
+			where agency=%s
 			and currency IS NULL
 		""",
-			(company_currency, default_payroll_payable_account, company),
+			(agency_currency, default_payroll_payable_account, agency),
 		)
 
 		# update fields in Salary Structure Assignment
@@ -109,10 +109,10 @@ def execute():
 			update `tabSalary Structure Assignment`
 			set currency = %s,
 				payroll_payable_account=%s
-			where company=%s
+			where agency=%s
 			and currency IS NULL
 		""",
-			(company_currency, default_payroll_payable_account, company),
+			(agency_currency, default_payroll_payable_account, agency),
 		)
 
 		# update fields in Salary Slip
@@ -127,8 +127,8 @@ def execute():
 				base_net_pay = net_pay,
 				base_rounded_total = rounded_total,
 				base_total_in_words = total_in_words
-			where company=%s
+			where agency=%s
 			and currency IS NULL
 		""",
-			(company_currency, company),
+			(agency_currency, agency),
 		)

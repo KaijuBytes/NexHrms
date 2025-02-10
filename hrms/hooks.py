@@ -48,7 +48,7 @@ app_include_css = "hrms.bundle.css"
 # include js in doctype views
 doctype_js = {
 	"Employee": "public/js/nex/employee.js",
-	"Company": "public/js/nex/company.js",
+	"Company": "public/js/nex/agency.js",
 	"Department": "public/js/nex/department.js",
 	"Timesheet": "public/js/nex/timesheet.js",
 	"Payment Entry": "public/js/nex/payment_entry.js",
@@ -165,12 +165,12 @@ doc_events = {
 		"on_update": "nex.setup.doctype.employee.employee.update_user_permissions",
 	},
 	"Company": {
-		"validate": "hrms.overrides.company.validate_default_accounts",
+		"validate": "hrms.overrides.agency.validate_default_accounts",
 		"on_update": [
-			"hrms.overrides.company.make_company_fixtures",
-			"hrms.overrides.company.set_default_hr_accounts",
+			"hrms.overrides.agency.make_agency_fixtures",
+			"hrms.overrides.agency.set_default_hr_accounts",
 		],
-		"on_trash": "hrms.overrides.company.handle_linked_docs",
+		"on_trash": "hrms.overrides.agency.handle_linked_docs",
 	},
 	"Holiday List": {
 		"on_update": "hrms.utils.holiday_list.invalidate_cache",
@@ -351,7 +351,7 @@ ignore_links_on_delete = ["PWA Notification"]
 # For example: Role, Gender, etc.
 # translated_search_doctypes = []
 
-company_data_to_be_ignored = [
+agency_data_to_be_ignored = [
 	"Salary Component Account",
 	"Salary Structure",
 	"Salary Structure Assignment",

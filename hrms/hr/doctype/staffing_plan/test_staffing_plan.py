@@ -17,7 +17,7 @@ class TestStaffingPlan(IntegrationTestCase):
 		if frappe.db.exists("Staffing Plan", "Test"):
 			return
 		staffing_plan = frappe.new_doc("Staffing Plan")
-		staffing_plan.company = "_Test Company 10"
+		staffing_plan.agency = "_Test Company 10"
 		staffing_plan.name = "Test"
 		staffing_plan.from_date = nowdate()
 		staffing_plan.to_date = add_days(nowdate(), 10)
@@ -29,12 +29,12 @@ class TestStaffingPlan(IntegrationTestCase):
 		staffing_plan.submit()
 		self.assertEqual(staffing_plan.total_estimated_budget, 300000.00)
 
-	def test_staffing_plan_subsidiary_company(self):
+	def test_staffing_plan_subsidiary_agency(self):
 		self.test_staffing_plan()
 		if frappe.db.exists("Staffing Plan", "Test 1"):
 			return
 		staffing_plan = frappe.new_doc("Staffing Plan")
-		staffing_plan.company = "_Test Company 3"
+		staffing_plan.agency = "_Test Company 3"
 		staffing_plan.name = "Test 1"
 		staffing_plan.from_date = nowdate()
 		staffing_plan.to_date = add_days(nowdate(), 10)
@@ -44,12 +44,12 @@ class TestStaffingPlan(IntegrationTestCase):
 		)
 		self.assertRaises(SubsidiaryCompanyError, staffing_plan.insert)
 
-	def test_staffing_plan_parent_company(self):
+	def test_staffing_plan_parent_agency(self):
 		_set_up()
 		if frappe.db.exists("Staffing Plan", "Test"):
 			return
 		staffing_plan = frappe.new_doc("Staffing Plan")
-		staffing_plan.company = "_Test Company 3"
+		staffing_plan.agency = "_Test Company 3"
 		staffing_plan.name = "Test"
 		staffing_plan.from_date = nowdate()
 		staffing_plan.to_date = add_days(nowdate(), 10)
@@ -63,7 +63,7 @@ class TestStaffingPlan(IntegrationTestCase):
 		if frappe.db.exists("Staffing Plan", "Test 1"):
 			return
 		staffing_plan = frappe.new_doc("Staffing Plan")
-		staffing_plan.company = "_Test Company 10"
+		staffing_plan.agency = "_Test Company 10"
 		staffing_plan.name = "Test 1"
 		staffing_plan.from_date = nowdate()
 		staffing_plan.to_date = add_days(nowdate(), 10)
@@ -78,20 +78,20 @@ class TestStaffingPlan(IntegrationTestCase):
 def _set_up():
 	for doctype in ["Staffing Plan", "Staffing Plan Detail"]:
 		frappe.db.sql(f"delete from `tab{doctype}`")
-	make_company()
+	make_agency()
 
 
-def make_company(name=None, abbr=None):
+def make_agency(name=None, abbr=None):
 	if not name:
 		name = "_Test Company 10"
 
 	if frappe.db.exists("Company", name):
 		return
 
-	company = frappe.new_doc("Company")
-	company.company_name = name
-	company.abbr = abbr or "_TC10"
-	company.parent_company = "_Test Company 3"
-	company.default_currency = "INR"
-	company.country = "Pakistan"
-	company.insert()
+	agency = frappe.new_doc("Company")
+	agency.agency_name = name
+	agency.abbr = abbr or "_TC10"
+	agency.parent_agency = "_Test Company 3"
+	agency.default_currency = "INR"
+	agency.country = "Pakistan"
+	agency.insert()

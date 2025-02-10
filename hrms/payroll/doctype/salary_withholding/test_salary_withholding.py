@@ -32,21 +32,21 @@ class TestSalaryWithholding(IntegrationTestCase):
 		]:
 			frappe.db.delete(dt)
 
-		self.company = frappe.get_doc("Company", COMPANY_NAME)
-		self.employee1 = make_employee("employee1@example.com", company=COMPANY_NAME, designation="Engineer")
-		self.employee2 = make_employee("employee2@example.com", company=COMPANY_NAME, designation="Engineer")
+		self.agency = frappe.get_doc("Company", COMPANY_NAME)
+		self.employee1 = make_employee("employee1@example.com", agency=COMPANY_NAME, designation="Engineer")
+		self.employee2 = make_employee("employee2@example.com", agency=COMPANY_NAME, designation="Engineer")
 
 		make_salary_structure(
 			"Test Withholding",
 			"Monthly",
-			company=COMPANY_NAME,
+			agency=COMPANY_NAME,
 			employee=self.employee1,
 			from_date=MONTH_1_START,
 		)
 		make_salary_structure(
 			"Test Withholding",
 			"Monthly",
-			company=COMPANY_NAME,
+			agency=COMPANY_NAME,
 			employee=self.employee2,
 			from_date=MONTH_1_START,
 		)
@@ -124,9 +124,9 @@ class TestSalaryWithholding(IntegrationTestCase):
 		return make_payroll_entry(
 			start_date=dates.start_date,
 			end_date=dates.end_date,
-			payable_account=self.company.default_payroll_payable_account,
-			currency=self.company.default_currency,
-			company=self.company.name,
+			payable_account=self.agency.default_payroll_payable_account,
+			currency=self.agency.default_currency,
+			agency=self.agency.name,
 		)
 
 	def _submit_bank_entry(self, bank_entry: dict):

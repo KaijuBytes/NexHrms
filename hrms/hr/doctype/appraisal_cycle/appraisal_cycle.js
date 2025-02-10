@@ -6,7 +6,7 @@ frappe.ui.form.on("Appraisal Cycle", {
 		frm.set_query("department", () => {
 			return {
 				filters: {
-					company: frm.doc.company,
+					agency: frm.doc.agency,
 				},
 			};
 		});
@@ -21,7 +21,7 @@ frappe.ui.form.on("Appraisal Cycle", {
 
 		frm.add_custom_button(__("View Goals"), () => {
 			frappe.route_options = {
-				company: frm.doc.company,
+				agency: frm.doc.agency,
 				appraisal_cycle: frm.doc.name,
 			};
 			frappe.set_route("Tree", "Goal");

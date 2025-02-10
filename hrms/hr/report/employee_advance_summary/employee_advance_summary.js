@@ -25,7 +25,7 @@ frappe.query_reports["Employee Advance Summary"] = {
 			default: frappe.datetime.get_today(),
 		},
 		{
-			fieldname: "company",
+			fieldname: "agency",
 			label: __("Company"),
 			fieldtype: "Link",
 			options: "Company",

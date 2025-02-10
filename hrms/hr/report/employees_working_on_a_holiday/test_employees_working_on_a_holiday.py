@@ -14,7 +14,7 @@ from hrms.tests.test_utils import get_first_sunday
 
 class TestEmployeesWorkingOnAHoliday(IntegrationTestCase):
 	def setUp(self):
-		self.company = "_Test Company"
+		self.agency = "_Test Company"
 		frappe.db.delete("Attendance")
 
 	def test_report(self):
@@ -25,9 +25,9 @@ class TestEmployeesWorkingOnAHoliday(IntegrationTestCase):
 		monday_off = make_holiday_list("Monday Off", from_date, to_date, True, ["Monday"])
 		tuesday_off = make_holiday_list("Tuesday Off", from_date, to_date, True, ["Tuesday"])
 
-		emp1 = make_employee("testemp@sunday.com", company=self.company, holiday_list=sunday_off)
-		emp2 = make_employee("testemp2@monday.com", company=self.company, holiday_list=monday_off)
-		emp3 = make_employee("testemp3@tuesday.com", company=self.company, holiday_list=tuesday_off)
+		emp1 = make_employee("testemp@sunday.com", agency=self.agency, holiday_list=sunday_off)
+		emp2 = make_employee("testemp2@monday.com", agency=self.agency, holiday_list=monday_off)
+		emp3 = make_employee("testemp3@tuesday.com", agency=self.agency, holiday_list=tuesday_off)
 
 		first_sunday = get_first_sunday()
 		# i realise this might not be the first monday and tuesday but doesn't matter for this test
@@ -51,7 +51,7 @@ class TestEmployeesWorkingOnAHoliday(IntegrationTestCase):
 			{
 				"from_date": from_date,
 				"to_date": to_date,
-				"company": self.company,
+				"agency": self.agency,
 			}
 		)
 		report = execute(filters=filters)

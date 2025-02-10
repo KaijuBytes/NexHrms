@@ -10,7 +10,7 @@
   "job_offer",
   "employee_onboarding_template",
   "column_break_7",
-  "company",
+  "agency",
   "boarding_status",
   "project",
   "details_section",
@@ -92,8 +92,8 @@
    "options": "Employee Onboarding Template"
   },
   {
-   "fetch_from": "employee_onboarding_template.company",
-   "fieldname": "company",
+   "fetch_from": "employee_onboarding_template.agency",
+   "fieldname": "agency",
    "fieldtype": "Link",
    "label": "Company",
    "options": "Company",

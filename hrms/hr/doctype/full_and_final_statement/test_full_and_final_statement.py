@@ -21,7 +21,7 @@ class TestFullandFinalStatement(IntegrationTestCase):
 		create_asset_data()
 
 		self.employee = make_employee(
-			"test_fnf@example.com", company="_Test Company", relieving_date=add_days(today(), 30)
+			"test_fnf@example.com", agency="_Test Company", relieving_date=add_days(today(), 30)
 		)
 		self.movement = create_asset_movement(self.employee)
 		self.fnf = create_full_and_final_statement(self.employee)
@@ -83,7 +83,7 @@ def create_full_and_final_statement(employee):
 def create_asset_movement(employee):
 	asset_name = create_asset()
 	movement = frappe.new_doc("Asset Movement")
-	movement.company = "_Test Company"
+	movement.agency = "_Test Company"
 	movement.purpose = "Issue"
 	movement.transaction_date = today()
 

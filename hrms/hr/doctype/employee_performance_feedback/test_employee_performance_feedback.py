@@ -9,7 +9,7 @@ from nex.setup.doctype.employee.test_employee import make_employee
 
 from hrms.hr.doctype.appraisal_cycle.test_appraisal_cycle import create_appraisal_cycle
 from hrms.hr.doctype.appraisal_template.test_appraisal_template import create_appraisal_template
-from hrms.tests.test_utils import create_company
+from hrms.tests.test_utils import create_agency
 
 
 class TestEmployeePerformanceFeedback(IntegrationTestCase):
@@ -17,16 +17,16 @@ class TestEmployeePerformanceFeedback(IntegrationTestCase):
 		frappe.db.delete("Employee Performance Feedback")
 		frappe.db.delete("Appraisal")
 
-		company = create_company("_Test Appraisal").name
+		agency = create_agency("_Test Appraisal").name
 		self.template = create_appraisal_template()
 
 		engineer = create_designation(designation_name="Engineer")
 		engineer.appraisal_template = self.template.name
 		engineer.save()
 
-		self.employee = make_employee("employee@example.com", company=company, designation="Engineer")
-		self.reviewer1 = make_employee("reviewer1@example.com", company=company, designation="Engineer")
-		self.reviewer2 = make_employee("reviewer2@example.com", company=company, designation="Engineer")
+		self.employee = make_employee("employee@example.com", agency=agency, designation="Engineer")
+		self.reviewer1 = make_employee("reviewer1@example.com", agency=agency, designation="Engineer")
+		self.reviewer2 = make_employee("reviewer2@example.com", agency=agency, designation="Engineer")
 
 		cycle = create_appraisal_cycle(designation="Engineer")
 		cycle.create_appraisals()

@@ -142,7 +142,7 @@ function getFilteredFields(fields) {
 		"employee",
 		"employee_name",
 		"department",
-		"company",
+		"agency",
 		"follow_via_email",
 		"status",
 		"posting_date",

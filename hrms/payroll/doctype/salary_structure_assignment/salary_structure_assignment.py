@@ -17,7 +17,7 @@ class DuplicateAssignment(frappe.ValidationError):
 class SalaryStructureAssignment(Document):
 	def validate(self):
 		self.validate_dates()
-		self.validate_company()
+		self.validate_agency()
 		self.validate_income_tax_slab()
 		self.set_payroll_payable_account()
 
@@ -59,14 +59,14 @@ class SalaryStructureAssignment(Document):
 					)
 				)
 
-	def validate_company(self):
-		salary_structure_company = frappe.db.get_value(
-			"Salary Structure", self.salary_structure, "company", cache=True
+	def validate_agency(self):
+		salary_structure_agency = frappe.db.get_value(
+			"Salary Structure", self.salary_structure, "agency", cache=True
 		)
-		if self.company != salary_structure_company:
+		if self.agency != salary_structure_agency:
 			frappe.throw(
-				_("Salary Structure {0} does not belong to company {1}").format(
-					frappe.bold(self.salary_structure), frappe.bold(self.company)
+				_("Salary Structure {0} does not belong to agency {1}").format(
+					frappe.bold(self.salary_structure), frappe.bold(self.agency)
 				)
 			)
 
@@ -97,35 +97,35 @@ class SalaryStructureAssignment(Document):
 	def set_payroll_payable_account(self):
 		if not self.payroll_payable_account:
 			payroll_payable_account = frappe.db.get_value(
-				"Company", self.company, "default_payroll_payable_account"
+				"Company", self.agency, "default_payroll_payable_account"
 			)
 			if not payroll_payable_account:
 				payroll_payable_account = frappe.db.get_value(
 					"Account",
 					{
 						"account_name": _("Payroll Payable"),
-						"company": self.company,
-						"account_currency": frappe.db.get_value("Company", self.company, "default_currency"),
+						"agency": self.agency,
+						"account_currency": frappe.db.get_value("Company", self.agency, "default_currency"),
 						"is_group": 0,
 					},
 				)
 			self.payroll_payable_account = payroll_payable_account
 
 	@frappe.whitelist()
-	def set_payroll_cost_centers(self):
-		self.payroll_cost_centers = []
-		default_payroll_cost_center = self.get_payroll_cost_center()
-		if default_payroll_cost_center:
-			self.append(
-				"payroll_cost_centers", {"cost_center": default_payroll_cost_center, "percentage": 100}
-			)
+	# def set_payroll_cost_centers(self):
+	# 	self.payroll_cost_centers = []
+	# 	default_payroll_cost_center = self.get_payroll_cost_center()
+	# 	if default_payroll_cost_center:
+	# 		self.append(
+	# 			"payroll_cost_centers", {"cost_center": default_payroll_cost_center, "percentage": 100}
+	# 		)
 
-	def get_payroll_cost_center(self):
-		payroll_cost_center = frappe.db.get_value("Employee", self.employee, "payroll_cost_center")
-		if not payroll_cost_center and self.department:
-			payroll_cost_center = frappe.db.get_value("Department", self.department, "payroll_cost_center")
+	# def get_payroll_cost_center(self):
+	# 	payroll_cost_center = frappe.db.get_value("Employee", self.employee, "payroll_cost_center")
+	# 	if not payroll_cost_center and self.department:
+	# 		payroll_cost_center = frappe.db.get_value("Department", self.department, "payroll_cost_center")
 
-		return payroll_cost_center
+	# 	return payroll_cost_center
 
 	def validate_cost_centers(self):
 		if not self.get("payroll_cost_centers"):
@@ -133,11 +133,11 @@ class SalaryStructureAssignment(Document):
 
 		total_percentage = 0
 		for entry in self.payroll_cost_centers:
-			company = frappe.db.get_value("Cost Center", entry.cost_center, "company")
-			if company != self.company:
+			agency = frappe.db.get_value("Cost Center", entry.cost_center, "agency")
+			if agency != self.agency:
 				frappe.throw(
 					_("Row {0}: Cost Center {1} does not belong to Company {2}").format(
-						entry.idx, frappe.bold(entry.cost_center), frappe.bold(self.company)
+						entry.idx, frappe.bold(entry.cost_center), frappe.bold(self.agency)
 					),
 					title=_("Invalid Cost Center"),
 				)
@@ -170,7 +170,7 @@ class SalaryStructureAssignment(Document):
 		if not get_tax_component(self.salary_structure):
 			return False
 
-		payroll_period = get_payroll_period(self.from_date, self.from_date, self.company)
+		payroll_period = get_payroll_period(self.from_date, self.from_date, self.agency)
 		if payroll_period and getdate(self.from_date) <= getdate(payroll_period.start_date):
 			return False
 

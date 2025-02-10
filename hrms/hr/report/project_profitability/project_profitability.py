@@ -55,8 +55,8 @@ def get_rows(filters):
 		.where((SalesInvoice.docstatus == 1) & (SalarySlip.docstatus == 1))
 	)
 
-	if filters.get("company"):
-		query = query.where(Timesheet.company == filters.get("company"))
+	if filters.get("agency"):
+		query = query.where(Timesheet.agency == filters.get("agency"))
 
 	if filters.get("start_date"):
 		query = query.where(Timesheet.start_date >= filters.get("start_date"))

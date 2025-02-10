@@ -11,7 +11,7 @@
   "employee_name",
   "amended_from",
   "column_break_3",
-  "company",
+  "agency",
   "payroll_period",
   "income_source_details_section",
   "source",
@@ -42,7 +42,7 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "company",
+   "fieldname": "agency",
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Company",
@@ -60,7 +60,7 @@
    "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "Amount",
-   "options": "Company:company:default_currency",
+   "options": "Company:agency:default_currency",
    "reqd": 1
   },
   {

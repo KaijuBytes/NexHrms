@@ -32,7 +32,7 @@ def get_columns(leave_types):
 
 def get_conditions(filters):
 	conditions = {
-		"company": filters.company,
+		"agency": filters.agency,
 	}
 	if filters.get("employee_status"):
 		conditions.update({"status": filters.get("employee_status")})

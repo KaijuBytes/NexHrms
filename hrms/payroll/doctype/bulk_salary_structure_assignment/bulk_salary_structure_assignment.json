@@ -10,7 +10,7 @@
   "from_date",
   "income_tax_slab",
   "column_break_rsep",
-  "company",
+  "agency",
   "payroll_payable_account",
   "currency",
   "quick_filters_section",
@@ -108,8 +108,8 @@
    "label": "Employees HTML"
   },
   {
-   "fetch_from": "salary_structure.company",
-   "fieldname": "company",
+   "fetch_from": "salary_structure.agency",
+   "fieldname": "agency",
    "fieldtype": "Link",
    "label": "Company",
    "options": "Company",

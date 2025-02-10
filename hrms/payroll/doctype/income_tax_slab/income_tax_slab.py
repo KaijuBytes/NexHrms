@@ -10,5 +10,5 @@ import nex
 
 class IncomeTaxSlab(Document):
 	def validate(self):
-		if self.company:
-			self.currency = nex.get_company_currency(self.company)
+		if self.agency:
+			self.currency = nex.get_agency_currency(self.agency)

@@ -84,7 +84,7 @@ def get_data(filters: dict | None = None) -> list[dict]:
 		.where(Appraisal.docstatus != 2)
 	)
 
-	for condition in ["appraisal_cycle", "employee", "department", "designation", "company"]:
+	for condition in ["appraisal_cycle", "employee", "department", "designation", "agency"]:
 		if filters.get(condition):
 			query = query.where(Appraisal[condition] == filters.get(condition))
 

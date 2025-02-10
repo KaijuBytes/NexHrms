@@ -12,7 +12,7 @@ frappe.ui.form.on("Employee Tax Exemption Declaration", {
 		});
 
 		frm.set_query("payroll_period", function () {
-			const fields = { employee: "Employee", company: "Company" };
+			const fields = { employee: "Employee", agency: "Company" };
 
 			for (let [field, label] of Object.entries(fields)) {
 				if (!frm.doc[field]) {
@@ -20,10 +20,10 @@ frappe.ui.form.on("Employee Tax Exemption Declaration", {
 				}
 			}
 
-			if (frm.doc.employee && frm.doc.company) {
+			if (frm.doc.employee && frm.doc.agency) {
 				return {
 					filters: {
-						company: frm.doc.company,
+						agency: frm.doc.agency,
 					},
 				};
 			}

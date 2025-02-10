@@ -20,17 +20,17 @@ def execute(filters=None):
 	currency = None
 	if filters.get("currency"):
 		currency = filters.get("currency")
-	company_currency = nex.get_company_currency(filters.get("company"))
+	agency_currency = nex.get_agency_currency(filters.get("agency"))
 
-	salary_slips = get_salary_slips(filters, company_currency)
+	salary_slips = get_salary_slips(filters, agency_currency)
 	if not salary_slips:
 		return [], []
 
 	earning_types, ded_types = get_earning_and_deduction_types(salary_slips)
 	columns = get_columns(earning_types, ded_types)
 
-	ss_earning_map = get_salary_slip_details(salary_slips, currency, company_currency, "earnings")
-	ss_ded_map = get_salary_slip_details(salary_slips, currency, company_currency, "deductions")
+	ss_earning_map = get_salary_slip_details(salary_slips, currency, agency_currency, "earnings")
+	ss_ded_map = get_salary_slip_details(salary_slips, currency, agency_currency, "deductions")
 
 	doj_map = get_employee_doj_map()
 
@@ -44,13 +44,13 @@ def execute(filters=None):
 			"branch": ss.branch,
 			"department": ss.department,
 			"designation": ss.designation,
-			"company": ss.company,
+			"agency": ss.agency,
 			"start_date": ss.start_date,
 			"end_date": ss.end_date,
 			"leave_without_pay": ss.leave_without_pay,
 			"absent_days": ss.absent_days,
 			"payment_days": ss.payment_days,
-			"currency": currency or company_currency,
+			"currency": currency or agency_currency,
 			"total_loan_repayment": ss.total_loan_repayment,
 		}
 
@@ -62,7 +62,7 @@ def execute(filters=None):
 		for d in ded_types:
 			row.update({frappe.scrub(d): ss_ded_map.get(ss.name, {}).get(d)})
 
-		if currency == company_currency:
+		if currency == agency_currency:
 			row.update(
 				{
 					"gross_pay": flt(ss.gross_pay) * flt(ss.exchange_rate),
@@ -153,7 +153,7 @@ def get_columns(earning_types, ded_types):
 		},
 		{
 			"label": _("Company"),
-			"fieldname": "company",
+			"fieldname": "agency",
 			"fieldtype": "Link",
 			"options": "Company",
 			"width": 120,
@@ -270,7 +270,7 @@ def get_salary_component_type(salary_component):
 	return frappe.db.get_value("Salary Component", salary_component, "type", cache=True)
 
 
-def get_salary_slips(filters, company_currency):
+def get_salary_slips(filters, agency_currency):
 	doc_status = {"Draft": 0, "Submitted": 1, "Cancelled": 2}
 
 	query = frappe.qb.from_(salary_slip).select(salary_slip.star)
@@ -284,13 +284,13 @@ def get_salary_slips(filters, company_currency):
 	if filters.get("to_date"):
 		query = query.where(salary_slip.end_date <= filters.get("to_date"))
 
-	if filters.get("company"):
-		query = query.where(salary_slip.company == filters.get("company"))
+	if filters.get("agency"):
+		query = query.where(salary_slip.agency == filters.get("agency"))
 
 	if filters.get("employee"):
 		query = query.where(salary_slip.employee == filters.get("employee"))
 
-	if filters.get("currency") and filters.get("currency") != company_currency:
+	if filters.get("currency") and filters.get("currency") != agency_currency:
 		query = query.where(salary_slip.currency == filters.get("currency"))
 
 	salary_slips = query.run(as_dict=1)
@@ -306,7 +306,7 @@ def get_employee_doj_map():
 	return frappe._dict(result)
 
 
-def get_salary_slip_details(salary_slips, currency, company_currency, component_type):
+def get_salary_slip_details(salary_slips, currency, agency_currency, component_type):
 	salary_slips = [ss.name for ss in salary_slips]
 
 	result = (
@@ -326,7 +326,7 @@ def get_salary_slip_details(salary_slips, currency, company_currency, component_
 
 	for d in result:
 		ss_map.setdefault(d.parent, frappe._dict()).setdefault(d.salary_component, 0.0)
-		if currency == company_currency:
+		if currency == agency_currency:
 			ss_map[d.parent][d.salary_component] += flt(d.amount) * flt(
 				d.exchange_rate if d.exchange_rate else 1
 			)

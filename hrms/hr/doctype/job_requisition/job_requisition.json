@@ -14,7 +14,7 @@
   "no_of_positions",
   "expected_compensation",
   "column_break_4",
-  "company",
+  "agency",
   "status",
   "section_break_7",
   "requested_by",
@@ -54,7 +54,7 @@
    "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "Expected Compensation",
-   "options": "Company:company:default_currency",
+   "options": "Company:agency:default_currency",
    "reqd": 1
   },
   {
@@ -70,7 +70,7 @@
    "reqd": 1
   },
   {
-   "fieldname": "company",
+   "fieldname": "agency",
    "fieldtype": "Link",
    "label": "Company",
    "options": "Company",

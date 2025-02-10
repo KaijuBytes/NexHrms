@@ -13,11 +13,11 @@ class TestLeavePeriod(IntegrationTestCase):
 	pass
 
 
-def create_leave_period(from_date, to_date, company=None):
+def create_leave_period(from_date, to_date, agency=None):
 	leave_period = frappe.db.get_value(
 		"Leave Period",
 		dict(
-			company=company or nex.get_default_company(),
+			agency=agency or nex.get_default_agency(),
 			from_date=from_date,
 			to_date=to_date,
 			is_active=1,
@@ -30,7 +30,7 @@ def create_leave_period(from_date, to_date, company=None):
 	leave_period = frappe.get_doc(
 		{
 			"doctype": "Leave Period",
-			"company": company or nex.get_default_company(),
+			"agency": agency or nex.get_default_agency(),
 			"from_date": from_date,
 			"to_date": to_date,
 			"is_active": 1,

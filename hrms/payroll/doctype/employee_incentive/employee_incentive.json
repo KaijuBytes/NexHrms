@@ -11,7 +11,7 @@
   "employee_name",
   "amended_from",
   "column_break_5",
-  "company",
+  "agency",
   "department",
   "incentive_section",
   "salary_component",
@@ -88,7 +88,7 @@
    "reqd": 1
   },
   {
-   "fieldname": "company",
+   "fieldname": "agency",
    "fieldtype": "Link",
    "label": "Company",
    "options": "Company",

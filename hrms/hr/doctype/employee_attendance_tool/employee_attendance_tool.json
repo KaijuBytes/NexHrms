@@ -7,7 +7,7 @@
  "field_order": [
   "date",
   "section_break_ackd",
-  "company",
+  "agency",
   "column_break_bhny",
   "department",
   "column_break_3",
@@ -48,7 +48,7 @@
    "options": "Branch"
   },
   {
-   "fieldname": "company",
+   "fieldname": "agency",
    "fieldtype": "Link",
    "label": "Company",
    "options": "Company"

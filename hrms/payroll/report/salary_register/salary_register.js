@@ -35,7 +35,7 @@ frappe.query_reports["Salary Register"] = {
 			width: "100px",
 		},
 		{
-			fieldname: "company",
+			fieldname: "agency",
 			label: __("Company"),
 			fieldtype: "Link",
 			options: "Company",

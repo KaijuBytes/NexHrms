@@ -141,7 +141,7 @@
 									{{ jo.job_title }}
 								</h4>
 								<div class="text-14">
-									<span class="font-weight-bold">{{ jo.company }}</span>
+									<span class="font-weight-bold">{{ jo.agency }}</span>
 									<span class="text-secondary">
 										{{ " · " }} {{ jo.posted_on }}
 									</span>
@@ -279,7 +279,7 @@
 							id="{{ pg }}"
 							name="pagination"
 							class="btn btn-default text-muted rounded-0"
-							style="background-color: {{ 'var(--gray-100)' if pg|string == page else 'white' }}"
+							<!-- style="background-color: {{ 'var(--gray-100)' if pg|string == page else 'white' }}" -->
 						>
 							{% if (loop.first and pg != 1) or (loop.last and pg != no_of_pages) %}
 							<span>...</span>

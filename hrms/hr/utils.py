@@ -25,7 +25,7 @@ from frappe.utils import (
 )
 
 import nex
-from nex import get_company_currency
+from nex import get_agency_currency
 from nex.setup.doctype.employee.employee import (
 	InactiveEmployeeStatusError,
 	get_holiday_list_for_employee,
@@ -188,7 +188,7 @@ def validate_dates(doc, from_date, to_date, restrict_future_dates=True):
 		frappe.throw(_("To date can not greater than employee's relieving date"))
 
 
-def validate_overlap(doc, from_date, to_date, company=None):
+def validate_overlap(doc, from_date, to_date, agency=None):
 	query = """
 		select name
 		from `tab{0}`
@@ -207,7 +207,7 @@ def validate_overlap(doc, from_date, to_date, company=None):
 			"from_date": from_date,
 			"to_date": to_date,
 			"name": doc.name,
-			"company": company,
+			"agency": agency,
 		},
 		as_dict=1,
 	)
@@ -215,8 +215,8 @@ def validate_overlap(doc, from_date, to_date, company=None):
 	if overlap_doc:
 		if doc.get("employee"):
 			exists_for = doc.employee
-		if company:
-			exists_for = company
+		if agency:
+			exists_for = agency
 		throw_overlap_error(doc, exists_for, overlap_doc[0].name, from_date, to_date)
 
 
@@ -227,7 +227,7 @@ def get_doc_condition(doctype):
 		or work_end_date between %(from_date)s and %(to_date)s \
 		or (work_from_date < %(from_date)s and work_end_date > %(to_date)s))"
 	elif doctype == "Leave Period":
-		return "and company = %(company)s and (from_date between %(from_date)s and %(to_date)s \
+		return "and agency = %(agency)s and (from_date between %(from_date)s and %(to_date)s \
 			or to_date between %(from_date)s and %(to_date)s \
 			or (from_date < %(from_date)s and to_date > %(to_date)s))"
 
@@ -296,17 +296,17 @@ def get_total_exemption_amount(declarations):
 
 
 @frappe.whitelist()
-def get_leave_period(from_date, to_date, company):
+def get_leave_period(from_date, to_date, agency):
 	leave_period = frappe.db.sql(
 		"""
 		select name, from_date, to_date
 		from `tabLeave Period`
-		where company=%(company)s and is_active=1
+		where agency=%(agency)s and is_active=1
 			and (from_date between %(from_date)s and %(to_date)s
 				or to_date between %(from_date)s and %(to_date)s
 				or (from_date < %(from_date)s and to_date > %(to_date)s))
 	""",
-		{"from_date": from_date, "to_date": to_date, "company": company},
+		{"from_date": from_date, "to_date": to_date, "agency": agency},
 		as_dict=1,
 	)
 
@@ -720,12 +720,12 @@ def validate_loan_repay_from_salary(doc, method=None):
 		if not doc.applicant:
 			frappe.throw(_("Please select an Applicant"))
 
-		if not doc.company:
+		if not doc.agency:
 			frappe.throw(_("Please select a Company"))
 
 		employee_currency = get_employee_currency(doc.applicant)
-		company_currency = nex.get_company_currency(doc.company)
-		if employee_currency != company_currency:
+		agency_currency = nex.get_agency_currency(doc.agency)
+		if employee_currency != agency_currency:
 			frappe.throw(
 				_(
 					"Loan cannot be repayed from salary for Employee {0} because salary is processed in currency {1}"
@@ -738,7 +738,7 @@ def validate_loan_repay_from_salary(doc, method=None):
 
 def get_matching_queries(
 	bank_account,
-	company,
+	agency,
 	transaction,
 	document_types,
 	exact_match,
@@ -755,7 +755,7 @@ def get_matching_queries(
 	if transaction.withdrawal > 0:
 		if "expense_claim" in document_types:
 			ec_amount_matching = get_ec_matching_query(
-				bank_account, company, exact_match, from_date, to_date, common_filters
+				bank_account, agency, exact_match, from_date, to_date, common_filters
 			)
 			queries.extend([ec_amount_matching])
 
@@ -763,7 +763,7 @@ def get_matching_queries(
 
 
 def get_ec_matching_query(
-	bank_account, company, exact_match, from_date=None, to_date=None, common_filters=None
+	bank_account, agency, exact_match, from_date=None, to_date=None, common_filters=None
 ):
 	# get matching Expense Claim query
 	filters = []
@@ -775,7 +775,7 @@ def get_ec_matching_query(
 			"Mode of Payment Account", filters={"default_account": bank_account}, fields=["parent"]
 		)
 	]
-	company_currency = get_company_currency(company)
+	agency_currency = get_agency_currency(agency)
 
 	filters.append(ec.docstatus == 1)
 	filters.append(ec.is_paid == 1)
@@ -808,7 +808,7 @@ def get_ec_matching_query(
 			ec.employee.as_("party"),
 			ConstantColumn("Employee").as_("party_type"),
 			ec.posting_date,
-			ConstantColumn(company_currency).as_("currency"),
+			ConstantColumn(agency_currency).as_("currency"),
 		)
 		.where(Criterion.all(filters))
 	)

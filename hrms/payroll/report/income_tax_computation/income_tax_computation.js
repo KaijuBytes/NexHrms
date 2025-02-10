@@ -5,7 +5,7 @@
 frappe.query_reports["Income Tax Computation"] = {
 	filters: [
 		{
-			fieldname: "company",
+			fieldname: "agency",
 			label: __("Company"),
 			fieldtype: "Link",
 			options: "Company",

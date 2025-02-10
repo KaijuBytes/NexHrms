@@ -15,13 +15,13 @@ from hrms.payroll.doctype.salary_slip.test_salary_slip import (
 	make_holiday_list,
 	make_leave_application,
 )
-from hrms.tests.test_utils import create_company, get_first_day_for_prev_month
+from hrms.tests.test_utils import create_agency, get_first_day_for_prev_month
 
 
 class TestMonthlyAttendanceSheet(IntegrationTestCase):
 	def setUp(self):
-		self.company = "_Test Company"
-		self.employee = make_employee("test_employee@example.com", company=self.company)
+		self.agency = "_Test Company"
+		self.employee = make_employee("test_employee@example.com", agency=self.agency)
 		frappe.db.delete("Attendance")
 
 		if not frappe.db.exists("Shift Type", "Day Shift"):
@@ -41,14 +41,14 @@ class TestMonthlyAttendanceSheet(IntegrationTestCase):
 		mark_attendance(self.employee, previous_month_first + relativedelta(days=1), "Present")
 		mark_attendance(self.employee, previous_month_first + relativedelta(days=2), "On Leave")
 
-		employee_on_leave_with_shift = make_employee("employee@leave.com", company=self.company)
+		employee_on_leave_with_shift = make_employee("employee@leave.com", agency=self.agency)
 		mark_attendance(employee_on_leave_with_shift, previous_month_first, "On Leave", "Day Shift")
 
 		filters = frappe._dict(
 			{
 				"month": previous_month_first.month,
 				"year": previous_month_first.year,
-				"company": self.company,
+				"agency": self.agency,
 			}
 		)
 		report = execute(filters=filters)
@@ -81,7 +81,7 @@ class TestMonthlyAttendanceSheet(IntegrationTestCase):
 			{
 				"month": previous_month_first.month,
 				"year": previous_month_first.year,
-				"company": self.company,
+				"agency": self.agency,
 			}
 		)
 		report = execute(filters=filters)
@@ -114,7 +114,7 @@ class TestMonthlyAttendanceSheet(IntegrationTestCase):
 			{
 				"month": previous_month_first.month,
 				"year": previous_month_first.year,
-				"company": self.company,
+				"agency": self.agency,
 			}
 		)
 		report = execute(filters=filters)
@@ -139,7 +139,7 @@ class TestMonthlyAttendanceSheet(IntegrationTestCase):
 			{
 				"month": previous_month_first.month,
 				"year": previous_month_first.year,
-				"company": self.company,
+				"agency": self.agency,
 			}
 		)
 		report = execute(filters=filters)
@@ -176,7 +176,7 @@ class TestMonthlyAttendanceSheet(IntegrationTestCase):
 			{
 				"month": previous_month_first.month,
 				"year": previous_month_first.year,
-				"company": self.company,
+				"agency": self.agency,
 				"summarized_view": 1,
 			}
 		)
@@ -209,7 +209,7 @@ class TestMonthlyAttendanceSheet(IntegrationTestCase):
 		mark_attendance(self.employee, previous_month_first + relativedelta(days=3), "Present")
 
 		departmentless_employee = make_employee(
-			"emp@departmentless.com", company=self.company, department=None
+			"emp@departmentless.com", agency=self.agency, department=None
 		)
 		mark_attendance(departmentless_employee, previous_month_first + relativedelta(days=3), "Present")
 
@@ -217,7 +217,7 @@ class TestMonthlyAttendanceSheet(IntegrationTestCase):
 			{
 				"month": previous_month_first.month,
 				"year": previous_month_first.year,
-				"company": self.company,
+				"agency": self.agency,
 				"group_by": "Department",
 			}
 		)
@@ -241,8 +241,8 @@ class TestMonthlyAttendanceSheet(IntegrationTestCase):
 	def test_attendance_with_employee_filter(self):
 		previous_month_first = get_first_day_for_prev_month()
 
-		employee2 = make_employee("test_employee2@example.com", company=self.company)
-		employee3 = make_employee("test_employee3@example.com", company=self.company)
+		employee2 = make_employee("test_employee2@example.com", agency=self.agency)
+		employee3 = make_employee("test_employee3@example.com", agency=self.agency)
 
 		# mark different attendance status on first 3 days of previous month for employee1
 		mark_attendance(self.employee, previous_month_first, "Absent")
@@ -263,7 +263,7 @@ class TestMonthlyAttendanceSheet(IntegrationTestCase):
 			{
 				"month": previous_month_first.month,
 				"year": previous_month_first.year,
-				"company": self.company,
+				"agency": self.agency,
 				"employee": self.employee,
 			}
 		)
@@ -284,14 +284,14 @@ class TestMonthlyAttendanceSheet(IntegrationTestCase):
 		self.assertEqual(present[1], 1)
 		self.assertEqual(leaves[2], 1)
 
-	def test_attendance_with_company_filter(self):
-		create_company("Test Parent Company", is_group=1)
-		create_company("Test Child Company", is_group=1, parent_company="Test Parent Company")
-		create_company("Test Grandchild Company", parent_company="Test Child Company")
+	def test_attendance_with_agency_filter(self):
+		create_agency("Test Parent Company", is_group=1)
+		create_agency("Test Child Company", is_group=1, parent_agency="Test Parent Company")
+		create_agency("Test Grandchild Company", parent_agency="Test Child Company")
 
-		employee1 = make_employee("test_employee@parent.com", company="Test Parent Company")
-		employee2 = make_employee("test_employee@child.com", company="Test Child Company")
-		employee3 = make_employee("test_employee@grandchild.com", company="Test Grandchild Company")
+		employee1 = make_employee("test_employee@parent.com", agency="Test Parent Company")
+		employee2 = make_employee("test_employee@child.com", agency="Test Child Company")
+		employee3 = make_employee("test_employee@grandchild.com", agency="Test Grandchild Company")
 
 		previous_month_first = get_first_day_for_prev_month()
 		mark_attendance(employee1, previous_month_first, "Present")
@@ -302,22 +302,22 @@ class TestMonthlyAttendanceSheet(IntegrationTestCase):
 			{
 				"month": previous_month_first.month,
 				"year": previous_month_first.year,
-				"company": "Test Parent Company",
-				"include_company_descendants": 1,
+				"agency": "Test Parent Company",
+				"include_agency_descendants": 1,
 			}
 		)
 		report = execute(filters=filters)
 		self.assertEqual(len(report[1]), 3)
 
-		filters.include_company_descendants = 0
+		filters.include_agency_descendants = 0
 		report = execute(filters=filters)
 		self.assertEqual(len(report[1]), 1)
 
 	def test_attendance_with_employee_filter_and_summarized_view(self):
 		previous_month_first = get_first_day_for_prev_month()
 
-		employee2 = make_employee("test_employee2@example.com", company=self.company)
-		employee3 = make_employee("test_employee3@example.com", company=self.company)
+		employee2 = make_employee("test_employee2@example.com", agency=self.agency)
+		employee3 = make_employee("test_employee3@example.com", agency=self.agency)
 
 		# mark different attendance status on first 3 days of previous month for employee1
 		mark_attendance(self.employee, previous_month_first, "Absent")
@@ -338,7 +338,7 @@ class TestMonthlyAttendanceSheet(IntegrationTestCase):
 			{
 				"month": previous_month_first.month,
 				"year": previous_month_first.year,
-				"company": self.company,
+				"agency": self.agency,
 				"employee": self.employee,
 				"summarized_view": 1,
 			}
@@ -372,7 +372,7 @@ class TestMonthlyAttendanceSheet(IntegrationTestCase):
 			{
 				"month": previous_month_first.month,
 				"year": previous_month_first.year,
-				"company": self.company,
+				"agency": self.agency,
 				"group_by": "Department",
 			}
 		)
@@ -395,5 +395,5 @@ def get_leave_application(employee):
 
 
 def execute_report_with_invalid_filters():
-	filters = frappe._dict({"company": "_Test Company", "group_by": "Department"})
+	filters = frappe._dict({"agency": "_Test Company", "group_by": "Department"})
 	execute(filters=filters)

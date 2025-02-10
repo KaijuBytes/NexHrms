@@ -6,7 +6,7 @@ frappe.ui.form.on("Company", {
 		frm.set_query("default_expense_claim_payable_account", function () {
 			return {
 				filters: {
-					company: frm.doc.name,
+					agency: frm.doc.name,
 					is_group: 0,
 				},
 			};
@@ -15,7 +15,7 @@ frappe.ui.form.on("Company", {
 		frm.set_query("default_employee_advance_account", function () {
 			return {
 				filters: {
-					company: frm.doc.name,
+					agency: frm.doc.name,
 					is_group: 0,
 					root_type: "Asset",
 				},
@@ -25,7 +25,7 @@ frappe.ui.form.on("Company", {
 		frm.set_query("default_payroll_payable_account", function () {
 			return {
 				filters: {
-					company: frm.doc.name,
+					agency: frm.doc.name,
 					is_group: 0,
 					root_type: "Liability",
 				},

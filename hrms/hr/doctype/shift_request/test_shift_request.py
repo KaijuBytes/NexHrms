@@ -92,14 +92,14 @@ class TestShiftRequest(IntegrationTestCase):
 	def test_overlap_for_request_without_to_date(self):
 		# shift should be Ongoing if Only from_date is present
 		user = "test_shift_request@example.com"
-		employee = make_employee(user, company="_Test Company", shift_request_approver=user)
+		employee = make_employee(user, agency="_Test Company", shift_request_approver=user)
 		setup_shift_type(shift_type="Day Shift")
 
 		shift_request = frappe.get_doc(
 			{
 				"doctype": "Shift Request",
 				"shift_type": "Day Shift",
-				"company": "_Test Company",
+				"agency": "_Test Company",
 				"employee": employee,
 				"from_date": nowdate(),
 				"approver": user,
@@ -111,7 +111,7 @@ class TestShiftRequest(IntegrationTestCase):
 			{
 				"doctype": "Shift Request",
 				"shift_type": "Day Shift",
-				"company": "_Test Company",
+				"agency": "_Test Company",
 				"employee": employee,
 				"from_date": add_days(nowdate(), 2),
 				"approver": user,
@@ -123,14 +123,14 @@ class TestShiftRequest(IntegrationTestCase):
 
 	def test_overlap_for_request_with_from_and_to_dates(self):
 		user = "test_shift_request@example.com"
-		employee = make_employee(user, company="_Test Company", shift_request_approver=user)
+		employee = make_employee(user, agency="_Test Company", shift_request_approver=user)
 		setup_shift_type(shift_type="Day Shift")
 
 		shift_request = frappe.get_doc(
 			{
 				"doctype": "Shift Request",
 				"shift_type": "Day Shift",
-				"company": "_Test Company",
+				"agency": "_Test Company",
 				"employee": employee,
 				"from_date": nowdate(),
 				"to_date": add_days(nowdate(), 30),
@@ -143,7 +143,7 @@ class TestShiftRequest(IntegrationTestCase):
 			{
 				"doctype": "Shift Request",
 				"shift_type": "Day Shift",
-				"company": "_Test Company",
+				"agency": "_Test Company",
 				"employee": employee,
 				"from_date": add_days(nowdate(), 10),
 				"to_date": add_days(nowdate(), 35),
@@ -156,7 +156,7 @@ class TestShiftRequest(IntegrationTestCase):
 
 	def test_overlapping_for_a_fixed_period_shift_and_ongoing_shift(self):
 		user = "test_shift_request@example.com"
-		employee = make_employee(user, company="_Test Company", shift_request_approver=user)
+		employee = make_employee(user, agency="_Test Company", shift_request_approver=user)
 
 		# shift setup for 8-12
 		shift_type = setup_shift_type(shift_type="Shift 1", start_time="08:00:00", end_time="12:00:00")
@@ -167,7 +167,7 @@ class TestShiftRequest(IntegrationTestCase):
 			{
 				"doctype": "Shift Request",
 				"shift_type": shift_type.name,
-				"company": "_Test Company",
+				"agency": "_Test Company",
 				"employee": employee,
 				"from_date": date,
 				"to_date": add_days(date, 30),
@@ -182,7 +182,7 @@ class TestShiftRequest(IntegrationTestCase):
 			{
 				"doctype": "Shift Request",
 				"shift_type": shift_type.name,
-				"company": "_Test Company",
+				"agency": "_Test Company",
 				"employee": employee,
 				"from_date": date,
 				"approver": user,
@@ -195,7 +195,7 @@ class TestShiftRequest(IntegrationTestCase):
 	@change_settings("HR Settings", {"allow_multiple_shift_assignments": 1})
 	def test_allow_non_overlapping_shift_requests_for_same_day(self):
 		user = "test_shift_request@example.com"
-		employee = make_employee(user, company="_Test Company", shift_request_approver=user)
+		employee = make_employee(user, agency="_Test Company", shift_request_approver=user)
 
 		# shift setup for 8-12
 		shift_type = setup_shift_type(shift_type="Shift 1", start_time="08:00:00", end_time="12:00:00")
@@ -206,7 +206,7 @@ class TestShiftRequest(IntegrationTestCase):
 			{
 				"doctype": "Shift Request",
 				"shift_type": shift_type.name,
-				"company": "_Test Company",
+				"agency": "_Test Company",
 				"employee": employee,
 				"from_date": date,
 				"to_date": add_days(date, 30),
@@ -221,7 +221,7 @@ class TestShiftRequest(IntegrationTestCase):
 			{
 				"doctype": "Shift Request",
 				"shift_type": shift_type.name,
-				"company": "_Test Company",
+				"agency": "_Test Company",
 				"employee": employee,
 				"from_date": date,
 				"approver": user,
@@ -254,7 +254,7 @@ def make_shift_request(
 		{
 			"doctype": "Shift Request",
 			"shift_type": "Day Shift",
-			"company": "_Test Company",
+			"agency": "_Test Company",
 			"employee": employee,
 			"employee_name": employee_name,
 			"from_date": from_date,

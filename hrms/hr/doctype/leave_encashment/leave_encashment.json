@@ -11,7 +11,7 @@
   "employee",
   "employee_name",
   "department",
-  "company",
+  "agency",
   "column_break_4",
   "leave_period",
   "leave_type",
@@ -139,8 +139,8 @@
    "fieldtype": "Column Break"
   },
   {
-   "fetch_from": "employee.company",
-   "fieldname": "company",
+   "fetch_from": "employee.agency",
+   "fieldname": "agency",
    "fieldtype": "Link",
    "label": "Company",
    "options": "Company",

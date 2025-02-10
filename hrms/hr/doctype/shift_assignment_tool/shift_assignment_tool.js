@@ -34,7 +34,7 @@ frappe.ui.form.on("Shift Assignment Tool", {
 		frm.trigger("get_employees");
 	},
 
-	company(frm) {
+	agency(frm) {
 		frm.trigger("get_employees");
 	},
 

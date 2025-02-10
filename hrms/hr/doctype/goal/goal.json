@@ -16,7 +16,7 @@
   "section_break_nf0j",
   "employee",
   "employee_name",
-  "company",
+  "agency",
   "user",
   "column_break_ahxr",
   "start_date",
@@ -203,8 +203,8 @@
    "fieldtype": "Column Break"
   },
   {
-   "fetch_from": "employee.company",
-   "fieldname": "company",
+   "fetch_from": "employee.agency",
+   "fieldname": "agency",
    "fieldtype": "Link",
    "label": "Company",
    "options": "Company",

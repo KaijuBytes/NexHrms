@@ -55,7 +55,7 @@ frappe.ui.form.on("Appraisal", {
 	add_custom_buttons(frm) {
 		frm.add_custom_button(__("View Goals"), function () {
 			frappe.route_options = {
-				company: frm.doc.company,
+				agency: frm.doc.agency,
 				employee: frm.doc.employee,
 				appraisal_cycle: frm.doc.appraisal_cycle,
 			};

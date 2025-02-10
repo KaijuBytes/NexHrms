@@ -10,7 +10,7 @@
   "training_program",
   "status",
   "column_break_3",
-  "company",
+  "agency",
   "section_break_5",
   "trainer_name",
   "trainer_email",
@@ -45,7 +45,7 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "company",
+   "fieldname": "agency",
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Company",

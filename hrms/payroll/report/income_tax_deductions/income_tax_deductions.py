@@ -12,14 +12,14 @@ Filters = frappe._dict
 
 
 def execute(filters: Filters = None) -> tuple:
-	is_indian_company = nex.get_region(filters.get("company")) == "India"
-	columns = get_columns(is_indian_company)
-	data = get_data(filters, is_indian_company)
+	is_indian_agency = nex.get_region(filters.get("agency")) == "India"
+	columns = get_columns(is_indian_agency)
+	data = get_data(filters, is_indian_agency)
 
 	return columns, data
 
 
-def get_columns(is_indian_company: bool) -> list[dict]:
+def get_columns(is_indian_agency: bool) -> list[dict]:
 	columns = [
 		{
 			"label": _("Employee"),
@@ -36,7 +36,7 @@ def get_columns(is_indian_company: bool) -> list[dict]:
 		},
 	]
 
-	if is_indian_company:
+	if is_indian_agency:
 		columns.append(
 			{"label": _("PAN Number"), "fieldname": "pan_number", "fieldtype": "Data", "width": 140}
 		)
@@ -63,11 +63,11 @@ def get_columns(is_indian_company: bool) -> list[dict]:
 	return columns
 
 
-def get_data(filters: Filters, is_indian_company: bool) -> list[dict]:
+def get_data(filters: Filters, is_indian_agency: bool) -> list[dict]:
 	data = []
 
 	employee_pan_dict = {}
-	if is_indian_company:
+	if is_indian_agency:
 		employee_pan_dict = frappe._dict(
 			frappe.get_all("Employee", fields=["name", "pan_number"], as_list=True)
 		)
@@ -84,7 +84,7 @@ def get_data(filters: Filters, is_indian_company: bool) -> list[dict]:
 			"gross_pay": d.gross_pay,
 		}
 
-		if is_indian_company:
+		if is_indian_agency:
 			employee["pan_number"] = employee_pan_dict.get(d.employee)
 
 		data.append(employee)
@@ -120,7 +120,7 @@ def get_income_tax_deductions(filters: Filters) -> list[dict]:
 		)
 	)
 
-	for field in ["department", "branch", "company"]:
+	for field in ["department", "branch", "agency"]:
 		if filters.get(field):
 			query = query.where(getattr(SalarySlip, field) == filters.get(field))
 

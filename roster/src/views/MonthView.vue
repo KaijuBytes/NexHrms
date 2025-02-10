@@ -45,7 +45,7 @@
 			:employeeFilters="employeeFilters"
 			:shiftFilters="shiftFilters"
 		/>
-		<div v-else class="py-40 text-center">Please select a company.</div>
+		<div v-else class="py-40 text-center">Please select a agency.</div>
 	</div>
 	<ShiftAssignmentDialog
 		v-model="showShiftAssignmentDialog"
@@ -68,7 +68,7 @@ import MonthViewHeader from "../components/MonthViewHeader.vue";
 import ShiftAssignmentDialog from "../components/ShiftAssignmentDialog.vue";
 
 export type EmployeeFilters = {
-	[K in "status" | "company" | "department" | "branch" | "designation"]?: string;
+	[K in "status" | "agency" | "department" | "branch" | "designation"]?: string;
 };
 export type ShiftFilters = {
 	[K in "shift_type" | "shift_location"]?: string;
@@ -99,7 +99,7 @@ const addToMonth = (change: number) => {
 };
 
 const updateFilters = (newFilters: EmployeeFilters & ShiftFilters) => {
-	isCompanySelected.value = !!newFilters.company;
+	isCompanySelected.value = !!newFilters.agency;
 	if (!isCompanySelected.value) return;
 	let employeeUpdated = false;
 	(Object.entries(newFilters) as [keyof EmployeeFilters | keyof ShiftFilters, string][]).forEach(

@@ -208,7 +208,7 @@ class SalaryStructure(Document):
 		income_tax_slab=None,
 	):
 		employees = self.get_employees(
-			company=self.company,
+			agency=self.agency,
 			grade=grade,
 			department=department,
 			designation=designation,
@@ -268,7 +268,7 @@ def assign_salary_structure_for_employees(
 			assignment = create_salary_structure_assignment(
 				employee,
 				salary_structure.name,
-				salary_structure.company,
+				salary_structure.agency,
 				salary_structure.currency,
 				from_date,
 				payroll_payable_account,
@@ -295,7 +295,7 @@ def assign_salary_structure_for_employees(
 def create_salary_structure_assignment(
 	employee,
 	salary_structure,
-	company,
+	agency,
 	currency,
 	from_date,
 	payroll_payable_account=None,
@@ -306,24 +306,24 @@ def create_salary_structure_assignment(
 	assignment = frappe.new_doc("Salary Structure Assignment")
 
 	if not payroll_payable_account:
-		payroll_payable_account = frappe.db.get_value("Company", company, "default_payroll_payable_account")
+		payroll_payable_account = frappe.db.get_value("Company", agency, "default_payroll_payable_account")
 		if not payroll_payable_account:
 			frappe.throw(_('Please set "Default Payroll Payable Account" in Company Defaults'))
 
 	payroll_payable_account_currency = frappe.db.get_value(
 		"Account", payroll_payable_account, "account_currency"
 	)
-	company_curency = nex.get_company_currency(company)
-	if payroll_payable_account_currency != currency and payroll_payable_account_currency != company_curency:
+	agency_curency = nex.get_agency_currency(agency)
+	if payroll_payable_account_currency != currency and payroll_payable_account_currency != agency_curency:
 		frappe.throw(
 			_("Invalid Payroll Payable Account. The account currency must be {0} or {1}").format(
-				currency, company_curency
+				currency, agency_curency
 			)
 		)
 
 	assignment.employee = employee
 	assignment.salary_structure = salary_structure
-	assignment.company = company
+	assignment.agency = agency
 	assignment.currency = currency
 	assignment.payroll_payable_account = payroll_payable_account
 	assignment.from_date = from_date
@@ -342,9 +342,9 @@ def get_existing_assignments(employees, salary_structure, from_date):
 		f"""
 		SELECT DISTINCT employee FROM `tabSalary Structure Assignment`
 		WHERE salary_structure=%s AND employee IN ({", ".join(["%s"] * len(employees))})
-		AND from_date=%s AND company=%s AND docstatus=1
+		AND from_date=%s AND agency=%s AND docstatus=1
 		""",
-		[salary_structure.name, *employees, from_date, salary_structure.company],
+		[salary_structure.name, *employees, from_date, salary_structure.agency],
 	)
 	if salary_structures_assignments:
 		frappe.msgprint(
@@ -428,7 +428,7 @@ def get_salary_component(doctype, txt, searchfield, start, page_len, filters):
 		frappe.qb.from_(sc)
 		.left_join(sca)
 		.on(sca.parent == sc.name)
-		.select(sc.name, sca.account, sca.company)
+		.select(sc.name, sca.account, sca.agency)
 		.where(
 			(sc.type == filters.get("component_type"))
 			& (sc.disabled == 0)
@@ -440,10 +440,10 @@ def get_salary_component(doctype, txt, searchfield, start, page_len, filters):
 
 	accounts = []
 	for component in salary_components:
-		if not component.company:
-			accounts.append((component.name, component.account, component.company))
+		if not component.agency:
+			accounts.append((component.name, component.account, component.agency))
 		else:
-			if component.company == filters["company"]:
-				accounts.append((component.name, component.account, component.company))
+			if component.agency == filters["agency"]:
+				accounts.append((component.name, component.account, component.agency))
 
 	return accounts

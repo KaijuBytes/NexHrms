@@ -22,7 +22,7 @@ def execute(filters=None):
 		row = [
 			advance.name,
 			advance.employee,
-			advance.company,
+			advance.agency,
 			advance.posting_date,
 			advance.advance_amount,
 			advance.paid_amount,
@@ -52,7 +52,7 @@ def get_columns():
 		},
 		{
 			"label": _("Company"),
-			"fieldname": "company",
+			"fieldname": "agency",
 			"fieldtype": "Link",
 			"options": "Company",
 			"width": 120,
@@ -80,8 +80,8 @@ def get_conditions(filters):
 
 	if filters.get("employee"):
 		conditions += "and employee = %(employee)s"
-	if filters.get("company"):
-		conditions += " and company = %(company)s"
+	if filters.get("agency"):
+		conditions += " and agency = %(agency)s"
 	if filters.get("status"):
 		conditions += " and status = %(status)s"
 	if filters.get("from_date"):
@@ -95,7 +95,7 @@ def get_conditions(filters):
 def get_advances(filters):
 	conditions = get_conditions(filters)
 	return frappe.db.sql(
-		"""select name, employee, paid_amount, status, advance_amount, claimed_amount, company,
+		"""select name, employee, paid_amount, status, advance_amount, claimed_amount, agency,
 		posting_date, purpose
 		from `tabEmployee Advance`
 		where docstatus<2 %s order by posting_date, name desc"""

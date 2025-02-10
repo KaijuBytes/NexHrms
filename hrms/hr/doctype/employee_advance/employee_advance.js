@@ -15,9 +15,9 @@ frappe.ui.form.on("Employee Advance", {
 			if (!frm.doc.employee) {
 				frappe.msgprint(__("Please select employee first"));
 			}
-			let company_currency = nex.get_currency(frm.doc.company);
-			let currencies = [company_currency];
-			if (frm.doc.currency && frm.doc.currency != company_currency) {
+			let agency_currency = nex.get_currency(frm.doc.agency);
+			let currencies = [agency_currency];
+			if (frm.doc.currency && frm.doc.currency != agency_currency) {
 				currencies.push(frm.doc.currency);
 			}
 
@@ -25,7 +25,7 @@ frappe.ui.form.on("Employee Advance", {
 				filters: {
 					root_type: "Asset",
 					is_group: 0,
-					company: frm.doc.company,
+					agency: frm.doc.agency,
 					account_currency: ["in", currencies],
 				},
 			};
@@ -133,7 +133,7 @@ frappe.ui.form.on("Employee Advance", {
 			method: "hrms.hr.doctype.expense_claim.expense_claim.get_expense_claim",
 			args: {
 				employee_name: frm.doc.employee,
-				company: frm.doc.company,
+				agency: frm.doc.agency,
 				employee_advance_name: frm.doc.name,
 				posting_date: frm.doc.posting_date,
 				paid_amount: frm.doc.paid_amount,
@@ -152,7 +152,7 @@ frappe.ui.form.on("Employee Advance", {
 			method: "hrms.hr.doctype.employee_advance.employee_advance.make_return_entry",
 			args: {
 				employee: frm.doc.employee,
-				company: frm.doc.company,
+				agency: frm.doc.agency,
 				employee_advance_name: frm.doc.name,
 				return_amount: flt(frm.doc.paid_amount - frm.doc.claimed_amount),
 				advance_account: frm.doc.advance_account,
@@ -178,7 +178,7 @@ frappe.ui.form.on("Employee Advance", {
 			"currency",
 			(r) => {
 				if (r.currency) frm.set_value("currency", r.currency);
-				else frm.set_value("currency", nex.get_currency(frm.doc.company));
+				else frm.set_value("currency", nex.get_currency(frm.doc.agency));
 				frm.refresh_fields();
 			},
 		);
@@ -187,14 +187,14 @@ frappe.ui.form.on("Employee Advance", {
 	currency: function (frm) {
 		if (frm.doc.currency) {
 			var from_currency = frm.doc.currency;
-			var company_currency;
-			if (!frm.doc.company) {
-				company_currency = nex.get_currency(frappe.defaults.get_default("Company"));
+			var agency_currency;
+			if (!frm.doc.agency) {
+				agency_currency = nex.get_currency(frappe.defaults.get_default("Company"));
 			} else {
-				company_currency = nex.get_currency(frm.doc.company);
+				agency_currency = nex.get_currency(frm.doc.agency);
 			}
-			if (from_currency != company_currency) {
-				frm.events.set_exchange_rate(frm, from_currency, company_currency);
+			if (from_currency != agency_currency) {
+				frm.events.set_exchange_rate(frm, from_currency, agency_currency);
 			} else {
 				frm.set_value("exchange_rate", 1.0);
 				frm.set_df_property("exchange_rate", "hidden", 1);
@@ -204,12 +204,12 @@ frappe.ui.form.on("Employee Advance", {
 		}
 	},
 
-	set_exchange_rate: function (frm, from_currency, company_currency) {
+	set_exchange_rate: function (frm, from_currency, agency_currency) {
 		frappe.call({
 			method: "nex.setup.utils.get_exchange_rate",
 			args: {
 				from_currency: from_currency,
-				to_currency: company_currency,
+				to_currency: agency_currency,
 			},
 			callback: function (r) {
 				frm.set_value("exchange_rate", flt(r.message));
@@ -217,7 +217,7 @@ frappe.ui.form.on("Employee Advance", {
 				frm.set_df_property(
 					"exchange_rate",
 					"description",
-					"1 " + frm.doc.currency + " = [?] " + company_currency,
+					"1 " + frm.doc.currency + " = [?] " + agency_currency,
 				);
 			},
 		});

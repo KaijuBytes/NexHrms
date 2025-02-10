@@ -106,7 +106,7 @@ class AttendanceRequest(Document):
 			doc.employee = self.employee
 			doc.attendance_date = date
 			doc.shift = self.shift
-			doc.company = self.company
+			doc.agency = self.agency
 			doc.attendance_request = self.name
 			doc.status = status
 			doc.insert(ignore_permissions=True)

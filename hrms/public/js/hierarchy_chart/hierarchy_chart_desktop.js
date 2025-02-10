@@ -76,23 +76,23 @@ hrms.HierarchyChart = class {
 
 	show() {
 		this.setup_actions();
-		if (this.page.main.find('[data-fieldname="company"]').length) return;
+		if (this.page.main.find('[data-fieldname="agency"]').length) return;
 		let me = this;
 
-		let company = this.page.add_field({
+		let agency = this.page.add_field({
 			fieldtype: "Link",
 			options: "Company",
-			fieldname: "company",
+			fieldname: "agency",
 			placeholder: __("Select Company"),
-			default: frappe.defaults.get_default("company"),
+			default: frappe.defaults.get_default("agency"),
 			only_select: true,
 			reqd: 1,
 			change: () => {
-				me.company = "";
+				me.agency = "";
 				$("#hierarchy-chart-wrapper").remove();
 
-				if (company.get_value()) {
-					me.company = company.get_value();
+				if (agency.get_value()) {
+					me.agency = agency.get_value();
 
 					// svg for connectors
 					me.make_svg_markers();
@@ -100,14 +100,14 @@ hrms.HierarchyChart = class {
 					me.render_root_nodes();
 					me.all_nodes_expanded = false;
 				} else {
-					frappe.throw(__("Please select a company first."));
+					frappe.throw(__("Please select a agency first."));
 				}
 			},
 		});
 
-		company.refresh();
-		$(`[data-fieldname="company"]`).trigger("change");
-		$(`[data-fieldname="company"] .link-field`).css("z-index", 2);
+		agency.refresh();
+		$(`[data-fieldname="agency"]`).trigger("change");
+		$(`[data-fieldname="agency"] .link-field`).css("z-index", 2);
 	}
 
 	setup_actions() {
@@ -223,7 +223,7 @@ hrms.HierarchyChart = class {
 			.call({
 				method: me.method,
 				args: {
-					company: me.company,
+					agency: me.agency,
 				},
 			})
 			.then((r) => {
@@ -295,8 +295,8 @@ hrms.HierarchyChart = class {
 	}
 
 	load_children(node, deep = false) {
-		if (!this.company) {
-			frappe.throw(__("Please select a company first."));
+		if (!this.agency) {
+			frappe.throw(__("Please select a agency first."));
 		}
 
 		if (!deep) {
@@ -324,7 +324,7 @@ hrms.HierarchyChart = class {
 					method: me.method,
 					args: {
 						parent: node_id,
-						company: me.company,
+						agency: me.agency,
 					},
 				})
 				.then((r) => resolve(r.message));
@@ -372,7 +372,7 @@ hrms.HierarchyChart = class {
 				method: "hrms.utils.hierarchy_chart.get_all_nodes",
 				args: {
 					method: me.method,
-					company: me.company,
+					agency: me.agency,
 				},
 				callback: (r) => {
 					resolve(r.message);

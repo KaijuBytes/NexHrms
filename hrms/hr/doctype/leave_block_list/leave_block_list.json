@@ -9,7 +9,7 @@
  "engine": "InnoDB",
  "field_order": [
   "leave_block_list_name",
-  "company",
+  "agency",
   "applies_to_all_departments",
   "column_break_4",
   "leave_type",
@@ -29,7 +29,7 @@
    "unique": 1
   },
   {
-   "fieldname": "company",
+   "fieldname": "agency",
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Company",

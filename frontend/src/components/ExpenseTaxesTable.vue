@@ -196,7 +196,7 @@ const taxesTableFields = createResource({
 			.map((field) => {
 				if (field.fieldname === "account_head") {
 					field.linkFilters = {
-						company: props.expenseClaim.company,
+						agency: props.expenseClaim.agency,
 						account_type: [
 							"in",
 							[

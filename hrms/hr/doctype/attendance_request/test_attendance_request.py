@@ -32,7 +32,7 @@ class TestAttendanceRequest(IntegrationTestCase):
 		frappe.db.set_value("Employee", self.employee.name, "holiday_list", self.holiday_list)
 
 	def test_attendance_request_overlap(self):
-		create_attendance_request(employee=self.employee.name, reason="On Duty", company="_Test Company")
+		create_attendance_request(employee=self.employee.name, reason="On Duty", agency="_Test Company")
 
 		today = getdate()
 		dateranges = [
@@ -46,7 +46,7 @@ class TestAttendanceRequest(IntegrationTestCase):
 				"doctype": "Attendance Request",
 				"employee": self.employee.name,
 				"reason": "On Duty",
-				"company": "_Test Company",
+				"agency": "_Test Company",
 			}
 		)
 
@@ -63,7 +63,7 @@ class TestAttendanceRequest(IntegrationTestCase):
 	def test_on_duty_attendance_request(self):
 		"Test creation of Attendance from Attendance Request, on duty."
 		attendance_request = create_attendance_request(
-			employee=self.employee.name, reason="On Duty", company="_Test Company"
+			employee=self.employee.name, reason="On Duty", agency="_Test Company"
 		)
 		records = self.get_attendance_records(attendance_request.name)
 
@@ -82,7 +82,7 @@ class TestAttendanceRequest(IntegrationTestCase):
 	def test_work_from_home_attendance_request(self):
 		"Test creation of Attendance from Attendance Request, work from home."
 		attendance_request = create_attendance_request(
-			employee=self.employee.name, reason="Work From Home", company="_Test Company"
+			employee=self.employee.name, reason="Work From Home", agency="_Test Company"
 		)
 		records = self.get_attendance_records(attendance_request.name)
 
@@ -97,7 +97,7 @@ class TestAttendanceRequest(IntegrationTestCase):
 		attendance_name = mark_attendance(self.employee.name, getdate(), "Absent")
 
 		attendance_request = create_attendance_request(
-			employee=self.employee.name, reason="Work From Home", company="_Test Company"
+			employee=self.employee.name, reason="Work From Home", agency="_Test Company"
 		)
 		prev_attendance = frappe.get_doc("Attendance", attendance_name)
 
@@ -110,7 +110,7 @@ class TestAttendanceRequest(IntegrationTestCase):
 		add_date_to_holiday_list(today, self.holiday_list)
 
 		attendance_request = create_attendance_request(
-			employee=self.employee.name, reason="On Duty", company="_Test Company"
+			employee=self.employee.name, reason="On Duty", agency="_Test Company"
 		)
 
 		records = self.get_attendance_records(attendance_request.name)
@@ -130,7 +130,7 @@ class TestAttendanceRequest(IntegrationTestCase):
 		make_leave_application(self.employee.name, today, today, leave_type.name)
 
 		attendance_request = create_attendance_request(
-			employee=self.employee.name, reason="On Duty", company="_Test Company"
+			employee=self.employee.name, reason="On Duty", agency="_Test Company"
 		)
 		records = self.get_attendance_records(attendance_request.name)
 
@@ -149,7 +149,7 @@ class TestAttendanceRequest(IntegrationTestCase):
 		attendance_request = create_attendance_request(
 			employee=self.employee.name,
 			reason="On Duty",
-			company="_Test Company",
+			agency="_Test Company",
 			include_holidays=1,  # Set include_holidays to True
 		)
 
@@ -184,7 +184,7 @@ def create_attendance_request(**args: dict) -> dict:
 			"from_date": add_days(today, -1),
 			"to_date": today,
 			"reason": "On Duty",
-			"company": "_Test Company",
+			"agency": "_Test Company",
 		}
 	)
 

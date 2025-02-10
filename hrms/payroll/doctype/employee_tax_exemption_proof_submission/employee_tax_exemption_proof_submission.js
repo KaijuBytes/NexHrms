@@ -12,10 +12,10 @@ frappe.ui.form.on("Employee Tax Exemption Proof Submission", {
 		});
 
 		frm.set_query("payroll_period", function () {
-			if (frm.doc.employee && frm.doc.company) {
+			if (frm.doc.employee && frm.doc.agency) {
 				return {
 					filters: {
-						company: frm.doc.company,
+						agency: frm.doc.agency,
 					},
 				};
 			} else {
@@ -39,7 +39,7 @@ frappe.ui.form.on("Employee Tax Exemption Proof Submission", {
 		if (frm.doc.docstatus === 0) {
 			let filters = {
 				docstatus: 1,
-				company: frm.doc.company,
+				agency: frm.doc.agency,
 			};
 			if (frm.doc.employee) filters["employee"] = frm.doc.employee;
 			if (frm.doc.payroll_period) filters["payroll_period"] = frm.doc.payroll_period;

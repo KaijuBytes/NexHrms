@@ -24,7 +24,7 @@ frappe.ui.form.on("Bulk Salary Structure Assignment", {
 		frm.trigger("get_employees");
 	},
 
-	async company(frm) {
+	async agency(frm) {
 		await frm.trigger("set_payroll_payable_account");
 		frm.trigger("get_employees");
 	},
@@ -59,7 +59,7 @@ frappe.ui.form.on("Bulk Salary Structure Assignment", {
 		frm.set_query("salary_structure", function () {
 			return {
 				filters: {
-					company: frm.doc.company,
+					agency: frm.doc.agency,
 					is_active: "Yes",
 					docstatus: 1,
 				},
@@ -68,7 +68,7 @@ frappe.ui.form.on("Bulk Salary Structure Assignment", {
 		frm.set_query("income_tax_slab", function () {
 			return {
 				filters: {
-					company: frm.doc.company,
+					agency: frm.doc.agency,
 					disabled: 0,
 					docstatus: 1,
 					currency: frm.doc.currency,
@@ -76,20 +76,20 @@ frappe.ui.form.on("Bulk Salary Structure Assignment", {
 			};
 		});
 		frm.set_query("payroll_payable_account", function () {
-			const company_currency = nex.get_currency(frm.doc.company);
+			const agency_currency = nex.get_currency(frm.doc.agency);
 			return {
 				filters: {
-					company: frm.doc.company,
+					agency: frm.doc.agency,
 					root_type: "Liability",
 					is_group: 0,
-					account_currency: ["in", [frm.doc.currency, company_currency]],
+					account_currency: ["in", [frm.doc.currency, agency_currency]],
 				},
 			};
 		});
 	},
 
 	set_payroll_payable_account(frm) {
-		frappe.db.get_value("Company", frm.doc.company, "default_payroll_payable_account", (r) => {
+		frappe.db.get_value("Company", frm.doc.agency, "default_payroll_payable_account", (r) => {
 			frm.set_value("payroll_payable_account", r.default_payroll_payable_account);
 		});
 	},

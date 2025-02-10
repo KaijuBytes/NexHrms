@@ -2,7 +2,7 @@
 // License: GNU General Public License v3. See license.txt
 
 frappe.provide("hrms.hr");
-frappe.provide("nex.accounts.dimensions");
+// frappe.provide("nex.accounts.dimensions");
 
 frappe.ui.form.on("Expense Claim", {
 	setup: function (frm) {
@@ -30,7 +30,7 @@ frappe.ui.form.on("Expense Claim", {
 		frm.set_query("account_head", "taxes", function () {
 			return {
 				filters: [
-					["company", "=", frm.doc.company],
+					["agency", "=", frm.doc.agency],
 					[
 						"account_type",
 						"in",
@@ -45,7 +45,7 @@ frappe.ui.form.on("Expense Claim", {
 				filters: {
 					report_type: "Balance Sheet",
 					account_type: "Payable",
-					company: frm.doc.company,
+					agency: frm.doc.agency,
 					is_group: 0,
 				},
 			};
@@ -68,29 +68,29 @@ frappe.ui.form.on("Expense Claim", {
 		frm.set_query("department", function () {
 			return {
 				filters: {
-					company: frm.doc.company,
+					agency: frm.doc.agency,
 				},
 			};
 		});
 	},
 
-	onload: function (frm) {
-		nex.accounts.dimensions.setup_dimension_filters(frm, frm.doctype);
+	// onload: function (frm) {
+	// 	nex.accounts.dimensions.setup_dimension_filters(frm, frm.doctype);
 
-		if (frm.doc.docstatus == 0) {
-			return frappe.call({
-				method: "hrms.hr.doctype.leave_application.leave_application.get_mandatory_approval",
-				args: {
-					doctype: frm.doc.doctype,
-				},
-				callback: function (r) {
-					if (!r.exc && r.message) {
-						frm.toggle_reqd("expense_approver", true);
-					}
-				},
-			});
-		}
-	},
+	// 	if (frm.doc.docstatus == 0) {
+	// 		return frappe.call({
+	// 			method: "hrms.hr.doctype.leave_application.leave_application.get_mandatory_approval",
+	// 			args: {
+	// 				doctype: frm.doc.doctype,
+	// 			},
+	// 			callback: function (r) {
+	// 				if (!r.exc && r.message) {
+	// 					frm.toggle_reqd("expense_approver", true);
+	// 				}
+	// 			},
+	// 		});
+	// 	}
+	// },
 
 	refresh: function (frm) {
 		frm.trigger("toggle_fields");
@@ -122,7 +122,7 @@ frappe.ui.form.on("Expense Claim", {
 				function () {
 					frappe.route_options = {
 						voucher_no: frm.doc.name,
-						company: frm.doc.company,
+						agency: frm.doc.agency,
 						from_date: frm.doc.posting_date,
 						to_date: moment(frm.doc.modified).format("YYYY-MM-DD"),
 						group_by: "",
@@ -157,7 +157,7 @@ frappe.ui.form.on("Expense Claim", {
 						frappe.route_options = {
 							party_type: "Employee",
 							party: frm.doc.employee,
-							company: frm.doc.company,
+							agency: frm.doc.agency,
 						};
 						frappe.set_route("List", entry_doctype);
 					},
@@ -231,8 +231,8 @@ frappe.ui.form.on("Expense Claim", {
 		});
 	},
 
-	company: function (frm) {
-		nex.accounts.dimensions.update_dimension(frm, frm.doctype);
+	agency: function (frm) {
+		// nex.accounts.dimensions.update_dimension(frm, frm.doctype);
 		var expenses = frm.doc.expenses;
 		for (var i = 0; i < expenses.length; i++) {
 			var expense = expenses[i];
@@ -243,7 +243,7 @@ frappe.ui.form.on("Expense Claim", {
 				method: "hrms.hr.doctype.expense_claim.expense_claim.get_expense_claim_account_and_cost_center",
 				args: {
 					expense_claim_type: expense.expense_type,
-					company: frm.doc.company,
+					agency: frm.doc.agency,
 				},
 				callback: function (r) {
 					if (r.message) {
@@ -335,7 +335,7 @@ frappe.ui.form.on("Expense Claim", {
 frappe.ui.form.on("Expense Claim Detail", {
 	expense_type: function (frm, cdt, cdn) {
 		var d = locals[cdt][cdn];
-		if (!frm.doc.company) {
+		if (!frm.doc.agency) {
 			d.expense_type = "";
 			frappe.msgprint(__("Please set the Company"));
 			this.frm.refresh_fields();
@@ -349,7 +349,7 @@ frappe.ui.form.on("Expense Claim Detail", {
 			method: "hrms.hr.doctype.expense_claim.expense_claim.get_expense_claim_account_and_cost_center",
 			args: {
 				expense_claim_type: d.expense_type,
-				company: frm.doc.company,
+				agency: frm.doc.agency,
 			},
 			callback: function (r) {
 				if (r.message) {

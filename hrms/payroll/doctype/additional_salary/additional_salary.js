@@ -12,7 +12,7 @@ frappe.ui.form.on("Additional Salary", {
 		frm.set_query("employee", function () {
 			return {
 				filters: {
-					company: frm.doc.company,
+					agency: frm.doc.agency,
 					status: ["!=", "Inactive"],
 				},
 			};
@@ -29,39 +29,39 @@ frappe.ui.form.on("Additional Salary", {
 		if (frm.doc.employee) {
 			frappe.run_serially([
 				() => frm.trigger("get_employee_currency"),
-				() => frm.trigger("set_company"),
+				() => frm.trigger("set_agency"),
 			]);
 		} else {
-			frm.set_value("company", null);
+			frm.set_value("agency", null);
 		}
 	},
 
-	set_company: function (frm) {
+	set_agency: function (frm) {
 		frappe.call({
 			method: "frappe.client.get_value",
 			args: {
 				doctype: "Employee",
-				fieldname: "company",
+				fieldname: "agency",
 				filters: {
 					name: frm.doc.employee,
 				},
 			},
 			callback: function (data) {
 				if (data.message) {
-					frm.set_value("company", data.message.company);
+					frm.set_value("agency", data.message.agency);
 				}
 			},
 		});
 	},
 
-	company: function (frm) {
+	agency: function (frm) {
 		frm.set_value("type", "");
 		frm.trigger("set_component_query");
 	},
 
 	set_component_query: function (frm) {
-		if (!frm.doc.company) return;
-		let filters = { company: frm.doc.company };
+		if (!frm.doc.agency) return;
+		let filters = { agency: frm.doc.agency };
 		if (frm.doc.type) {
 			filters.type = frm.doc.type;
 		}

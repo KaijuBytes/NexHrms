@@ -12,7 +12,7 @@
   "to_date",
   "is_active",
   "column_break_3",
-  "company",
+  "agency",
   "optional_holiday_list"
  ],
  "fields": [
@@ -41,7 +41,7 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "company",
+   "fieldname": "agency",
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Company",
@@ -100,7 +100,7 @@
    "write": 1
   }
  ],
- "search_fields": "from_date, to_date, company",
+ "search_fields": "from_date, to_date, agency",
  "sort_field": "creation",
  "sort_order": "DESC",
  "states": [],

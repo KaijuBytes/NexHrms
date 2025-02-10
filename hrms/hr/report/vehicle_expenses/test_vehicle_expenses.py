@@ -6,7 +6,7 @@ import frappe
 from frappe.tests import IntegrationTestCase
 from frappe.utils import getdate
 
-from nex.accounts.utils import get_fiscal_year
+# from nex.accounts.utils import get_fiscal_year
 from nex.setup.doctype.employee.test_employee import make_employee
 
 from hrms.hr.doctype.vehicle_log.test_vehicle_log import get_vehicle, make_vehicle_log
@@ -23,7 +23,7 @@ class TestVehicleExpenses(IntegrationTestCase):
 		employee_id = frappe.db.sql("""select name from `tabEmployee` where name='testdriver@example.com'""")
 		self.employee_id = employee_id[0][0] if employee_id else None
 		if not self.employee_id:
-			self.employee_id = make_employee("testdriver@example.com", company="_Test Company")
+			self.employee_id = make_employee("testdriver@example.com", agency="_Test Company")
 
 		self.license_plate = get_vehicle(self.employee_id)
 

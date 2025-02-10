@@ -239,7 +239,7 @@ $.extend(hrms, {
 			() => {
 				const doc = frappe.model.get_new_doc("Shift Assignment Tool");
 				doc.action = action;
-				doc.company = frappe.defaults.get_default("company");
+				doc.agency = frappe.defaults.get_default("agency");
 				doc.status = "Active";
 				frappe.set_route("Form", "Shift Assignment Tool", doc.name);
 			},
@@ -261,7 +261,7 @@ $.extend(hrms, {
 			() => {
 				const doc = frappe.model.get_new_doc("Shift Assignment Tool");
 				Object.assign(doc, fields);
-				doc.company = frappe.defaults.get_default("company");
+				doc.agency = frappe.defaults.get_default("agency");
 				doc.status = "Active";
 				frappe.set_route("Form", "Shift Assignment Tool", doc.name);
 			},

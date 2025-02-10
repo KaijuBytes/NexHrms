@@ -20,7 +20,7 @@ from frappe.utils import (
 	nowdate,
 )
 
-from nex.buying.doctype.supplier_scorecard.supplier_scorecard import daterange
+# from nex.buying.doctype.supplier_scorecard.supplier_scorecard import daterange
 from nex.setup.doctype.employee.employee import get_holiday_list_for_employee
 
 import hrms
@@ -246,33 +246,33 @@ class LeaveApplication(Document, PWANotificationsMixin):
 				).format(formatdate(future_allocation[0].from_date), future_allocation[0].name)
 			)
 
-	def update_attendance(self):
-		if self.status != "Approved":
-			return
+	# def update_attendance(self):
+	# 	if self.status != "Approved":
+	# 		return
 
-		holiday_dates = []
-		if not frappe.db.get_value("Leave Type", self.leave_type, "include_holiday"):
-			holiday_dates = get_holiday_dates_for_employee(self.employee, self.from_date, self.to_date)
+	# 	holiday_dates = []
+	# 	if not frappe.db.get_value("Leave Type", self.leave_type, "include_holiday"):
+	# 		holiday_dates = get_holiday_dates_for_employee(self.employee, self.from_date, self.to_date)
 
-		for dt in daterange(getdate(self.from_date), getdate(self.to_date)):
-			date = dt.strftime("%Y-%m-%d")
-			attendance_name = frappe.db.exists(
-				"Attendance", dict(employee=self.employee, attendance_date=date, docstatus=("!=", 2))
-			)
+	# 	for dt in daterange(getdate(self.from_date), getdate(self.to_date)):
+	# 		date = dt.strftime("%Y-%m-%d")
+	# 		attendance_name = frappe.db.exists(
+	# 			"Attendance", dict(employee=self.employee, attendance_date=date, docstatus=("!=", 2))
+	# 		)
 
-			# don't mark attendance for holidays
-			# if leave type does not include holidays within leaves as leaves
-			if date in holiday_dates:
-				if attendance_name:
-					# cancel and delete existing attendance for holidays
-					attendance = frappe.get_doc("Attendance", attendance_name)
-					attendance.flags.ignore_permissions = True
-					if attendance.docstatus == 1:
-						attendance.cancel()
-					frappe.delete_doc("Attendance", attendance_name, force=1)
-				continue
+	# 		# don't mark attendance for holidays
+	# 		# if leave type does not include holidays within leaves as leaves
+	# 		if date in holiday_dates:
+	# 			if attendance_name:
+	# 				# cancel and delete existing attendance for holidays
+	# 				attendance = frappe.get_doc("Attendance", attendance_name)
+	# 				attendance.flags.ignore_permissions = True
+	# 				if attendance.docstatus == 1:
+	# 					attendance.cancel()
+	# 				frappe.delete_doc("Attendance", attendance_name, force=1)
+	# 			continue
 
-			self.create_or_update_attendance(attendance_name, date)
+	# 		self.create_or_update_attendance(attendance_name, date)
 
 	def create_or_update_attendance(self, attendance_name, date):
 		status = (
@@ -289,7 +289,7 @@ class LeaveApplication(Document, PWANotificationsMixin):
 			doc.employee = self.employee
 			doc.employee_name = self.employee_name
 			doc.attendance_date = date
-			doc.company = self.company
+			doc.agency = self.agency
 			doc.leave_type = self.leave_type
 			doc.leave_application = self.name
 			doc.status = status
@@ -334,7 +334,7 @@ class LeaveApplication(Document, PWANotificationsMixin):
 			self.from_date,
 			self.to_date,
 			self.employee,
-			self.company,
+			self.agency,
 			all_lists=True,
 			leave_type=self.leave_type,
 		)
@@ -346,7 +346,7 @@ class LeaveApplication(Document, PWANotificationsMixin):
 
 	def validate_block_days(self):
 		block_dates = get_applicable_block_dates(
-			self.from_date, self.to_date, self.employee, self.company, leave_type=self.leave_type
+			self.from_date, self.to_date, self.employee, self.agency, leave_type=self.leave_type
 		)
 
 		if block_dates and self.status == "Approved":
@@ -561,7 +561,7 @@ class LeaveApplication(Document, PWANotificationsMixin):
 			)
 
 	def validate_optional_leave(self):
-		leave_period = get_leave_period(self.from_date, self.to_date, self.company)
+		leave_period = get_leave_period(self.from_date, self.to_date, self.agency)
 		if not leave_period:
 			frappe.throw(_("Cannot find active Leave Period"))
 		optional_holiday_list = frappe.db.get_value(
@@ -1207,30 +1207,30 @@ def get_events(start, end, filters=None):
 	events = []
 
 	employee = frappe.db.get_value(
-		"Employee", filters={"user_id": frappe.session.user}, fieldname=["name", "company"], as_dict=True
+		"Employee", filters={"user_id": frappe.session.user}, fieldname=["name", "agency"], as_dict=True
 	)
 
 	if employee:
-		employee, company = employee.name, employee.company
+		employee, agency = employee.name, employee.agency
 	else:
 		employee = ""
-		company = frappe.db.get_value("Global Defaults", None, "default_company")
+		agency = frappe.db.get_value("Global Defaults", None, "default_agency")
 
 	# show department leaves for employee
 	if "Employee" in frappe.get_roles():
-		add_department_leaves(events, start, end, employee, company)
+		add_department_leaves(events, start, end, employee, agency)
 
 	add_leaves(events, start, end, filters)
-	add_block_dates(events, start, end, employee, company)
-	add_holidays(events, start, end, employee, company)
+	add_block_dates(events, start, end, employee, agency)
+	add_holidays(events, start, end, employee, agency)
 
 	return events
 
 
-def add_department_leaves(events, start, end, employee, company):
+def add_department_leaves(events, start, end, employee, agency):
 	if department := frappe.db.get_value("Employee", employee, "department"):
 		department_employees = frappe.get_list(
-			"Employee", filters={"department": department, "company": company}, pluck="name"
+			"Employee", filters={"department": department, "agency": agency}, pluck="name"
 		)
 		filters = [["employee", "in", department_employees]]
 		add_leaves(events, start, end, filters=filters)
@@ -1276,9 +1276,9 @@ def add_leaves(events, start, end, filters=None):
 			events.append(d)
 
 
-def add_block_dates(events, start, end, employee, company):
+def add_block_dates(events, start, end, employee, agency):
 	cnt = 0
-	block_dates = get_applicable_block_dates(start, end, employee, company, all_lists=True)
+	block_dates = get_applicable_block_dates(start, end, employee, agency, all_lists=True)
 
 	for block_date in block_dates:
 		events.append(
@@ -1294,8 +1294,8 @@ def add_block_dates(events, start, end, employee, company):
 		cnt += 1
 
 
-def add_holidays(events, start, end, employee, company):
-	applicable_holiday_list = get_holiday_list_for_employee(employee, company)
+def add_holidays(events, start, end, employee, agency):
+	applicable_holiday_list = get_holiday_list_for_employee(employee, agency)
 	if not applicable_holiday_list:
 		return
 

@@ -10,7 +10,7 @@ from hrms.hr.doctype.employee_performance_feedback.test_employee_performance_fee
 	create_performance_feedback,
 )
 from hrms.hr.report.appraisal_overview.appraisal_overview import execute
-from hrms.tests.test_utils import create_company
+from hrms.tests.test_utils import create_agency
 
 
 class TestAppraisalOverview(IntegrationTestCase):
@@ -18,7 +18,7 @@ class TestAppraisalOverview(IntegrationTestCase):
 		frappe.db.delete("Goal")
 		frappe.db.delete("Appraisal")
 
-		self.company = create_company("_Test Appraisal").name
+		self.agency = create_agency("_Test Appraisal").name
 
 		engineer = create_designation(designation_name="Engineer")
 		engineer.appraisal_template = create_appraisal_template().name
@@ -28,11 +28,11 @@ class TestAppraisalOverview(IntegrationTestCase):
 		consultant.appraisal_template = create_appraisal_template("Consultant").name
 		consultant.save()
 
-		self.employee1 = make_employee("employee1@example.com", company=self.company, designation="Engineer")
+		self.employee1 = make_employee("employee1@example.com", agency=self.agency, designation="Engineer")
 		self.employee2 = make_employee(
-			"employee3@example.com", company=self.company, designation="Consultant"
+			"employee3@example.com", agency=self.agency, designation="Consultant"
 		)
-		self.reviewer = make_employee("reviewer@example.com", company=self.company, designation="Engineer")
+		self.reviewer = make_employee("reviewer@example.com", agency=self.agency, designation="Engineer")
 
 	def test_appraisal_overview(self):
 		cycle = create_appraisal_cycle(kra_evaluation_method="Manual Rating")

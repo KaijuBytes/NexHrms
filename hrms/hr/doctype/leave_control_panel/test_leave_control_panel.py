@@ -12,15 +12,15 @@ from hrms.hr.doctype.leave_allocation.test_leave_allocation import create_leave_
 from hrms.hr.doctype.leave_control_panel.leave_control_panel import LeaveControlPanel
 from hrms.hr.doctype.leave_period.test_leave_period import create_leave_period
 from hrms.hr.doctype.leave_policy.test_leave_policy import create_leave_policy
-from hrms.tests.test_utils import create_company
+from hrms.tests.test_utils import create_agency
 
 
 class TestLeaveControlPanel(IntegrationTestCase):
 	@classmethod
 	def setUpClass(self):
-		create_company()
+		create_agency()
 		super().setUpClass()
-		frappe.db.delete("Employee", {"company": "_Test Company"})
+		frappe.db.delete("Employee", {"agency": "_Test Company"})
 
 		self.create_records()
 
@@ -36,19 +36,19 @@ class TestLeaveControlPanel(IntegrationTestCase):
 
 		self.emp1 = make_employee(
 			"employee1@example.com",
-			company="_Test Company",
+			agency="_Test Company",
 		)
 		self.emp2 = make_employee(
 			"employee2@example.com",
-			company="_Test Company",
+			agency="_Test Company",
 		)
 		self.emp3 = make_employee(
 			"employee3@example.com",
-			company="_Test Company",
+			agency="_Test Company",
 		)
 		self.emp4 = make_employee(
 			"employee4@example.com",
-			company="_Test Company",
+			agency="_Test Company",
 			date_of_joining=date(2030, 1, 5),
 		)
 
@@ -134,7 +134,7 @@ class TestLeaveControlPanel(IntegrationTestCase):
 
 		args = {
 			"doctype": "Leave Control Panel",
-			"company": "_Test Company",
+			"agency": "_Test Company",
 			"dates_based_on": "Leave Period",
 			"leave_period": self.leave_period.name,
 			"allocate_based_on_leave_policy": 1,

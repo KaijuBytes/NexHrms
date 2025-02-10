@@ -94,8 +94,8 @@ def send_birthday_reminders():
 	sender = get_sender_email()
 	employees_born_today = get_employees_who_are_born_today()
 
-	for company, birthday_persons in employees_born_today.items():
-		employee_emails = get_all_employee_emails(company)
+	for agency, birthday_persons in employees_born_today.items():
+		employee_emails = get_all_employee_emails(agency)
 		birthday_person_emails = [get_employee_email(doc) for doc in birthday_persons]
 		recipients = list(set(employee_emails) - set(birthday_person_emails))
 
@@ -105,7 +105,7 @@ def send_birthday_reminders():
 		if len(birthday_persons) > 1:
 			# special email for people sharing birthdays
 			for person in birthday_persons:
-				person_email = person["user_id"] or person["personal_email"] or person["company_email"]
+				person_email = person["user_id"] or person["personal_email"] or person["agency_email"]
 				others = [d for d in birthday_persons if d != person]
 				reminder_text, message = get_birthday_reminder_text_and_message(others)
 				send_birthday_reminder(person_email, reminder_text, others, message, sender)
@@ -143,13 +143,13 @@ def send_birthday_reminder(recipients, reminder_text, birthday_persons, message,
 
 
 def get_employees_who_are_born_today():
-	"""Get all employee born today & group them based on their company"""
+	"""Get all employee born today & group them based on their agency"""
 	return get_employees_having_an_event_today("birthday")
 
 
 def get_employees_having_an_event_today(event_type):
 	"""Get all employee who have `event_type` today
-	& group them based on their company. `event_type`
+	& group them based on their agency. `event_type`
 	can be `birthday` or `work_anniversary`"""
 
 	from collections import defaultdict
@@ -165,7 +165,7 @@ def get_employees_having_an_event_today(event_type):
 	employees_born_today = frappe.db.multisql(
 		{
 			"mariadb": f"""
-			SELECT `personal_email`, `company`, `company_email`, `user_id`, `employee_name` AS 'name', `image`, `date_of_joining`
+			SELECT `personal_email`, `agency`, `agency_email`, `user_id`, `employee_name` AS 'name', `image`, `date_of_joining`
 			FROM `tabEmployee`
 			WHERE
 				DAY({condition_column}) = DAY(%(today)s)
@@ -177,7 +177,7 @@ def get_employees_having_an_event_today(event_type):
 				`status` = 'Active'
 		""",
 			"postgres": f"""
-			SELECT "personal_email", "company", "company_email", "user_id", "employee_name" AS 'name', "image"
+			SELECT "personal_email", "agency", "agency_email", "user_id", "employee_name" AS 'name', "image"
 			FROM "tabEmployee"
 			WHERE
 				DATE_PART('day', {condition_column}) = date_part('day', %(today)s)
@@ -196,7 +196,7 @@ def get_employees_having_an_event_today(event_type):
 	grouped_employees = defaultdict(lambda: [])
 
 	for employee_doc in employees_born_today:
-		grouped_employees[employee_doc.get("company")].append(employee_doc)
+		grouped_employees[employee_doc.get("agency")].append(employee_doc)
 
 	return grouped_employees
 
@@ -217,8 +217,8 @@ def send_work_anniversary_reminders():
 	message += "<br>"
 	message += _("Everyone, let’s congratulate them on their work anniversary!")
 
-	for company, anniversary_persons in employees_joined_today.items():
-		employee_emails = get_all_employee_emails(company)
+	for agency, anniversary_persons in employees_joined_today.items():
+		employee_emails = get_all_employee_emails(agency)
 		anniversary_person_emails = [get_employee_email(doc) for doc in anniversary_persons]
 		recipients = list(set(employee_emails) - set(anniversary_person_emails))
 
@@ -228,7 +228,7 @@ def send_work_anniversary_reminders():
 		if len(anniversary_persons) > 1:
 			# email for people sharing work anniversaries
 			for person in anniversary_persons:
-				person_email = person["user_id"] or person["personal_email"] or person["company_email"]
+				person_email = person["user_id"] or person["personal_email"] or person["agency_email"]
 				others = [d for d in anniversary_persons if d != person]
 				reminder_text = get_work_anniversary_reminder_text(others)
 				send_work_anniversary_reminder(person_email, reminder_text, others, message, sender)
@@ -245,7 +245,7 @@ def get_work_anniversary_reminder_text(anniversary_persons: list) -> str:
 	names_grouped_by_years = {}
 
 	for person in anniversary_persons:
-		# Number of years completed at the company
+		# Number of years completed at the agency
 		completed_years = getdate().year - person["date_of_joining"].year
 		names_grouped_by_years.setdefault(completed_years, []).append(person["name"])
 

@@ -142,7 +142,7 @@ class TestInterview(IntegrationTestCase):
 		interview = create_interview_and_dependencies(job_applicant.name)
 		make_employee(
 			"test_interviewer2@example.com",
-			company="_Test Company",
+			agency="_Test Company",
 			first_name="Test",
 			date_of_joining=frappe.utils.add_years(getdate(), -2),
 			designation="Engineer",

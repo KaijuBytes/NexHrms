@@ -17,7 +17,7 @@
   "employee_name",
   "cell_number",
   "prefered_email",
-  "company",
+  "agency",
   "column_break_7",
   "date_of_birth",
   "personal_id_type",
@@ -215,8 +215,8 @@
    "fieldtype": "Column Break"
   },
   {
-   "fetch_from": "employee.company",
-   "fieldname": "company",
+   "fetch_from": "employee.agency",
+   "fieldname": "agency",
    "fieldtype": "Link",
    "label": "Company",
    "options": "Company",

@@ -37,12 +37,12 @@ const props = defineProps({
 const employeeAdvance = ref({
 	employee: employee.data.name,
 	employee_name: employee.data.employee_name,
-	company: employee.data.company,
+	agency: employee.data.agency,
 	department: employee.data.department,
 })
 
-const companyCurrency = computed(() =>
-	getCompanyCurrency(employeeAdvance.value.company)
+const agencyCurrency = computed(() =>
+	getCompanyCurrency(employeeAdvance.value.agency)
 )
 
 // get form fields
@@ -78,7 +78,7 @@ const exchangeRate = createResource({
 
 const advanceAccount = createResource({
 	url: "hrms.api.get_advance_account",
-	params: { company: employeeAdvance.value.company },
+	params: { agency: employeeAdvance.value.agency },
 	onSuccess(data) {
 		employeeAdvance.value.advance_account = data
 	},
@@ -99,7 +99,7 @@ function getFilteredFields(fields) {
 		"employee",
 		"employee_name",
 		"department",
-		"company",
+		"agency",
 		"more_info_section",
 		"pending_amount",
 	]
@@ -113,11 +113,11 @@ function applyFilters(fields) {
 	return fields.map((field) => {
 		if (field.fieldname === "advance_account") {
 			let currencies = [employeeAdvance.value.currency]
-			if (employeeAdvance.value.currency != companyCurrency.value)
-				currencies.push(companyCurrency.value)
+			if (employeeAdvance.value.currency != agencyCurrency.value)
+				currencies.push(agencyCurrency.value)
 
 			field.linkFilters = {
-				company: employeeAdvance.value.company,
+				agency: employeeAdvance.value.agency,
 				is_group: 0,
 				root_type: "Asset",
 				account_currency: ("in", currencies),
@@ -134,13 +134,13 @@ function setExchangeRate() {
 		(field) => field.fieldname === "exchange_rate"
 	)
 
-	if (employeeAdvance.value.currency === companyCurrency.value) {
+	if (employeeAdvance.value.currency === agencyCurrency.value) {
 		employeeAdvance.value.exchange_rate = 1
 		exchange_rate_field.hidden = 1
 	} else {
 		exchangeRate.fetch({
 			from_currency: employeeAdvance.value.currency,
-			to_currency: companyCurrency.value,
+			to_currency: agencyCurrency.value,
 		})
 		exchange_rate_field.hidden = 0
 	}

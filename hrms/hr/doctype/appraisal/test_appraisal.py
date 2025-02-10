@@ -14,7 +14,7 @@ from hrms.hr.doctype.employee_performance_feedback.test_employee_performance_fee
 	create_performance_feedback,
 )
 from hrms.hr.doctype.goal.test_goal import create_goal
-from hrms.tests.test_utils import create_company
+from hrms.tests.test_utils import create_agency
 
 
 class TestAppraisal(IntegrationTestCase):
@@ -23,14 +23,14 @@ class TestAppraisal(IntegrationTestCase):
 		frappe.db.delete("Appraisal")
 		frappe.db.delete("Employee Performance Feedback")
 
-		self.company = create_company("_Test Appraisal").name
+		self.agency = create_agency("_Test Appraisal").name
 		self.template = create_appraisal_template()
 
 		engineer = create_designation(designation_name="Engineer")
 		engineer.appraisal_template = self.template.name
 		engineer.save()
 
-		self.employee1 = make_employee("employee1@example.com", company=self.company, designation="Engineer")
+		self.employee1 = make_employee("employee1@example.com", agency=self.agency, designation="Engineer")
 
 	def test_validate_duplicate(self):
 		cycle = create_appraisal_cycle(designation="Engineer")
@@ -298,7 +298,7 @@ class TestAppraisal(IntegrationTestCase):
 		self.assertRaises(frappe.ValidationError, appraisal.insert)
 
 	def test_cycle_summary(self):
-		employee2 = make_employee("employee2@example.com", company=self.company, designation="Engineer")
+		employee2 = make_employee("employee2@example.com", agency=self.agency, designation="Engineer")
 
 		cycle = create_appraisal_cycle(designation="Engineer")
 		cycle.create_appraisals()

@@ -44,7 +44,7 @@ frappe.query_reports["Leave Ledger"] = {
 		},
 		{
 			label: __("Company"),
-			fieldname: "company",
+			fieldname: "agency",
 			fieldtype: "Link",
 			options: "Company",
 			default: frappe.defaults.get_user_default("Company"),
@@ -90,7 +90,7 @@ frappe.query_reports["Leave Ledger"] = {
 			args: {
 				from_date: today,
 				to_date: today,
-				company: frappe.defaults.get_user_default("Company"),
+				agency: frappe.defaults.get_user_default("Company"),
 			},
 			freeze: true,
 			callback: (data) => {

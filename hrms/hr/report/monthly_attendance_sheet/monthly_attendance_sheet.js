@@ -36,16 +36,16 @@ frappe.query_reports["Monthly Attendance Sheet"] = {
 			fieldtype: "Link",
 			options: "Employee",
 			get_query: () => {
-				var company = frappe.query_report.get_filter_value("company");
+				var agency = frappe.query_report.get_filter_value("agency");
 				return {
 					filters: {
-						company: company,
+						agency: agency,
 					},
 				};
 			},
 		},
 		{
-			fieldname: "company",
+			fieldname: "agency",
 			label: __("Company"),
 			fieldtype: "Link",
 			options: "Company",
@@ -59,7 +59,7 @@ frappe.query_reports["Monthly Attendance Sheet"] = {
 			options: ["", "Branch", "Grade", "Department", "Designation"],
 		},
 		{
-			fieldname: "include_company_descendants",
+			fieldname: "include_agency_descendants",
 			label: __("Include Company Descendants"),
 			fieldtype: "Check",
 			default: 1,

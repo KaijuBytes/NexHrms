@@ -143,7 +143,7 @@ def get_employees(filters: Filters) -> list[dict]:
 		Employee.department,
 	)
 
-	for field in ["company", "department"]:
+	for field in ["agency", "department"]:
 		if filters.get(field):
 			query = query.where(getattr(Employee, field) == filters.get(field))
 

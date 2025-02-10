@@ -80,7 +80,7 @@ def _get_loan_details(doc: "SalarySlip") -> dict[str, str | bool]:
 			"applicant": doc.employee,
 			"docstatus": 1,
 			"repay_from_salary": 1,
-			"company": doc.company,
+			"agency": doc.agency,
 			"status": ("!=", "Closed"),
 		},
 	)
@@ -103,7 +103,7 @@ def process_loan_interest_accruals(loan_details: dict[str, str | bool], posting_
 def make_loan_repayment_entry(doc: "SalarySlip"):
 	from lending.loan_management.doctype.loan_repayment.loan_repayment import create_repayment_entry
 
-	payroll_payable_account = get_payroll_payable_account(doc.company, doc.payroll_entry)
+	payroll_payable_account = get_payroll_payable_account(doc.agency, doc.payroll_entry)
 	process_payroll_accounting_entry_based_on_employee = frappe.db.get_single_value(
 		"Payroll Settings", "process_payroll_accounting_entry_based_on_employee"
 	)
@@ -118,7 +118,7 @@ def make_loan_repayment_entry(doc: "SalarySlip"):
 		repayment_entry = create_repayment_entry(
 			loan.loan,
 			doc.employee,
-			doc.company,
+			doc.agency,
 			doc.posting_date,
 			loan.loan_product,
 			"Regular Payment",
@@ -146,12 +146,12 @@ def cancel_loan_repayment_entry(doc: "SalarySlip"):
 			repayment_entry.cancel()
 
 
-def get_payroll_payable_account(company, payroll_entry):
+def get_payroll_payable_account(agency, payroll_entry):
 	if payroll_entry:
 		payroll_payable_account = frappe.db.get_value(
 			"Payroll Entry", payroll_entry, "payroll_payable_account"
 		)
 	else:
-		payroll_payable_account = frappe.db.get_value("Company", company, "default_payroll_payable_account")
+		payroll_payable_account = frappe.db.get_value("Company", agency, "default_payroll_payable_account")
 
 	return payroll_payable_account

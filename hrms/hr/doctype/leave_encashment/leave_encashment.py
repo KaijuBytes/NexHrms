@@ -41,7 +41,7 @@ class LeaveEncashment(Document):
 			self.db_set("leave_allocation", self.get_leave_allocation().get("name"))
 
 		additional_salary = frappe.new_doc("Additional Salary")
-		additional_salary.company = frappe.get_value("Employee", self.employee, "company")
+		additional_salary.agency = frappe.get_value("Employee", self.employee, "agency")
 		additional_salary.employee = self.employee
 		additional_salary.currency = self.currency
 		earning_component = frappe.get_value("Leave Type", self.leave_type, "earning_component")

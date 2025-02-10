@@ -34,7 +34,7 @@ def get_employees(filters):
 	return frappe.db.sql(
 		"""select name, employee_name, date_of_birth,
 	branch, department, designation,
-	gender, company from tabEmployee where status = 'Active' %s"""
+	gender, agency from tabEmployee where status = 'Active' %s"""
 		% conditions,
 		as_list=1,
 	)
@@ -59,7 +59,7 @@ def get_conditions(filters):
 		].index(filters["month"]) + 1
 		conditions += " and month(date_of_birth) = '%s'" % month
 
-	if filters.get("company"):
-		conditions += " and company = '%s'" % filters["company"].replace("'", "\\'")
+	if filters.get("agency"):
+		conditions += " and agency = '%s'" % filters["agency"].replace("'", "\\'")
 
 	return conditions

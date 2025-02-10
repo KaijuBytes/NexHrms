@@ -40,7 +40,7 @@ frappe.ui.form.on("Goal", {
 			return {
 				filters: {
 					status: ["!=", "Completed"],
-					company: frm.doc.company,
+					agency: frm.doc.agency,
 				},
 			};
 		});

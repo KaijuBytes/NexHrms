@@ -19,11 +19,11 @@ def get_employees(
 	date: str | datetime.date,
 	department: str | None = None,
 	branch: str | None = None,
-	company: str | None = None,
+	agency: str | None = None,
 ) -> dict[str, list]:
 	filters = {"status": "Active", "date_of_joining": ["<=", date]}
 
-	for field, value in {"department": department, "branch": branch, "company": company}.items():
+	for field, value in {"department": department, "branch": branch, "agency": agency}.items():
 		if value:
 			filters[field] = value
 
@@ -62,7 +62,7 @@ def mark_employee_attendance(
 	status: str,
 	date: str | datetime.date,
 	leave_type: str | None = None,
-	company: str | None = None,
+	agency: str | None = None,
 	late_entry: int | None = None,
 	early_exit: int | None = None,
 	shift: str | None = None,

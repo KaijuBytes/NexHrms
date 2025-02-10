@@ -67,22 +67,22 @@ hrms.HierarchyChartMobile = class {
 	}
 
 	show() {
-		if (this.page.main.find('[data-fieldname="company"]').length) return;
+		if (this.page.main.find('[data-fieldname="agency"]').length) return;
 		let me = this;
 
-		let company = this.page.add_field({
+		let agency = this.page.add_field({
 			fieldtype: "Link",
 			options: "Company",
-			fieldname: "company",
+			fieldname: "agency",
 			placeholder: __("Select Company"),
-			default: frappe.defaults.get_default("company"),
+			default: frappe.defaults.get_default("agency"),
 			only_select: true,
 			reqd: 1,
 			change: () => {
-				me.company = "";
+				me.agency = "";
 
-				if (company.get_value() && me.company != company.get_value()) {
-					me.company = company.get_value();
+				if (agency.get_value() && me.agency != agency.get_value()) {
+					me.agency = agency.get_value();
 
 					// svg for connectors
 					me.make_svg_markers();
@@ -99,8 +99,8 @@ hrms.HierarchyChartMobile = class {
 			},
 		});
 
-		company.refresh();
-		$(`[data-fieldname="company"]`).trigger("change");
+		agency.refresh();
+		$(`[data-fieldname="agency"]`).trigger("change");
 	}
 
 	make_svg_markers() {
@@ -150,7 +150,7 @@ hrms.HierarchyChartMobile = class {
 			.call({
 				method: me.method,
 				args: {
-					company: me.company,
+					agency: me.agency,
 				},
 			})
 			.then((r) => {
@@ -229,8 +229,8 @@ hrms.HierarchyChartMobile = class {
 	}
 
 	load_children(node) {
-		if (!this.company) {
-			frappe.throw(__("Please select a company first"));
+		if (!this.agency) {
+			frappe.throw(__("Please select a agency first"));
 		}
 
 		frappe.run_serially([
@@ -247,7 +247,7 @@ hrms.HierarchyChartMobile = class {
 					method: me.method,
 					args: {
 						parent: node_id,
-						company: me.company,
+						agency: me.agency,
 						exclude_node: exclude_node,
 					},
 				})

@@ -12,7 +12,7 @@
   "salary_currency",
   "column_break_3",
   "promotion_date",
-  "company",
+  "agency",
   "details_section",
   "promotion_details",
   "salary_details_section",
@@ -56,8 +56,8 @@
    "reqd": 1
   },
   {
-   "fetch_from": "employee.company",
-   "fieldname": "company",
+   "fetch_from": "employee.agency",
+   "fieldname": "agency",
    "fieldtype": "Link",
    "label": "Company",
    "options": "Company"

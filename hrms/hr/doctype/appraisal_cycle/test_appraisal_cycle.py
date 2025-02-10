@@ -8,12 +8,12 @@ from nex.setup.doctype.designation.test_designation import create_designation
 from nex.setup.doctype.employee.test_employee import make_employee
 
 from hrms.hr.doctype.appraisal_template.test_appraisal_template import create_appraisal_template
-from hrms.tests.test_utils import create_company
+from hrms.tests.test_utils import create_agency
 
 
 class TestAppraisalCycle(IntegrationTestCase):
 	def setUp(self):
-		company = create_company("_Test Appraisal").name
+		agency = create_agency("_Test Appraisal").name
 		self.template = create_appraisal_template()
 
 		engineer = create_designation(designation_name="Engineer")
@@ -22,8 +22,8 @@ class TestAppraisalCycle(IntegrationTestCase):
 
 		create_designation(designation_name="Consultant")
 
-		self.employee1 = make_employee("employee1@example.com", company=company, designation="Engineer")
-		self.employee2 = make_employee("employee2@example.com", company=company, designation="Consultant")
+		self.employee1 = make_employee("employee1@example.com", agency=agency, designation="Engineer")
+		self.employee2 = make_employee("employee2@example.com", agency=agency, designation="Consultant")
 
 	def test_set_employees(self):
 		cycle = create_appraisal_cycle(designation="Engineer")
@@ -63,7 +63,7 @@ def create_appraisal_cycle(**args):
 		{
 			"doctype": "Appraisal Cycle",
 			"cycle_name": name,
-			"company": args.company or "_Test Appraisal",
+			"agency": args.agency or "_Test Appraisal",
 			"start_date": args.start_date or "2022-01-01",
 			"end_date": args.end_date or "2022-03-31",
 		}

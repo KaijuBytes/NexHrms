@@ -8,7 +8,7 @@ from frappe.utils import add_days, getdate
 from nex.setup.doctype.employee.test_employee import make_employee
 
 from hrms.hr.doctype.job_opening.job_opening import close_expired_job_openings
-from hrms.hr.doctype.staffing_plan.test_staffing_plan import make_company
+from hrms.hr.doctype.staffing_plan.test_staffing_plan import make_agency
 
 
 class TestJobOpening(IntegrationTestCase):
@@ -17,16 +17,16 @@ class TestJobOpening(IntegrationTestCase):
 		frappe.db.delete("Staffing Plan Detail")
 		frappe.db.delete("Job Opening")
 
-		make_company("_Test Opening Company", "_TOC")
-		frappe.db.delete("Employee", {"company": "_Test Opening Company"})
+		make_agency("_Test Opening Company", "_TOC")
+		frappe.db.delete("Employee", {"agency": "_Test Opening Company"})
 
 	def test_vacancies_fulfilled(self):
-		make_employee("test_job_opening@example.com", company="_Test Opening Company", designation="Designer")
+		make_employee("test_job_opening@example.com", agency="_Test Opening Company", designation="Designer")
 
 		staffing_plan = frappe.get_doc(
 			{
 				"doctype": "Staffing Plan",
-				"company": "_Test Opening Company",
+				"agency": "_Test Opening Company",
 				"name": "Test",
 				"from_date": getdate(),
 				"to_date": add_days(getdate(), 10),
@@ -86,7 +86,7 @@ def get_job_opening(**args):
 			"doctype": "Job Opening",
 			"job_title": "Designer",
 			"designation": "Designer",
-			"company": "_Test Opening Company",
+			"agency": "_Test Opening Company",
 			"status": "Open",
 		}
 	)

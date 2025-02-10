@@ -19,7 +19,7 @@ frappe.ui.form.on("Staffing Plan", {
 		frm.set_query("department", function () {
 			return {
 				filters: {
-					company: frm.doc.company,
+					agency: frm.doc.agency,
 				},
 			};
 		});
@@ -37,7 +37,7 @@ frappe.ui.form.on("Staffing Plan", {
 			},
 			get_query() {
 				let filters = {
-					company: frm.doc.company,
+					agency: frm.doc.agency,
 					status: ["in", ["Pending", "Open & Approved"]],
 				};
 
@@ -70,7 +70,7 @@ frappe.ui.form.on("Staffing Plan", {
 frappe.ui.form.on("Staffing Plan Detail", {
 	designation: function (frm, cdt, cdn) {
 		let child = locals[cdt][cdn];
-		if (frm.doc.company && child.designation) {
+		if (frm.doc.agency && child.designation) {
 			set_number_of_positions(frm, cdt, cdn);
 		}
 	},
@@ -99,7 +99,7 @@ var set_number_of_positions = function (frm, cdt, cdn) {
 		method: "hrms.hr.doctype.staffing_plan.staffing_plan.get_designation_counts",
 		args: {
 			designation: child.designation,
-			company: frm.doc.company,
+			agency: frm.doc.agency,
 		},
 		callback: function (data) {
 			if (data.message) {

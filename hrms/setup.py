@@ -8,7 +8,7 @@ from frappe.desk.page.setup_wizard.install_fixtures import (
 from frappe.desk.page.setup_wizard.setup_wizard import make_records
 from frappe.installer import update_site_config
 
-from hrms.overrides.company import delete_company_fixtures
+# from hrms.overrides.agency import delete_agency_fixtures
 
 
 def after_install():
@@ -26,7 +26,7 @@ def after_install():
 def before_uninstall():
 	delete_custom_fields(get_custom_fields())
 	delete_custom_fields(get_salary_slip_loan_fields())
-	delete_company_fixtures()
+	# delete_agency_fixtures()
 
 
 def after_app_install(app_name):
@@ -290,7 +290,7 @@ def get_custom_fields():
 				"fieldname": "total_expense_claim",
 				"fieldtype": "Currency",
 				"label": _("Total Expense Claim (via Expense Claim)"),
-				"options": "Company:company:default_currency",
+				"options": "Company:agency:default_currency",
 				"read_only": 1,
 				"insert_after": "total_costing_amount",
 			},
@@ -538,7 +538,7 @@ def get_post_install_patches():
 		"erpnext.patches.v13_0.update_start_end_date_for_old_shift_assignment",
 		"erpnext.patches.v13_0.updates_for_multi_currency_payroll",
 		"erpnext.patches.v13_0.update_reason_for_resignation_in_employee",
-		"erpnext.patches.v13_0.set_company_in_leave_ledger_entry",
+		"erpnext.patches.v13_0.set_agency_in_leave_ledger_entry",
 		"erpnext.patches.v13_0.rename_stop_to_send_birthday_reminders",
 		"erpnext.patches.v13_0.set_training_event_attendance",
 		"erpnext.patches.v14_0.set_payroll_cost_centers",
@@ -785,7 +785,7 @@ def get_salary_slip_loan_fields():
 				"fieldtype": "Currency",
 				"label": _("Total Principal Amount"),
 				"default": "0",
-				"options": "Company:company:default_currency",
+				"options": "Company:agency:default_currency",
 				"read_only": 1,
 				"insert_after": "loan_details_sb_1",
 			},
@@ -794,7 +794,7 @@ def get_salary_slip_loan_fields():
 				"fieldtype": "Currency",
 				"label": _("Total Interest Amount"),
 				"default": "0",
-				"options": "Company:company:default_currency",
+				"options": "Company:agency:default_currency",
 				"read_only": 1,
 				"insert_after": "total_principal_amount",
 			},
@@ -808,7 +808,7 @@ def get_salary_slip_loan_fields():
 				"fieldtype": "Currency",
 				"label": _("Total Loan Repayment"),
 				"default": "0",
-				"options": "Company:company:default_currency",
+				"options": "Company:agency:default_currency",
 				"read_only": 1,
 				"insert_after": "loan_cb_1",
 			},

@@ -28,17 +28,17 @@ def execute():
 	if standard_tax_exemption_amount_exists:
 		select_fields = "name, start_date, end_date, standard_tax_exemption_amount"
 
-	for company in frappe.get_all("Company"):
+	for agency in frappe.get_all("Company"):
 		payroll_periods = frappe.db.sql(
 			f"""
 			SELECT
 				{select_fields}
 			FROM
 				`tabPayroll Period`
-			WHERE company=%s
+			WHERE agency=%s
 			ORDER BY start_date DESC
 		""",
-			company.name,
+			agency.name,
 			as_dict=1,
 		)
 
@@ -52,7 +52,7 @@ def execute():
 				income_tax_slab.disabled = 1
 
 			income_tax_slab.effective_from = period.start_date
-			income_tax_slab.company = company.name
+			income_tax_slab.agency = agency.name
 			income_tax_slab.allow_tax_exemption = 1
 			if standard_tax_exemption_amount_exists:
 				income_tax_slab.standard_tax_exemption_amount = period.standard_tax_exemption_amount
@@ -77,11 +77,11 @@ def execute():
 					set
 						income_tax_slab = %s
 					where
-						company = %s
+						agency = %s
 						and from_date >= %s
 						and docstatus < 2
 				""",
-					(income_tax_slab.name, company.name, period.start_date),
+					(income_tax_slab.name, agency.name, period.start_date),
 				)
 
 	# move other incomes to separate document
@@ -95,14 +95,14 @@ def execute():
 	proofs = frappe.get_all(
 		"Employee Tax Exemption Proof Submission",
 		filters={"docstatus": 1},
-		fields=["payroll_period", "employee", "company", "income_from_other_sources"],
+		fields=["payroll_period", "employee", "agency", "income_from_other_sources"],
 	)
 	for proof in proofs:
 		if proof.income_from_other_sources:
 			employee_other_income = frappe.new_doc("Employee Other Income")
 			employee_other_income.employee = proof.employee
 			employee_other_income.payroll_period = proof.payroll_period
-			employee_other_income.company = proof.company
+			employee_other_income.agency = proof.agency
 			employee_other_income.amount = proof.income_from_other_sources
 
 			try:
@@ -120,7 +120,7 @@ def execute():
 	declerations = frappe.get_all(
 		"Employee Tax Exemption Declaration",
 		filters={"docstatus": 1},
-		fields=["payroll_period", "employee", "company", "income_from_other_sources"],
+		fields=["payroll_period", "employee", "agency", "income_from_other_sources"],
 	)
 
 	for declaration in declerations:
@@ -131,7 +131,7 @@ def execute():
 			employee_other_income = frappe.new_doc("Employee Other Income")
 			employee_other_income.employee = declaration.employee
 			employee_other_income.payroll_period = declaration.payroll_period
-			employee_other_income.company = declaration.company
+			employee_other_income.agency = declaration.agency
 			employee_other_income.amount = declaration.income_from_other_sources
 
 			try:

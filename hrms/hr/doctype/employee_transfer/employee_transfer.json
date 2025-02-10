@@ -10,8 +10,8 @@
   "employee_name",
   "transfer_date",
   "column_break_3",
-  "company",
-  "new_company",
+  "agency",
+  "new_agency",
   "department",
   "details_section",
   "transfer_details",
@@ -47,14 +47,14 @@
    "fieldtype": "Column Break"
   },
   {
-   "fetch_from": "employee.company",
-   "fieldname": "company",
+   "fetch_from": "employee.agency",
+   "fieldname": "agency",
    "fieldtype": "Link",
    "label": "Company",
    "options": "Company"
   },
   {
-   "fieldname": "new_company",
+   "fieldname": "new_agency",
    "fieldtype": "Link",
    "label": "New Company",
    "options": "Company"

@@ -9,7 +9,7 @@
 					:disabled="!!props.shiftAssignmentName"
 					:options="employees"
 				/>
-				<FormControl type="text" label="Company" v-model="form.company" :disabled="true" />
+				<FormControl type="text" label="Company" v-model="form.agency" :disabled="true" />
 				<FormControl
 					type="text"
 					label="Employee Name"
@@ -152,7 +152,7 @@ type Status = "Active" | "Inactive";
 
 type Form = {
 	[K in
-		| "company"
+		| "agency"
 		| "employee_name"
 		| "department"
 		| "employee"
@@ -188,7 +188,7 @@ const emit = defineEmits<{
 
 const formObject: Form = {
 	employee: "",
-	company: "",
+	agency: "",
 	employee_name: "",
 	department: "",
 	shift_type: "",
@@ -330,7 +330,7 @@ watch(
 			employee.fetch();
 		} else {
 			form.employee_name = "";
-			form.company = "";
+			form.agency = "";
 			form.department = "";
 		}
 	},
@@ -393,12 +393,12 @@ const employee = createResource({
 		return {
 			doctype: "Employee",
 			name: employee,
-			fields: ["employee_name", "company", "department"],
+			fields: ["employee_name", "agency", "department"],
 		};
 	},
-	onSuccess: (data: { [K in "employee_name" | "company" | "department"]: string }) => {
+	onSuccess: (data: { [K in "employee_name" | "agency" | "department"]: string }) => {
 		form.employee_name = data.employee_name;
-		form.company = data.company;
+		form.agency = data.agency;
 		form.department = data.department;
 	},
 	onError(error: { messages: string[] }) {
@@ -465,7 +465,7 @@ const insertShift = createResource({
 			employee: (form.employee as { value: string }).value,
 			shift_type: (form.shift_type as { value: string }).value,
 			shift_location: (form.shift_location as { value: string }).value,
-			company: form.company,
+			agency: form.agency,
 			status: form.status,
 			start_date: form.start_date,
 			end_date: form.end_date,
@@ -503,7 +503,7 @@ const createShiftAssignmentSchedule = createResource({
 		return {
 			employee: (form.employee as { value: string }).value,
 			shift_type: (form.shift_type as { value: string }).value,
-			company: form.company,
+			agency: form.agency,
 			status: form.status,
 			start_date: form.start_date,
 			end_date: form.end_date,

@@ -87,20 +87,20 @@ const tabs = [
 ]
 
 watch(
-	() => salarySlip.value.company,
-	async (company) => {
-		if (!company) return
+	() => salarySlip.value.agency,
+	async (agency) => {
+		if (!agency) return
 
-		const companyCurrency = await getCompanyCurrency(company)
+		const agencyCurrency = await getCompanyCurrency(agency)
 
 		formFields.data?.map((field) => {
 			if (field.label?.includes("Company Currency")) {
-				if (salarySlip.value.currency === companyCurrency) {
+				if (salarySlip.value.currency === agencyCurrency) {
 					// hide base currency fields
 					field.hidden = true
 				} else {
 					// set currency in label
-					field.label = field.label.replace("Company Currency", companyCurrency)
+					field.label = field.label.replace("Company Currency", agencyCurrency)
 				}
 			}
 		})

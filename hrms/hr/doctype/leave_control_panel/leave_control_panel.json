@@ -17,7 +17,7 @@
   "leave_type",
   "no_of_days",
   "quick_filters_section",
-  "company",
+  "agency",
   "branch",
   "department",
   "column_break1",
@@ -31,7 +31,7 @@
  ],
  "fields": [
   {
-   "fieldname": "company",
+   "fieldname": "agency",
    "fieldtype": "Link",
    "label": "Company",
    "options": "Company",

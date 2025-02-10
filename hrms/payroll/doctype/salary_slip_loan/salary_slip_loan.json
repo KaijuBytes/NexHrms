@@ -49,7 +49,7 @@
    "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "Principal Amount",
-   "options": "Company:company:default_currency",
+   "options": "Company:agency:default_currency",
    "read_only": 1
   },
   {
@@ -57,7 +57,7 @@
    "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "Interest Amount",
-   "options": "Company:company:default_currency",
+   "options": "Company:agency:default_currency",
    "read_only": 1
   },
   {
@@ -65,7 +65,7 @@
    "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "Total Payment",
-   "options": "Company:company:default_currency"
+   "options": "Company:agency:default_currency"
   },
   {
    "fieldname": "loan_repayment_entry",

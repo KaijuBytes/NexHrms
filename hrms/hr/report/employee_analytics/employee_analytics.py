@@ -10,7 +10,7 @@ def execute(filters=None):
 	if not filters:
 		filters = {}
 
-	if not filters["company"]:
+	if not filters["agency"]:
 		frappe.throw(_("{0} is mandatory").format(_("Company")))
 
 	columns = get_columns()
@@ -41,8 +41,8 @@ def get_columns():
 def get_conditions(filters):
 	conditions = " and " + filters.get("parameter").lower().replace(" ", "_") + " IS NOT NULL "
 
-	if filters.get("company"):
-		conditions += " and company = '%s'" % filters["company"].replace("'", "\\'")
+	if filters.get("agency"):
+		conditions += " and agency = '%s'" % filters["agency"].replace("'", "\\'")
 	return conditions
 
 
@@ -52,7 +52,7 @@ def get_employees(filters):
 	return frappe.db.sql(
 		"""select name, employee_name, date_of_birth,
 	branch, department, designation,
-	gender, company from `tabEmployee` where status = 'Active' %s"""
+	gender, agency from `tabEmployee` where status = 'Active' %s"""
 		% conditions,
 		as_list=1,
 	)
@@ -79,8 +79,8 @@ def get_chart_data(parameters, employees, filters):
 				"""select count(*) from
 				`tabEmployee` where """
 				+ parameter_field_name
-				+ """ = %s and  company = %s""",
-				(parameter[0], filters.get("company")),
+				+ """ = %s and  agency = %s""",
+				(parameter[0], filters.get("agency")),
 				as_list=1,
 			)
 			if total_employee[0][0]:

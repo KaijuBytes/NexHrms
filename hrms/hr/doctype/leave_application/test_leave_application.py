@@ -45,7 +45,7 @@ test_dependencies = ["Leave Type", "Leave Allocation", "Leave Block List", "Empl
 
 _test_records = [
 	{
-		"company": "_Test Company",
+		"agency": "_Test Company",
 		"doctype": "Leave Application",
 		"employee": "_T-Employee-00001",
 		"from_date": "2013-05-01",
@@ -55,7 +55,7 @@ _test_records = [
 		"to_date": "2013-05-05",
 	},
 	{
-		"company": "_Test Company",
+		"agency": "_Test Company",
 		"doctype": "Leave Application",
 		"employee": "_T-Employee-00002",
 		"from_date": "2013-05-01",
@@ -65,7 +65,7 @@ _test_records = [
 		"to_date": "2013-05-05",
 	},
 	{
-		"company": "_Test Company",
+		"agency": "_Test Company",
 		"doctype": "Leave Application",
 		"employee": "_T-Employee-00001",
 		"from_date": "2013-01-15",
@@ -146,7 +146,7 @@ class TestLeaveApplication(IntegrationTestCase):
 				leave_type=leave_type.name,
 				from_date=add_days(first_sunday, 1),
 				to_date=add_days(first_sunday, 4),
-				company="_Test Company",
+				agency="_Test Company",
 				status="Approved",
 				leave_approver="test@example.com",
 			)
@@ -165,7 +165,7 @@ class TestLeaveApplication(IntegrationTestCase):
 				leave_type=leave_type.name,
 				from_date=add_days(first_sunday, -10),
 				to_date=add_days(first_sunday, 1),
-				company="_Test Company",
+				agency="_Test Company",
 				status="Approved",
 				leave_approver="test@example.com",
 			)
@@ -200,7 +200,7 @@ class TestLeaveApplication(IntegrationTestCase):
 				leave_type=leave_type.name,
 				from_date=add_days(first_sunday, 1),
 				to_date=add_days(first_sunday, 3),
-				company="_Test Company",
+				agency="_Test Company",
 				status="Approved",
 				leave_approver="test@example.com",
 			)
@@ -390,7 +390,7 @@ class TestLeaveApplication(IntegrationTestCase):
 		attendance.save()
 
 		leave_application = make_leave_application(
-			employee.name, first_sunday, add_days(first_sunday, 3), leave_type.name, employee.company
+			employee.name, first_sunday, add_days(first_sunday, 3), leave_type.name, employee.agency
 		)
 		leave_application.reload()
 
@@ -577,7 +577,7 @@ class TestLeaveApplication(IntegrationTestCase):
 			dict(
 				doctype="Leave Application",
 				employee=employee.name,
-				company="_Test Company",
+				agency="_Test Company",
 				description="_Test Reason",
 				leave_type=leave_type,
 				from_date=date,
@@ -617,7 +617,7 @@ class TestLeaveApplication(IntegrationTestCase):
 				description="_Test Reason",
 				from_date=date,
 				to_date=add_days(date, 2),
-				company="_Test Company",
+				agency="_Test Company",
 				docstatus=1,
 				status="Approved",
 			)
@@ -632,7 +632,7 @@ class TestLeaveApplication(IntegrationTestCase):
 				description="_Test Reason",
 				from_date=add_days(date, 4),
 				to_date=add_days(date, 8),
-				company="_Test Company",
+				agency="_Test Company",
 				docstatus=1,
 				status="Approved",
 			)
@@ -658,7 +658,7 @@ class TestLeaveApplication(IntegrationTestCase):
 				description="_Test Reason",
 				from_date=date,
 				to_date=add_days(date, 4),
-				company="_Test Company",
+				agency="_Test Company",
 				docstatus=1,
 				status="Approved",
 			)
@@ -681,7 +681,7 @@ class TestLeaveApplication(IntegrationTestCase):
 				description="_Test Reason",
 				from_date=date,
 				to_date=add_days(date, 4),
-				company="_Test Company",
+				agency="_Test Company",
 				docstatus=1,
 				status="Approved",
 			)
@@ -715,7 +715,7 @@ class TestLeaveApplication(IntegrationTestCase):
 				description="_Test Reason",
 				from_date=date,
 				to_date=add_days(date, 4),
-				company="_Test Company",
+				agency="_Test Company",
 				docstatus=1,
 				status="Approved",
 			)
@@ -745,7 +745,7 @@ class TestLeaveApplication(IntegrationTestCase):
 				leave_type=leave_type.name,
 				from_date="2013-01-30",
 				to_date="2013-02-03",
-				company="_Test Company",
+				agency="_Test Company",
 				status="Approved",
 			)
 		).insert()
@@ -758,7 +758,7 @@ class TestLeaveApplication(IntegrationTestCase):
 				leave_type=leave_type.name,
 				from_date="2013-02-06",
 				to_date="2013-02-10",
-				company="_Test Company",
+				agency="_Test Company",
 				status="Approved",
 			)
 		).insert()
@@ -773,7 +773,7 @@ class TestLeaveApplication(IntegrationTestCase):
 				leave_type=leave_type.name,
 				from_date=from_date,
 				to_date=to_date,
-				company="_Test Company",
+				agency="_Test Company",
 				status="Approved",
 			)
 		)
@@ -825,7 +825,7 @@ class TestLeaveApplication(IntegrationTestCase):
 				description="_Test Reason",
 				from_date="2018-10-02",
 				to_date="2018-10-02",
-				company="_Test Company",
+				agency="_Test Company",
 				status="Approved",
 				leave_approver="test@example.com",
 			)
@@ -852,7 +852,7 @@ class TestLeaveApplication(IntegrationTestCase):
 				from_date=add_days(nowdate(), 1),
 				to_date=add_days(nowdate(), 4),
 				description="_Test Reason",
-				company="_Test Company",
+				agency="_Test Company",
 				docstatus=1,
 				status="Approved",
 			)
@@ -891,7 +891,7 @@ class TestLeaveApplication(IntegrationTestCase):
 				half_day=1,
 				half_day_date=add_days(nowdate(), -3),
 				description="_Test Reason",
-				company="_Test Company",
+				agency="_Test Company",
 				docstatus=1,
 				status="Approved",
 			)
@@ -992,7 +992,7 @@ class TestLeaveApplication(IntegrationTestCase):
 			to_date="2014-06-02",
 			posting_date="2014-05-30",
 			description="_Test Reason",
-			company="_Test Company",
+			agency="_Test Company",
 			leave_approver=leave_approver,
 		)
 		application.insert()
@@ -1030,7 +1030,7 @@ class TestLeaveApplication(IntegrationTestCase):
 			to_date="2014-06-04",
 			posting_date="2014-05-30",
 			description="_Test Reason",
-			company="_Test Company",
+			agency="_Test Company",
 			leave_approver=leave_approver,
 		)
 		application.insert()
@@ -1345,7 +1345,7 @@ def set_leave_approver():
 
 
 def get_leave_period():
-	leave_period_name = frappe.db.get_value("Leave Period", {"company": "_Test Company"})
+	leave_period_name = frappe.db.get_value("Leave Period", {"agency": "_Test Company"})
 	if leave_period_name:
 		return frappe.get_doc("Leave Period", leave_period_name)
 	else:
@@ -1355,7 +1355,7 @@ def get_leave_period():
 				doctype="Leave Period",
 				from_date=add_months(nowdate(), -6),
 				to_date=add_months(nowdate(), 6),
-				company="_Test Company",
+				agency="_Test Company",
 				is_active=1,
 			)
 		).insert()

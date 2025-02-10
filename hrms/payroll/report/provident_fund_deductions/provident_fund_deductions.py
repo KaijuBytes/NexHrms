@@ -52,8 +52,8 @@ def get_conditions(filters):
 	if filters.get("branch"):
 		conditions.append("sal.branch = '%s' " % (filters["branch"]))
 
-	if filters.get("company"):
-		conditions.append("sal.company = '%s' " % (filters["company"]))
+	if filters.get("agency"):
+		conditions.append("sal.agency = '%s' " % (filters["agency"]))
 
 	if filters.get("month"):
 		conditions.append("month(sal.start_date) = '%s' " % (filters["month"]))

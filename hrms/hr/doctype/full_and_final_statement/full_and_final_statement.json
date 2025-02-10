@@ -10,7 +10,7 @@
   "employee_name",
   "transaction_date",
   "column_break_12",
-  "company",
+  "agency",
   "status",
   "amended_from",
   "employee_details_section",
@@ -120,8 +120,8 @@
    "label": "Assets Allocated"
   },
   {
-   "fetch_from": "employee.company",
-   "fieldname": "company",
+   "fetch_from": "employee.agency",
+   "fieldname": "agency",
    "fieldtype": "Link",
    "in_list_view": 1,
    "in_standard_filter": 1,

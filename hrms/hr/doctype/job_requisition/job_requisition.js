@@ -58,7 +58,7 @@ frappe.ui.form.on("Job Requisition", {
 							reqd: 1,
 							get_query: () => {
 								const filters = {
-									company: frm.doc.company,
+									agency: frm.doc.agency,
 									status: "Open",
 									designation: frm.doc.designation,
 								};

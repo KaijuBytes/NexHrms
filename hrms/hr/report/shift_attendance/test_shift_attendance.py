@@ -8,15 +8,15 @@ from nex.setup.doctype.employee.test_employee import make_employee
 
 from hrms.hr.doctype.shift_type.test_shift_type import setup_shift_type
 from hrms.hr.report.shift_attendance.shift_attendance import execute
-from hrms.tests.test_utils import create_company
+from hrms.tests.test_utils import create_agency
 
 
 class TestShiftAttendance(IntegrationTestCase):
 	@classmethod
 	def setUpClass(cls):
-		create_company()
+		create_agency()
 		super().setUpClass()
-		frappe.db.delete("Employee", {"company": "_Test Company"})
+		frappe.db.delete("Employee", {"agency": "_Test Company"})
 
 		cls.create_records()
 
@@ -51,12 +51,12 @@ class TestShiftAttendance(IntegrationTestCase):
 
 		cls.emp1 = make_employee(
 			"employee1@example.com",
-			company="_Test Company",
+			agency="_Test Company",
 			default_shift="Shift 1",
 		)
 		cls.emp2 = make_employee(
 			"employee2@example.com",
-			company="_Test Company",
+			agency="_Test Company",
 			default_shift="Shift 2",
 		)
 
@@ -85,7 +85,7 @@ class TestShiftAttendance(IntegrationTestCase):
 	def test_data(self):
 		filters = frappe._dict(
 			{
-				"company": "_Test Company",
+				"agency": "_Test Company",
 				"from_date": date(2023, 1, 1),
 				"to_date": date(2023, 1, 3),
 			}
@@ -143,7 +143,7 @@ class TestShiftAttendance(IntegrationTestCase):
 	def test_chart(self):
 		filters = frappe._dict(
 			{
-				"company": "_Test Company",
+				"agency": "_Test Company",
 				"from_date": date(2023, 1, 1),
 				"to_date": date(2023, 1, 3),
 			}
@@ -158,7 +158,7 @@ class TestShiftAttendance(IntegrationTestCase):
 	def test_report_summary(self):
 		filters = frappe._dict(
 			{
-				"company": "_Test Company",
+				"agency": "_Test Company",
 				"from_date": date(2023, 1, 1),
 				"to_date": date(2023, 1, 3),
 			}

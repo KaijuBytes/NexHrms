@@ -712,7 +712,7 @@ function resetForm() {
 }
 
 async function setFormattedCurrency() {
-	const companyCurrency = await getCompanyCurrency(formModel.value.company)
+	const agencyCurrency = await getCompanyCurrency(formModel.value.agency)
 
 	props.fields.forEach((field) => {
 		if (field.fieldtype !== "Currency") return
@@ -726,7 +726,7 @@ async function setFormattedCurrency() {
 		} else {
 			formModel.value[field.fieldname] = formatCurrency(
 				formModel.value[field.fieldname],
-				companyCurrency
+				agencyCurrency
 			)
 		}
 	})

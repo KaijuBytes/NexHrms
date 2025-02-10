@@ -9,7 +9,7 @@
 					{{ __("Total Expense Amount") }}
 				</span>
 				<span class="text-gray-800 text-lg font-bold leading-6">
-					{{ formatCurrency(total_claimed_amount, company_currency) }}
+					{{ formatCurrency(total_claimed_amount, agency_currency) }}
 				</span>
 			</div>
 
@@ -25,7 +25,7 @@
 						{{
 							formatCurrency(
 								summary.data?.total_pending_amount,
-								company_currency
+								agency_currency
 							)
 						}}
 					</span>
@@ -41,7 +41,7 @@
 						{{
 							formatCurrency(
 								summary.data?.total_approved_amount,
-								company_currency
+								agency_currency
 							)
 						}}
 					</span>
@@ -58,7 +58,7 @@
 						{{
 							formatCurrency(
 								summary.data?.total_rejected_amount,
-								company_currency
+								agency_currency
 							)
 						}}
 					</span>
@@ -84,5 +84,5 @@ const total_claimed_amount = computed(() => {
 	)
 })
 
-const company_currency = computed(() => summary.data?.currency)
+const agency_currency = computed(() => summary.data?.currency)
 </script>

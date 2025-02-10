@@ -13,7 +13,7 @@
   "employee_name",
   "email",
   "column_break_5",
-  "company",
+  "agency",
   "status",
   "date",
   "employee_details_section",
@@ -74,7 +74,7 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "company",
+   "fieldname": "agency",
    "fieldtype": "Link",
    "in_standard_filter": 1,
    "label": "Company",
